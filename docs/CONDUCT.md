@@ -42,3 +42,4 @@
 
 ### Signatures 
 ![Signature1](https://drive.google.com/file/d/1wkQKVNFPr7H72RyVjH14DYDZH5iMYsRi/view?usp=drive_link)
+![LoganSignature](https://github.com/loganmccue17/neighborhood-noise/blob/main/docs/Signatures/LoganSignature)
