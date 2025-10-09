@@ -41,5 +41,8 @@
 - In extreme cases, issues will be brought up to 305Soft leaders.
 
 ### Signatures 
-![Signature1](https://drive.google.com/file/d/1wkQKVNFPr7H72RyVjH14DYDZH5iMYsRi/view?usp=drive_link)
+![Signature1](https://github.com/loganmccue17/neighborhood-noise/blob/main/docs/Signatures/TrekkerSign.JPG)
 ![LoganSignature](https://github.com/loganmccue17/neighborhood-noise/blob/main/docs/Signatures/LoganSignature)
+![](https://github.com/loganmccue17/neighborhood-noise/blob/main/docs/Signatures/Screenshot%202025-10-09%20112346.png)
+![](https://github.com/loganmccue17/neighborhood-noise/blob/main/docs/Signatures/Screenshot%202025-10-09%20112322.png)
+![](https://github.com/loganmccue17/neighborhood-noise/blob/main/docs/Signatures/Screenshot%202025-10-09%20112336.png)
