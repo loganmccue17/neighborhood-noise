@@ -41,4 +41,4 @@
 - In extreme cases, issues will be brought up to 305Soft leaders.
 
 ### Signatures 
-![](https://drive.google.com/file/d/1wkQKVNFPr7H72RyVjH14DYDZH5iMYsRi/view?usp=drive_link)
+![Signature1](https://drive.google.com/file/d/1wkQKVNFPr7H72RyVjH14DYDZH5iMYsRi/view?usp=drive_link)
