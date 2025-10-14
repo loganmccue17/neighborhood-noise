@@ -17,21 +17,25 @@ Observation Statement:
 
 Team Action (if any): 
 
+## Observation 3: (Trekker)
 
-## Observation 3: (Trekker) 
-Observation Statement: 
+Observation Statement: Users overwhelmingly tend to find new bands to follow based on genre.
 
-### Supporting Data:
-
-Team Action (if any):
-
-
-## Observation 4: (Enmanuel)
-Observation Statement:
-
-### Supporting Data:
+### Supporting Data:  
+- 85.7% of users stated that they searched for new bands by genre.
+- 5.7% of users stated that they searched for new bands by location.
 
 Team Action (if any):
+- Build a filter that allows users to search for local bands by genre
+
+## Observation 4: (Emmanuel)
+
+Observation Statement: One observation that was made was in the last question "What app format do you think will work best?". 47.2 % of people wanted the app format as list view to view bands in order of distance, and about 30.6 percent wanted a map to view closest bands 
+
+### Supporting Data: 47.2 % - list view , 30.6 - map view , 22.2 - search bar 
+
+Team Action (if any): As a team we planned on formatting our map around the idea of it being like a social media formatted app. This being said we believe we will quickly do the search format first then the list format , and finally the map formatting. This is the order in which we might most likely being our features. 
+
 
 
 ## Observation 5: Weston)
