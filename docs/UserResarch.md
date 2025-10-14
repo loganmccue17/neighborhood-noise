@@ -19,12 +19,14 @@ Team Action (if any):
 
 ## Observation 3: (Trekker) 
 
-Observation Statement: 
+Observation Statement: Users overwhelmingly tend to find new bands to follow based on genre.
 
-### Supporting Data:
+### Supporting Data:  
+- 85.7% of users stated that they searched for new bands by genre.
+- 5.7% of users stated that they searched for new bands by location.
 
 Team Action (if any):
-
+- Build a filter that allows users to search for local bands by genre
 
 ## Observation 4: (Enmanuel)
 
