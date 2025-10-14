@@ -11,11 +11,14 @@ Focus our ui design to be easy to use for older people. Simple to use no crazy a
 
 
 ## Observation 2: (Logan M)
-Observation Statement: 
+Observation Statement: Most bands seem to use social media to advertise and contact venue owners directly.
 
 ### Supporting Data:
+- Of the 9 people that are from a band that responded to our survey, 5 of them used Instagram, 1 used TikTok, and 1 used Google
+- Of the 9 bands that are from a band that responded to our survey, the overwhelming majority contacted venues or organizations directly
 
 Team Action (if any): 
+- Introduce a social aspect to our application, where users can not only find bands, but bands can find venues. This allows bands to post their gigs, easily contact venue owners, and interact with their users.
 
 ## Observation 3: (Trekker)
 
