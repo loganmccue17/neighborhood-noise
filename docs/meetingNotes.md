@@ -12,3 +12,9 @@
 - Discussed To-Dos for the week
 -  Uploaded signatures to finish the conduct page
 - Updated and reviewed PBI cards
+
+### Meeting 3 (10/14/2025)
+- The team worked on collecting all the links and make sure everyone is on the same page and be ready to submit by tonight
+- Discussed a plan for the upcoming week
+- Created User Story PBI Cards and assigned to each person
+- Define the golden path
