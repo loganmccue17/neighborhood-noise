@@ -15,6 +15,23 @@
  - '#' of new band accounts - In a Database that holds amount of registered band accounts for each month, in the current month tick up by 1 the amount of band accounts
 
  - % of new users who complete onboarding - In a Database that holds amount of onboarded users, tick up by one once the user finishes creating their profile, compare this amount with the total amount of users, can divide this by month or leave as a total number
+
 ## Retention
+
+Metric 1 – Weekly/Monthly Active Users (WAU/MAU)
+
+Use Firebase Analytics to log user_active events on each app open; query distinct user_ids active in the past 7 or 30 days via BigQuery export.
+
+Metric 2 – % of Bands Posting >1 Event per Month
+
+Store event posts in Firestore under each band_id; use a scheduled Cloud Function to count bands with >1 event created in the current month and divide by total active bands.
+
+Metric 3 – 30-Day Retention Rate
+
+Track sign_up and user_active events in Firebase Analytics; use BigQuery to calculate % of users who triggered user_active within 30 days of their sign_up event.
+
+Metric 4 – # of Likes on the App in Total per Week
+
+Log each like action in Firestore (or as a Firebase Analytics event); run a weekly aggregation query in BigQuery or a scheduled Cloud Function to total likes per 7-day period.
 
 ## Task Success
