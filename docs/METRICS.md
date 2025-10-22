@@ -10,7 +10,11 @@
   -These two metrics will be collected through custom actions in our app that update a number on the backend to track the metric.
 -We will also collect a number that is the average of followed bands per user. This will be a good way to detect how many users are actively going through the band searching process as well as successfuly finding bands through our app. 
 ## Adoption
+ - '#' of new registered users - In a Database that holds amount of all registered users for each month, in the current month tick up by 1 the amount of users
 
+ - '#' of new band accounts - In a Database that holds amount of registered band accounts for each month, in the current month tick up by 1 the amount of band accounts
+
+ - % of new users who complete onboarding - In a Database that holds amount of onboarded users, tick up by one once the user finishes creating their profile, compare this amount with the total amount of users, can divide this by month or leave as a total number
 ## Retention
 
 ## Task Success
