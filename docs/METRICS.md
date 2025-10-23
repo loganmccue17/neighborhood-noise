@@ -41,3 +41,5 @@ Track sign_up and user_active events in Firebase Analytics; use BigQuery to calc
 Log each like action in Firestore (or as a Firebase Analytics event); run a weekly aggregation query in BigQuery or a scheduled Cloud Function to total likes per 7-day period.
 
 ## Task Success
+% of people that complete signup and navigate to band 
+Firebase will keep track of the amount of people who use the search page, and find the percentage of who selects a gig.
