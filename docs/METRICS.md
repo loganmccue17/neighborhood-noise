@@ -1,6 +1,12 @@
 [HEART Framework Google Slide](https://docs.google.com/presentation/d/11cu22YObNyXOa9RklDN5qmV9LAiE2XLkWEyBcy0Opxg/edit?slide=id.gc8216bd24_20_0#slide=id.gc8216bd24_20_0)
 
 ## Happiness
+- We will measure user satisfaction through in-app ratings (1–5 stars), feedback submissions, and sentiment from user comments. These will be collected through Firestore and Firebase Analytics to quantify how happy users feel about discovering bands and engaging with our platform.
+- After certain in-app actions (like following a band, posting an event, or attending one), prompt a quick 1–5 star or emoji rating popup (e.g., “How was your experience?”).
+Store responses in Firestore under each user_id → calculate average satisfaction per month
+- after data is collected we can then us that data to improve the app 
+  
+
 
 ## Engagement
 - The average number of times our app was visited by a user in a designated period of time can be accessed directly in Firebase Analytics.
