@@ -57,3 +57,60 @@ Evaluate the impact of different font styles of the **main app title** on the **
 | **D (Variant 3)** | *Roboto Medium* | Clean and minimalist font | Test if a familiar, neutral style improves clarity |
 
 ---
+
+# Test 2 - Trekker (Band Name Placement inside Posts)
+
+**Band Name Placement Change – Post Component (US4)**
+
+---
+
+## **Metrics**
+**Primary Metric:**  
+- **Band Name Click-Through Rate (BandCTR)** — percentage of users who click the **band name** after viewing a post.
+
+**BandCTR Formula:**  
+`BandCTR = (Number of band_name_click events ÷ Number of post_view events) × 100`
+
+**Data Source:** Firebase Analytics Events  
+- `post_view`  
+- `band_name_click`  
+- `band_profile_view`
+
+---
+
+## **Hypothesis**
+- **H₀ (Null):** Moving the band name outside the main post box does not significantly affect BandCTR.  
+- **H₁ (Alternative):** Moving the band name outside the main post box increases BandCTR by improving visibility and perceived clickability.
+
+---
+
+## **Experiment**
+**Goal:**  
+Evaluate whether placing the band name outside the main post box increases clicks compared to the current placement.
+
+**Methodology:**  
+- Use Firebase A/B Testing and Remote Config to assign users randomly to control or variant.  
+- Measure BandCTR from event data.  
+- Run test for 2–4 weeks or until 95% confidence is reached.
+
+**Firebase Setup:**  
+1. **Remote Config Parameter:**  
+   - Key: `band_name_placement`  
+   - Default (Control): `inside_post`  
+   - Variant: `outside_post`  
+2. **Firebase A/B Test:**  
+   - Experiment name: *Band Name Placement (US4)*  
+   - Primary metric: BandCTR  
+   - Traffic allocation: 50% / 50%  
+3. **Implementation:**  
+   - On render, fetch `band_name_placement` and position the band name accordingly.  
+   - Track `post_view` and `band_name_click` events.
+
+---
+
+## **Variations**
+
+| Variant | Placement | Description | Purpose |
+|----------|------------|-------------|----------|
+| **A (Control)** | Inside main post box | Current layout | Baseline comparison |
+| **B (Variant)** | Outside main post box | Band name displayed just above post | Test improved visibility and click engagement |
