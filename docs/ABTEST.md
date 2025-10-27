@@ -233,48 +233,56 @@ Evaluate whether placing the band name outside the main post box increases click
 | **A (Control)** | Inside main post box | Current layout | Baseline comparison |
 | **B (Variant)** | Outside main post box | Band name displayed just above post | Test improved visibility and click engagement |
 
-# Test 4 - Weston Nichols ()
+# Test 4 - Weston Nichols (Color Scheme Experiment)
 
-****
+**App Color Scheme A/B Test – Visual Design Impact**
 
 ---
 
 ## **Metrics**  
 **Primary Metric:**  
-*
+Session Engagement Rate (SER) — percentage of sessions in which a user performs at least one key interaction (e.g., navigation, tap, or scroll) after landing on the home screen.
 
-**SER Formula:**
-*
+** Formula:**
+SER = (Number of session_with_interaction events ÷ Number of app_open events) × 100
 
 **Data Source:** Firebase Analytics Events  
-- *
+- app_open
+- session_with_interaction
+- screen_view
+- button_click
 
 ---
 
 ## **Hypothesis**  
-- **H₀ (Null):**   
-- **H₁ (Alternative):** 
+- **H₀ (Null):** Changing the app’s main color scheme does not significantly affect session engagement
+- **H₁ (Alternative):** A new color scheme increases session engagement by improving visual appeal, clarity, and user comfort.
 
 ---
 
 ## **Problem & Impact**  
-*
-
+Color scheme could use freshening and could use a better contrasing scheme so it will be easier to read the text in the app.
 ---
 
 ## **Experiment**  
 **Goal:**  
-*
+* Evaluate whether introducing a new color scheme improves the engagement and interaction frequency.
 
 **Methodology:**  
-- *
+- Use Firebase A/B Testing with Remote Config to assign users randomly to the current scheme or new color scheme.
+- Measure the SER as the primary metric.
+- Run for 2–4 weeks or until results reach 95% confidence.
+- Equal traffic split (50% control / 50% variant).
 
 **Firebase Setup:**  
 1. **Remote Config Parameter:**  
-   - *
-2. **Primary Metric:**   
-3. **Event Tracking:**  
-   - *
+   - Key: app_color_scheme
+   - Default (Control): current_scheme
+   - Variant: new_scheme
+     
+2. **Primary Metric:** SER
+3. **Event Tracking:** 
+   - app_open, session_with_interaction, screen_view, button_click
 
 ---
 
@@ -282,7 +290,7 @@ Evaluate whether placing the band name outside the main post box increases click
 
 | Variant | Layout | Description | Purpose |
 |----------|---------|-------------|----------|
-| **A (Oirgnal)** |---------|-------------|----------|
-| **B (Variant)** |---------|-------------|----------|
+| **A (Origunal)** |Current Color Scheme|Existing app colors|Establish current engagement benchmark|
+| **B (Variant)** |New Color Scheme|Updated palette|Determine changes in engagement|
 
 
