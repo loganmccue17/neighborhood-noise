@@ -174,5 +174,4 @@ Determine whether rearranging the **search bar**, **map**, and **filter button**
 | **A (Control)** | Default layout | Search bar at top, small filter icon, map below | Baseline |
 | **B (Variant 1)** | Floating Search Bar | Search bar overlays map with larger filter button | Emphasize visibility |
 | **C (Variant 2)** | Split View | Half map, half artist list view | Reduce friction, show results contextually |
-| **D (Variant 3)** | Sticky Layout | Sticky top search bar, bottom filter panel | Keep filters accessible |
 
