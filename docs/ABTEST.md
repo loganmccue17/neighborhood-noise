@@ -114,3 +114,65 @@ Evaluate whether placing the band name outside the main post box increases click
 |----------|------------|-------------|----------|
 | **A (Control)** | Inside main post box | Current layout | Baseline comparison |
 | **B (Variant)** | Outside main post box | Band name displayed just above post | Test improved visibility and click engagement |
+
+# Test 3 - Logan McCue (Search Page Layout Optimization)
+
+**Search Page Layout A/B Test – Artist Discovery Flow (US4)**
+
+---
+
+## **Metrics**  
+**Primary Metric:**  
+- **Search Engagement Rate (SER)** — percentage of users who perform a **search** or **apply a filter** after landing on the **search page**.
+
+**SER Formula:**  
+`SER = (Number of search_action or filter_apply events ÷ Number of search_page_view events) × 100`
+
+**Data Source:** Firebase Analytics Events  
+- `search_page_view`  
+- `search_action`  
+- `filter_apply`
+
+---
+
+## **Hypothesis**  
+- **H₀ (Null):** Changing the search page layout does **not** significantly affect SER.  
+- **H₁ (Alternative):** Improving the layout of the search bar, map, and filter button **increases SER** by making search and filtering more intuitive.
+
+---
+
+## **Problem & Impact**  
+Many users land on the search page but **do not perform a search** or **apply filters**, limiting discovery of smaller indie bands. Improving layout clarity and visibility of interactive elements could help users find artists faster, driving higher engagement and retention.
+
+---
+
+## **Experiment**  
+**Goal:**  
+Determine whether rearranging the **search bar**, **map**, and **filter button** increases user engagement on the search page.
+
+**Methodology:**  
+- Use **Firebase A/B Testing** and **Remote Config** to test layout variants.  
+- Target: all users who open the search page (US region).  
+- Duration: **3–4 weeks** or until **95% confidence** is reached.  
+- Equal traffic split across variants.
+
+**Firebase Setup:**  
+1. **Remote Config Parameter:**  
+   - Key: `search_layout_variant`  
+   - Default: control layout  
+   - Variants: overlay, split, sticky_filter  
+2. **Primary Metric:** SER  
+3. **Event Tracking:**  
+   - `search_page_view`, `search_action`, `filter_apply`
+
+---
+
+## **Variations**
+
+| Variant | Layout | Description | Purpose |
+|----------|---------|-------------|----------|
+| **A (Control)** | Default layout | Search bar at top, small filter icon, map below | Baseline |
+| **B (Variant 1)** | Floating Search Bar | Search bar overlays map with larger filter button | Emphasize visibility |
+| **C (Variant 2)** | Split View | Half map, half artist list view | Reduce friction, show results contextually |
+| **D (Variant 3)** | Sticky Layout | Sticky top search bar, bottom filter panel | Keep filters accessible |
+
