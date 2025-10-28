@@ -235,4 +235,94 @@ Color scheme could use freshening and could use a better contrasing scheme so it
 | **A (Origunal)** |Current Color Scheme|Existing app colors|Establish current engagement benchmark|
 | **B (Variant)** |New Color Scheme|Updated palette|Determine changes in engagement|
 
+Got you ✅ — here’s your **Test 5** in **perfect Markdown (.md)** format that will render cleanly on **GitHub**, exactly matching Tests 1–4 in structure, spacing, and hierarchy.
+
+---
+
+# Test 5 - VibeCheck (Profile Picture Shape & Size Experiment)
+
+**Profile Image Design Change – Band & User Profile Visibility (US7)**
+
+---
+
+## **Metrics**
+
+**Primary Metric:**
+
+* **Follow-Through Rate (FTR)** — measured as the percentage of users who tap the **“Follow”** button after viewing a profile.
+
+**FTR Formula:**
+
+```
+FTR = (Number of follow_button_click events ÷ Number of profile_view events) × 100
+```
+
+**Data Source:** Firebase Analytics Events
+
+* `profile_view`
+* `follow_button_click`
+
+---
+
+## **Hypothesis**
+
+* **H₀ (Null):** Changing the shape or size of profile images does **not** significantly affect Follow-Through Rate (FTR).
+* **H₁ (Alternative):** Changing the shape or size of profile images **increases** FTR by enhancing recognition and perceived authenticity.
+
+---
+
+## **Experiment**
+
+**Goal:**
+Evaluate the impact of different **profile image shapes and sizes** on the **Follow-Through Rate (FTR)** of band and user profiles.
+
+**Methodology:**
+
+* Use **Firebase A/B Testing** and **Firebase Remote Config** to randomly assign users to different profile image design variants.
+* Measure FTR by comparing the number of `follow_button_click` events against `profile_view` events.
+* Run the experiment until statistical significance is reached (**95% confidence**) or for **3–4 weeks**.
+
+**Firebase Setup:**
+
+1. **Remote Config Parameter:**
+
+   * **Key:** `profile_image_style`
+   * **Default (Control):** current design
+   * **Variants:** styles listed below
+2. **Firebase A/B Test:**
+
+   * **Experiment name:** *Profile Picture Shape & Size Experiment (US7)*
+   * **Primary metric:** FTR
+   * **Traffic allocation:** equal distribution among variants (e.g., 25% each if testing 4 styles)
+3. **Implementation:**
+
+   * On profile render, fetch `profile_image_style` from Remote Config and adjust the UI accordingly.
+   * Track `profile_view` and `follow_button_click` events in Firebase Analytics.
+
+---
+
+## **Variations**
+
+| Variant           | Profile Style           | Description                                       | Purpose                                                |
+| ----------------- | ----------------------- | ------------------------------------------------- | ------------------------------------------------------ |
+| **A (Control)**   | Small Circle            | Current default circular profile image            | Establishes baseline for engagement                    |
+| **B (Variant 1)** | Large Square            | Larger square image for visual prominence         | Tests visibility and clarity                           |
+| **C (Variant 2)** | Rounded Rectangle       | Softer look with rounded corners                  | Tests modern, friendly design impact                   |
+| **D (Variant 3)** | Circle with Glow Border | Circular image with colored border or glow effect | Tests whether visual emphasis drives higher engagement |
+
+---
+
+## **Visual Concept**
+
+```
+A (Control):      ( ) BandName
+B (Variant 1):   [  ] BandName
+C (Variant 2):   ▢  BandName
+D (Variant 3):  ( )✨ BandName
+```
+
+*(Each variant represents a different visual emphasis around the band’s profile photo to test attention and engagement patterns.)*
+
+---
+
 
