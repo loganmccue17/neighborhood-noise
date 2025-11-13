@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "922006682129",
+    "project_id": "neighborhood-noise-fcf5qa",
+    "storage_bucket": "neighborhood-noise-fcf5qa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922006682129:android:14a9cecd25489a2fa84fb0",
+        "android_client_info": {
+          "package_name": "com.mycompany.neighborhoodnoise"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIbDpgfAJQHlfcEtio8biYJeFtEdTweIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
