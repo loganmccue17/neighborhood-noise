@@ -189,6 +189,26 @@ void main() async {
     });
   });
 
+  group('User Story 5: Band Creation', () {
+    testWidgets('Navigate to Band Tab without a Band',
+        (WidgetTester tester) async {
+      _overrideOnError();
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: 'loganmcwho@gmail.com', password: 'abcde12345');
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (context) => FFAppState(),
+        child: MyApp(
+          entryPage: NoExistingBandPageWidget(),
+        ),
+      ));
+      await GoogleFonts.pendingFonts();
+
+      await tester.tap(find.byType(Button));
+      await tester.pumpAndSettle(const Duration(milliseconds: 5000));
+      expect(find.text('Tell Us About The Band!'), findsWidgets);
+    });
+  });
+
   testWidgets('US1', (WidgetTester tester) async {
     _overrideOnError();
 
