@@ -1,4 +1,4 @@
-package com.mycompany.neighborhoodnoise;
+package com.uricsc305.neighborhoodnoise;
 
 import androidx.test.rule.ActivityTestRule;
 import dev.flutter.plugins.integration_test.FlutterTestRunner;
