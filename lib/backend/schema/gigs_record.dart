@@ -30,10 +30,16 @@ class GigsRecord extends FirestoreRecord {
   LatLng? get location => _location;
   bool hasLocation() => _location != null;
 
+  // "location_name" field.
+  String? _locationName;
+  String get locationName => _locationName ?? '';
+  bool hasLocationName() => _locationName != null;
+
   void _initializeFields() {
     _bandPosted = snapshotData['band_posted'] as DocumentReference?;
     _description = snapshotData['description'] as String?;
     _location = snapshotData['location'] as LatLng?;
+    _locationName = snapshotData['location_name'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -73,12 +79,14 @@ Map<String, dynamic> createGigsRecordData({
   DocumentReference? bandPosted,
   String? description,
   LatLng? location,
+  String? locationName,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'band_posted': bandPosted,
       'description': description,
       'location': location,
+      'location_name': locationName,
     }.withoutNulls,
   );
 
@@ -92,12 +100,13 @@ class GigsRecordDocumentEquality implements Equality<GigsRecord> {
   bool equals(GigsRecord? e1, GigsRecord? e2) {
     return e1?.bandPosted == e2?.bandPosted &&
         e1?.description == e2?.description &&
-        e1?.location == e2?.location;
+        e1?.location == e2?.location &&
+        e1?.locationName == e2?.locationName;
   }
 
   @override
-  int hash(GigsRecord? e) =>
-      const ListEquality().hash([e?.bandPosted, e?.description, e?.location]);
+  int hash(GigsRecord? e) => const ListEquality()
+      .hash([e?.bandPosted, e?.description, e?.location, e?.locationName]);
 
   @override
   bool isValidKey(Object? o) => o is GigsRecord;

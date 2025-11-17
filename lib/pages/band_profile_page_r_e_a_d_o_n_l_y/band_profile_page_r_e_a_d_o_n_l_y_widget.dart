@@ -443,13 +443,24 @@ class _BandProfilePageREADONLYWidgetState
                                                     return Container(
                                                       key: ValueKey(
                                                           'GigPostComponent_onvm'),
-                                                      child:
-                                                          GigPostComponentWidget(
-                                                        key: Key(
-                                                            'Key0xy_${listViewIndex}_of_${listViewGigsRecordList.length}'),
-                                                        gigDocReference:
-                                                            listViewGigsRecord
-                                                                .reference,
+                                                      child: wrapWithModel(
+                                                        model: _model
+                                                            .gigPostComponentModels
+                                                            .getModel(
+                                                          widget.bandRef!.id,
+                                                          listViewIndex,
+                                                        ),
+                                                        updateCallback: () =>
+                                                            safeSetState(() {}),
+                                                        child:
+                                                            GigPostComponentWidget(
+                                                          key: Key(
+                                                            'Key0xy_${widget.bandRef!.id}',
+                                                          ),
+                                                          gigDocReference:
+                                                              listViewGigsRecord
+                                                                  .reference,
+                                                        ),
                                                       ),
                                                     );
                                                   },

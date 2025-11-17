@@ -88,19 +88,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
               : LoginWidget(),
         ),
         FFRoute(
-          name: NPSpageWidget.routeName,
-          path: NPSpageWidget.routePath,
-          builder: (context, params) => NPSpageWidget(),
-        ),
-        FFRoute(
-          name: ProfileCreationWidget.routeName,
-          path: ProfileCreationWidget.routePath,
-          builder: (context, params) => ProfileCreationWidget(),
-        ),
-        FFRoute(
           name: BandCreationWidget.routeName,
           path: BandCreationWidget.routePath,
           builder: (context, params) => BandCreationWidget(),
+        ),
+        FFRoute(
+          name: NPSpageWidget.routeName,
+          path: NPSpageWidget.routePath,
+          builder: (context, params) => NPSpageWidget(),
         ),
         FFRoute(
           name: SignupWidget.routeName,
@@ -128,13 +123,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
                     initialPage: 'profile_page',
                     page: ProfilePageWidget(),
                   )),
-        FFRoute(
-          name: HomePageWidget.routeName,
-          path: HomePageWidget.routePath,
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'HomePage')
-              : HomePageWidget(),
-        ),
         FFRoute(
           name: BandProfilePageWidget.routeName,
           path: BandProfilePageWidget.routePath,
@@ -169,6 +157,27 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           ),
         ),
         FFRoute(
+          name: ProfileCreationWidget.routeName,
+          path: ProfileCreationWidget.routePath,
+          builder: (context, params) => ProfileCreationWidget(),
+        ),
+        FFRoute(
+            name: SearchWidget.routeName,
+            path: SearchWidget.routePath,
+            builder: (context, params) => params.isEmpty
+                ? NavBarPage(initialPage: 'Search')
+                : NavBarPage(
+                    initialPage: 'Search',
+                    page: SearchWidget(),
+                  )),
+        FFRoute(
+          name: HomePageWidget.routeName,
+          path: HomePageWidget.routePath,
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'HomePage')
+              : HomePageWidget(),
+        ),
+        FFRoute(
             name: CreatePostWidget.routeName,
             path: CreatePostWidget.routePath,
             builder: (context, params) => NavBarPage(
@@ -181,16 +190,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
                       collectionNamePath: ['bands'],
                     ),
                   ),
-                )),
-        FFRoute(
-            name: SearchWidget.routeName,
-            path: SearchWidget.routePath,
-            builder: (context, params) => params.isEmpty
-                ? NavBarPage(initialPage: 'Search')
-                : NavBarPage(
-                    initialPage: 'Search',
-                    page: SearchWidget(),
-                  ))
+                ))
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 

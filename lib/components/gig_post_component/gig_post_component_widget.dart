@@ -156,8 +156,8 @@ class _GigPostComponentWidgetState extends State<GigPostComponentWidget> {
                   ),
                   Text(
                     valueOrDefault<String>(
-                      containerGigsRecord.location?.toString(),
-                      '0',
+                      containerGigsRecord.locationName,
+                      'N/A',
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           font: GoogleFonts.jaldi(

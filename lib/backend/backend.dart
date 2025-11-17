@@ -8,8 +8,8 @@ import 'schema/util/firestore_util.dart';
 import 'schema/posts_record.dart';
 import 'schema/nps_responses_record.dart';
 import 'schema/users_record.dart';
-import 'schema/gigs_record.dart';
 import 'schema/profile_data_record.dart';
+import 'schema/gigs_record.dart';
 import 'schema/bands_record.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -22,8 +22,8 @@ export 'schema/util/schema_util.dart';
 export 'schema/posts_record.dart';
 export 'schema/nps_responses_record.dart';
 export 'schema/users_record.dart';
-export 'schema/gigs_record.dart';
 export 'schema/profile_data_record.dart';
+export 'schema/gigs_record.dart';
 export 'schema/bands_record.dart';
 
 /// Functions to query PostsRecords (as a Stream and as a Future).
@@ -137,43 +137,6 @@ Future<List<UsersRecord>> queryUsersRecordOnce({
       singleRecord: singleRecord,
     );
 
-/// Functions to query GigsRecords (as a Stream and as a Future).
-Future<int> queryGigsRecordCount({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-}) =>
-    queryCollectionCount(
-      GigsRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
-
-Stream<List<GigsRecord>> queryGigsRecord({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      GigsRecord.collection,
-      GigsRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<GigsRecord>> queryGigsRecordOnce({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      GigsRecord.collection,
-      GigsRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
 /// Functions to query ProfileDataRecords (as a Stream and as a Future).
 Future<int> queryProfileDataRecordCount({
   Query Function(Query)? queryBuilder,
@@ -206,6 +169,43 @@ Future<List<ProfileDataRecord>> queryProfileDataRecordOnce({
     queryCollectionOnce(
       ProfileDataRecord.collection,
       ProfileDataRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query GigsRecords (as a Stream and as a Future).
+Future<int> queryGigsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      GigsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<GigsRecord>> queryGigsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      GigsRecord.collection,
+      GigsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<GigsRecord>> queryGigsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      GigsRecord.collection,
+      GigsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

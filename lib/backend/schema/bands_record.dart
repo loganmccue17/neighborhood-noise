@@ -61,6 +61,11 @@ class BandsRecord extends FirestoreRecord {
   List<String> get genreKeywords => _genreKeywords ?? const [];
   bool hasGenreKeywords() => _genreKeywords != null;
 
+  // "latlong" field.
+  LatLng? _latlong;
+  LatLng? get latlong => _latlong;
+  bool hasLatlong() => _latlong != null;
+
   void _initializeFields() {
     _bandName = snapshotData['bandName'] as String?;
     _bandMembers = getDataList(snapshotData['bandMembers']);
@@ -71,6 +76,7 @@ class BandsRecord extends FirestoreRecord {
     _gigs = getDataList(snapshotData['gigs']);
     _hasActiveGigs = snapshotData['hasActiveGigs'] as bool?;
     _genreKeywords = getDataList(snapshotData['genreKeywords']);
+    _latlong = snapshotData['latlong'] as LatLng?;
   }
 
   static CollectionReference get collection =>
@@ -112,6 +118,7 @@ Map<String, dynamic> createBandsRecordData({
   String? genre,
   String? bandPhotoUrl,
   bool? hasActiveGigs,
+  LatLng? latlong,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -120,6 +127,7 @@ Map<String, dynamic> createBandsRecordData({
       'genre': genre,
       'bandPhotoUrl': bandPhotoUrl,
       'hasActiveGigs': hasActiveGigs,
+      'latlong': latlong,
     }.withoutNulls,
   );
 
@@ -140,7 +148,8 @@ class BandsRecordDocumentEquality implements Equality<BandsRecord> {
         e1?.bandPhotoUrl == e2?.bandPhotoUrl &&
         listEquality.equals(e1?.gigs, e2?.gigs) &&
         e1?.hasActiveGigs == e2?.hasActiveGigs &&
-        listEquality.equals(e1?.genreKeywords, e2?.genreKeywords);
+        listEquality.equals(e1?.genreKeywords, e2?.genreKeywords) &&
+        e1?.latlong == e2?.latlong;
   }
 
   @override
@@ -153,7 +162,8 @@ class BandsRecordDocumentEquality implements Equality<BandsRecord> {
         e?.bandPhotoUrl,
         e?.gigs,
         e?.hasActiveGigs,
-        e?.genreKeywords
+        e?.genreKeywords,
+        e?.latlong
       ]);
 
   @override

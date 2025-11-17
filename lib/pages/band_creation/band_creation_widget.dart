@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -6,6 +7,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -426,6 +428,98 @@ class _BandCreationWidgetState extends State<BandCreationWidget> {
                               validator: _model.locationTextControllerValidator
                                   .asValidator(context),
                             ),
+                            FFButtonWidget(
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'BAND_CREATION_PAGE_locationsearch_ON_TAP');
+                                logFirebaseEvent('locationsearch_backend_call');
+                                _model.apiResultfnt =
+                                    await GeocodingAPICall.call(
+                                  add: _model.locationTextController.text,
+                                );
+
+                                if ((_model.apiResultfnt?.succeeded ?? true)) {
+                                  logFirebaseEvent(
+                                      'locationsearch_update_page_state');
+                                  _model.locationOutput = (getJsonField(
+                                    (_model.apiResultfnt?.jsonBody ?? ''),
+                                    r'''$.results[:].formatted_address''',
+                                    true,
+                                  ) as List?)!
+                                      .map<String>((e) => e.toString())
+                                      .toList()
+                                      .cast<String>()
+                                      .toList()
+                                      .cast<String>();
+                                  _model.lat = getJsonField(
+                                    (_model.apiResultfnt?.jsonBody ?? ''),
+                                    r'''$.results[:].geometry.location.lat''',
+                                  );
+                                  _model.long = getJsonField(
+                                    (_model.apiResultfnt?.jsonBody ?? ''),
+                                    r'''$.results[:].geometry.location.lng''',
+                                  );
+                                  safeSetState(() {});
+                                  logFirebaseEvent(
+                                      'locationsearch_custom_action');
+                                  _model.latlongobject = await actions.latlong(
+                                    _model.lat!,
+                                    _model.long!,
+                                  );
+                                  logFirebaseEvent(
+                                      'locationsearch_update_page_state');
+                                  _model.latlong = _model.latlongobject;
+                                  safeSetState(() {});
+                                  logFirebaseEvent(
+                                      'locationsearch_set_form_field');
+                                  safeSetState(() {
+                                    _model.locationTextController?.text =
+                                        valueOrDefault<String>(
+                                      _model.locationOutput.firstOrNull,
+                                      'No Location Available',
+                                    );
+                                  });
+                                }
+
+                                safeSetState(() {});
+                              },
+                              text: 'Search',
+                              options: FFButtonOptions(
+                                width: 100.0,
+                                height: 40.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 16.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).secondary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      font: GoogleFonts.jaldi(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontStyle,
+                                      ),
+                                      color: Colors.white,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .fontStyle,
+                                    ),
+                                elevation: 0.0,
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  width: 5.0,
+                                ),
+                                borderRadius: BorderRadius.circular(24.0),
+                              ),
+                            ),
                           ],
                         ),
                         Column(
@@ -622,6 +716,7 @@ class _BandCreationWidgetState extends State<BandCreationWidget> {
                                               _model.genreTextController.text,
                                           bandPhotoUrl: _model
                                               .uploadedFileUrl_uploadDataPe6,
+                                          latlong: _model.latlong,
                                         ),
                                         ...mapToFirestore(
                                           {
@@ -642,6 +737,7 @@ class _BandCreationWidgetState extends State<BandCreationWidget> {
                                               _model.genreTextController.text,
                                           bandPhotoUrl: _model
                                               .uploadedFileUrl_uploadDataPe6,
+                                          latlong: _model.latlong,
                                         ),
                                         ...mapToFirestore(
                                           {

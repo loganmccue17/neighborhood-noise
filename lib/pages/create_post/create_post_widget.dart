@@ -1,10 +1,11 @@
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
-import '/flutter_flow/flutter_flow_place_picker.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,6 +48,9 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
 
     _model.postDescriptionTextFieldTextController ??= TextEditingController();
     _model.postDescriptionTextFieldFocusNode ??= FocusNode();
+
+    _model.locationTextController ??= TextEditingController();
+    _model.locationFocusNode ??= FocusNode();
 
     _model.gigDescriptionTextController ??= TextEditingController();
     _model.gigDescriptionFocusNode ??= FocusNode();
@@ -834,43 +838,197 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 48.0),
-                                child: FlutterFlowPlacePicker(
-                                  iOSGoogleMapsApiKey: '',
-                                  androidGoogleMapsApiKey: '',
-                                  webGoogleMapsApiKey: '',
-                                  onSelect: (place) async {
-                                    safeSetState(
-                                        () => _model.placePickerValue = place);
-                                  },
-                                  defaultText: 'Select Location',
-                                  icon: Icon(
-                                    Icons.place,
-                                    color: FlutterFlowTheme.of(context).info,
-                                    size: 16.0,
-                                  ),
-                                  buttonOptions: FFButtonOptions(
-                                    width: 200.0,
-                                    height: 40.0,
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
+                              Container(
+                                width: 200.0,
+                                child: TextFormField(
+                                  controller: _model.locationTextController,
+                                  focusNode: _model.locationFocusNode,
+                                  autofocus: false,
+                                  enabled: true,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
                                         .override(
                                           font: GoogleFonts.jaldi(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
-                                                    .titleSmall
+                                                    .labelMedium
                                                     .fontWeight,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .titleSmall
+                                                    .labelMedium
                                                     .fontStyle,
                                           ),
-                                          color:
-                                              FlutterFlowTheme.of(context).info,
                                           letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontStyle,
+                                        ),
+                                    hintText: 'Enter Location',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          font: GoogleFonts.jaldi(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
+                                          ),
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .fontStyle,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.jaldi(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                  cursorColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  enableInteractiveSelection: true,
+                                  validator: _model
+                                      .locationTextControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ),
+                              FFButtonWidget(
+                                onPressed: () async {
+                                  logFirebaseEvent(
+                                      'CREATE_POST_PAGE_locationsearch_ON_TAP');
+                                  logFirebaseEvent(
+                                      'locationsearch_backend_call');
+                                  _model.apiResultfnt =
+                                      await GeocodingAPICall.call(
+                                    add: _model.locationTextController.text,
+                                  );
+
+                                  if ((_model.apiResultfnt?.succeeded ??
+                                      true)) {
+                                    logFirebaseEvent(
+                                        'locationsearch_update_page_state');
+                                    _model.locationOutput = (getJsonField(
+                                      (_model.apiResultfnt?.jsonBody ?? ''),
+                                      r'''$.results[:].formatted_address''',
+                                      true,
+                                    ) as List?)!
+                                        .map<String>((e) => e.toString())
+                                        .toList()
+                                        .cast<String>()
+                                        .toList()
+                                        .cast<String>();
+                                    _model.lat = getJsonField(
+                                      (_model.apiResultfnt?.jsonBody ?? ''),
+                                      r'''$.results[:].geometry.location.lat''',
+                                    );
+                                    _model.long = getJsonField(
+                                      (_model.apiResultfnt?.jsonBody ?? ''),
+                                      r'''$.results[:].geometry.location.lng''',
+                                    );
+                                    safeSetState(() {});
+                                    logFirebaseEvent(
+                                        'locationsearch_custom_action');
+                                    _model.latlongobject =
+                                        await actions.latlong(
+                                      _model.lat!,
+                                      _model.long!,
+                                    );
+                                    logFirebaseEvent(
+                                        'locationsearch_update_page_state');
+                                    _model.latlongoutput = _model.latlongobject;
+                                    safeSetState(() {});
+                                    logFirebaseEvent(
+                                        'locationsearch_set_form_field');
+                                    safeSetState(() {
+                                      _model.locationTextController?.text =
+                                          valueOrDefault<String>(
+                                        _model.locationOutput.firstOrNull,
+                                        'No Location Available',
+                                      );
+                                    });
+                                  }
+
+                                  safeSetState(() {});
+                                },
+                                text: 'Search',
+                                options: FFButtonOptions(
+                                  width: 100.0,
+                                  height: 40.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).secondary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        font: GoogleFonts.jaldi(
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
                                                   .titleSmall
@@ -880,13 +1038,21 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                                   .titleSmall
                                                   .fontStyle,
                                         ),
-                                    elevation: 0.0,
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontStyle,
+                                      ),
+                                  elevation: 0.0,
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    width: 5.0,
                                   ),
+                                  borderRadius: BorderRadius.circular(24.0),
                                 ),
                               ),
                               Align(
@@ -1068,7 +1234,11 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                     bandPosted: widget.bandToPostTo,
                                     description: _model
                                         .gigDescriptionTextController.text,
-                                    location: _model.placePickerValue.latLng,
+                                    location: _model.latlongoutput,
+                                    locationName: valueOrDefault<String>(
+                                      _model.locationOutput.firstOrNull,
+                                      'Null',
+                                    ),
                                   ));
                                   _model.gigPosting =
                                       GigsRecord.getDocumentFromData(
@@ -1077,8 +1247,12 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                             description: _model
                                                 .gigDescriptionTextController
                                                 .text,
-                                            location:
-                                                _model.placePickerValue.latLng,
+                                            location: _model.latlongoutput,
+                                            locationName:
+                                                valueOrDefault<String>(
+                                              _model.locationOutput.firstOrNull,
+                                              'Null',
+                                            ),
                                           ),
                                           gigsRecordReference);
                                   logFirebaseEvent('Button_backend_call');
