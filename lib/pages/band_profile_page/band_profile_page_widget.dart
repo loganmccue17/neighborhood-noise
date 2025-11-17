@@ -162,9 +162,9 @@ class _BandProfilePageWidgetState extends State<BandProfilePageWidget>
                               alignment: Alignment(0.0, 0),
                               child: TabBar(
                                 labelColor:
-                                    FlutterFlowTheme.of(context).primaryText,
+                                    FlutterFlowTheme.of(context).primary,
                                 unselectedLabelColor:
-                                    FlutterFlowTheme.of(context).secondaryText,
+                                    FlutterFlowTheme.of(context).primaryText,
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .titleMedium
                                     .override(
@@ -239,7 +239,7 @@ class _BandProfilePageWidgetState extends State<BandProfilePageWidget>
                                         border: Border.all(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
-                                          width: 5.0,
+                                          width: 3.0,
                                         ),
                                       ),
                                       child: Padding(
@@ -328,10 +328,10 @@ class _BandProfilePageWidgetState extends State<BandProfilePageWidget>
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        30.0, 20.0, 30.0, 20.0),
+                                        10.0, 0.0, 10.0, 0.0),
                                     child: Container(
                                       width: 300.0,
-                                      height: 350.0,
+                                      height: 353.29,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
@@ -344,72 +344,72 @@ class _BandProfilePageWidgetState extends State<BandProfilePageWidget>
                                           width: 5.0,
                                         ),
                                       ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            12.0, 12.0, 12.0, 12.0),
-                                        child: StreamBuilder<List<PostsRecord>>(
-                                          stream: queryPostsRecord(
-                                            queryBuilder: (postsRecord) =>
-                                                postsRecord.where(
-                                              'postedByBand',
-                                              isEqualTo:
-                                                  bandProfilePageBandsRecord
-                                                      .reference,
-                                            ),
-                                            limit: 20,
+                                      child: StreamBuilder<List<PostsRecord>>(
+                                        stream: queryPostsRecord(
+                                          queryBuilder: (postsRecord) =>
+                                              postsRecord.where(
+                                            'postedByBand',
+                                            isEqualTo:
+                                                bandProfilePageBandsRecord
+                                                    .reference,
                                           ),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 50.0,
-                                                  height: 50.0,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    valueColor:
-                                                        AlwaysStoppedAnimation<
-                                                            Color>(
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primary,
-                                                    ),
+                                          limit: 20,
+                                        ),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 50.0,
+                                                height: 50.0,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
                                                   ),
                                                 ),
-                                              );
-                                            }
-                                            List<PostsRecord>
-                                                gridViewPostsRecordList =
-                                                snapshot.data!;
-
-                                            return GridView.builder(
-                                              padding: EdgeInsets.zero,
-                                              gridDelegate:
-                                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 3,
-                                                crossAxisSpacing: 10.0,
-                                                mainAxisSpacing: 10.0,
-                                                childAspectRatio: 1.0,
                                               ),
-                                              scrollDirection: Axis.vertical,
-                                              itemCount: gridViewPostsRecordList
-                                                  .length,
-                                              itemBuilder:
-                                                  (context, gridViewIndex) {
-                                                final gridViewPostsRecord =
-                                                    gridViewPostsRecordList[
-                                                        gridViewIndex];
-                                                return PostCompactWidget(
-                                                  key: Key(
-                                                      'Keyror_${gridViewIndex}_of_${gridViewPostsRecordList.length}'),
-                                                  postReference:
-                                                      gridViewPostsRecord
-                                                          .reference,
-                                                );
-                                              },
                                             );
-                                          },
-                                        ),
+                                          }
+                                          List<PostsRecord>
+                                              gridViewPostsRecordList =
+                                              snapshot.data!;
+
+                                          return GridView.builder(
+                                            padding: EdgeInsets.fromLTRB(
+                                              0,
+                                              5.0,
+                                              0,
+                                              0,
+                                            ),
+                                            gridDelegate:
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 3,
+                                              crossAxisSpacing: 10.0,
+                                              mainAxisSpacing: 10.0,
+                                              childAspectRatio: 1.0,
+                                            ),
+                                            scrollDirection: Axis.vertical,
+                                            itemCount:
+                                                gridViewPostsRecordList.length,
+                                            itemBuilder:
+                                                (context, gridViewIndex) {
+                                              final gridViewPostsRecord =
+                                                  gridViewPostsRecordList[
+                                                      gridViewIndex];
+                                              return PostCompactWidget(
+                                                key: Key(
+                                                    'Keyror_${gridViewIndex}_of_${gridViewPostsRecordList.length}'),
+                                                postReference:
+                                                    gridViewPostsRecord
+                                                        .reference,
+                                              );
+                                            },
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
@@ -445,51 +445,6 @@ class _BandProfilePageWidgetState extends State<BandProfilePageWidget>
                               text: 'Add Post',
                               options: FFButtonOptions(
                                 width: 100.0,
-                                height: 40.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).secondary,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      font: GoogleFonts.jaldi(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontStyle,
-                                      ),
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontStyle,
-                                    ),
-                                elevation: 0.0,
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 5.0,
-                                ),
-                                borderRadius: BorderRadius.circular(24.0),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 20.0),
-                            child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
-                              text: 'My Profile',
-                              options: FFButtonOptions(
-                                width: 150.0,
                                 height: 40.0,
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 0.0, 16.0, 0.0),

@@ -51,6 +51,16 @@ class BandsRecord extends FirestoreRecord {
   List<DocumentReference> get gigs => _gigs ?? const [];
   bool hasGigs() => _gigs != null;
 
+  // "hasActiveGigs" field.
+  bool? _hasActiveGigs;
+  bool get hasActiveGigs => _hasActiveGigs ?? false;
+  bool hasHasActiveGigs() => _hasActiveGigs != null;
+
+  // "genreKeywords" field.
+  List<String>? _genreKeywords;
+  List<String> get genreKeywords => _genreKeywords ?? const [];
+  bool hasGenreKeywords() => _genreKeywords != null;
+
   void _initializeFields() {
     _bandName = snapshotData['bandName'] as String?;
     _bandMembers = getDataList(snapshotData['bandMembers']);
@@ -59,6 +69,8 @@ class BandsRecord extends FirestoreRecord {
     _genre = snapshotData['genre'] as String?;
     _bandPhotoUrl = snapshotData['bandPhotoUrl'] as String?;
     _gigs = getDataList(snapshotData['gigs']);
+    _hasActiveGigs = snapshotData['hasActiveGigs'] as bool?;
+    _genreKeywords = getDataList(snapshotData['genreKeywords']);
   }
 
   static CollectionReference get collection =>
@@ -99,6 +111,7 @@ Map<String, dynamic> createBandsRecordData({
   String? location,
   String? genre,
   String? bandPhotoUrl,
+  bool? hasActiveGigs,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -106,6 +119,7 @@ Map<String, dynamic> createBandsRecordData({
       'location': location,
       'genre': genre,
       'bandPhotoUrl': bandPhotoUrl,
+      'hasActiveGigs': hasActiveGigs,
     }.withoutNulls,
   );
 
@@ -124,7 +138,9 @@ class BandsRecordDocumentEquality implements Equality<BandsRecord> {
         e1?.location == e2?.location &&
         e1?.genre == e2?.genre &&
         e1?.bandPhotoUrl == e2?.bandPhotoUrl &&
-        listEquality.equals(e1?.gigs, e2?.gigs);
+        listEquality.equals(e1?.gigs, e2?.gigs) &&
+        e1?.hasActiveGigs == e2?.hasActiveGigs &&
+        listEquality.equals(e1?.genreKeywords, e2?.genreKeywords);
   }
 
   @override
@@ -135,7 +151,9 @@ class BandsRecordDocumentEquality implements Equality<BandsRecord> {
         e?.location,
         e?.genre,
         e?.bandPhotoUrl,
-        e?.gigs
+        e?.gigs,
+        e?.hasActiveGigs,
+        e?.genreKeywords
       ]);
 
   @override

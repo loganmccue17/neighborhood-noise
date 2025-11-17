@@ -71,6 +71,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
                   decoration: BoxDecoration(),
@@ -81,77 +82,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          flex: 5,
+                        Flexible(
                           child: Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
-                            child: Container(
-                              width: double.infinity,
-                              height: 92.4,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).tertiary,
-                                borderRadius: BorderRadius.circular(16.0),
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 3.0,
-                                ),
-                              ),
-                              alignment: AlignmentDirectional(1.0, 0.0),
-                              child: Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10.0, 5.0, 0.0, 5.0),
-                                      child: Text(
-                                        'Neighborhood\nNoise',
-                                        style: FlutterFlowTheme.of(context)
-                                            .headlineMedium
-                                            .override(
-                                              font: GoogleFonts.jockeyOne(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .headlineMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .headlineMedium
-                                                        .fontStyle,
-                                              ),
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .headlineMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .headlineMedium
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Align(
-                                        alignment:
-                                            AlignmentDirectional(1.0, 0.0),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(6.0),
-                                          child: Image.asset(
-                                            'assets/images/Logo(2).png',
-                                            width: double.infinity,
-                                            height: double.infinity,
-                                            fit: BoxFit.contain,
-                                            alignment: Alignment(1.0, 0.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/images/ChatGPT_Image_Nov_10,_2025,_09_46_37_PM.png',
+                                width: 304.8,
+                                height: 221.17,
+                                fit: BoxFit.cover,
+                                alignment: Alignment(0.0, 0.0),
                               ),
                             ),
                           ),
@@ -668,7 +609,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
                 Expanded(
                   child: Align(
-                    alignment: AlignmentDirectional(0.0, 1.0),
+                    alignment: AlignmentDirectional(0.0, 0.0),
                     child: Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
@@ -828,7 +769,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     ),
                   ),
                 ),
-              ].divide(SizedBox(height: 50.0)),
+              ].divide(SizedBox(height: 10.0)),
             ),
           ),
         ),

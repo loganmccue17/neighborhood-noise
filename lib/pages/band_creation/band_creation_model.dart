@@ -11,6 +11,10 @@ class BandCreationModel extends FlutterFlowModel<BandCreationWidget> {
 
   ///  State fields for stateful widgets in this page.
 
+  bool isDataUploading_uploadData2a0 = false;
+  FFUploadedFile uploadedLocalFile_uploadData2a0 =
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+
   // State field(s) for BandName widget.
   FocusNode? bandNameFocusNode;
   TextEditingController? bandNameTextController;
@@ -23,10 +27,6 @@ class BandCreationModel extends FlutterFlowModel<BandCreationWidget> {
   FocusNode? genreFocusNode;
   TextEditingController? genreTextController;
   String? Function(BuildContext, String?)? genreTextControllerValidator;
-  bool isDataUploading_uploadData2a0 = false;
-  FFUploadedFile uploadedLocalFile_uploadData2a0 =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
-
   bool isDataUploading_uploadDataPe6 = false;
   FFUploadedFile uploadedLocalFile_uploadDataPe6 =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');

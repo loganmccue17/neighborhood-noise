@@ -190,104 +190,120 @@ class _BandPostsWidgetState extends State<BandPostsWidget> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 8.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 16.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    ToggleIcon(
-                                      onPressed: () async {
-                                        safeSetState(
-                                            () => _model.liked = !_model.liked);
-                                        logFirebaseEvent(
-                                            'BAND_POSTS_ToggleIcon_kgwmnb9f_ON_TOGGLE');
-                                        if (_model.liked) {
+                    Flexible(
+                      child: Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 8.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 16.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      ToggleIcon(
+                                        onPressed: () async {
+                                          safeSetState(() =>
+                                              _model.liked = !_model.liked);
                                           logFirebaseEvent(
-                                              'ToggleIcon_backend_call');
+                                              'BAND_POSTS_ToggleIcon_kgwmnb9f_ON_TOGGLE');
+                                          if (_model.liked) {
+                                            logFirebaseEvent(
+                                                'ToggleIcon_backend_call');
 
-                                          await widget.postReference!.update({
-                                            ...mapToFirestore(
-                                              {
-                                                'numberOfLikes':
-                                                    FieldValue.increment(1),
-                                              },
-                                            ),
-                                          });
-                                          logFirebaseEvent(
-                                              'ToggleIcon_backend_call');
+                                            await widget.postReference!
+                                                .update({
+                                              ...mapToFirestore(
+                                                {
+                                                  'numberOfLikes':
+                                                      FieldValue.increment(1),
+                                                },
+                                              ),
+                                            });
+                                            logFirebaseEvent(
+                                                'ToggleIcon_backend_call');
 
-                                          await currentUserReference!.update({
-                                            ...mapToFirestore(
-                                              {
-                                                'liked_posts':
-                                                    FieldValue.arrayUnion([
-                                                  widget.postReference
-                                                ]),
-                                              },
-                                            ),
-                                          });
-                                        } else {
-                                          logFirebaseEvent(
-                                              'ToggleIcon_backend_call');
+                                            await currentUserReference!.update({
+                                              ...mapToFirestore(
+                                                {
+                                                  'liked_posts':
+                                                      FieldValue.arrayUnion([
+                                                    widget.postReference
+                                                  ]),
+                                                },
+                                              ),
+                                            });
+                                          } else {
+                                            logFirebaseEvent(
+                                                'ToggleIcon_backend_call');
 
-                                          await widget.postReference!.update({
-                                            ...mapToFirestore(
-                                              {
-                                                'numberOfLikes':
-                                                    FieldValue.increment(-(1)),
-                                              },
-                                            ),
-                                          });
-                                          logFirebaseEvent(
-                                              'ToggleIcon_backend_call');
+                                            await widget.postReference!
+                                                .update({
+                                              ...mapToFirestore(
+                                                {
+                                                  'numberOfLikes':
+                                                      FieldValue.increment(
+                                                          -(1)),
+                                                },
+                                              ),
+                                            });
+                                            logFirebaseEvent(
+                                                'ToggleIcon_backend_call');
 
-                                          await currentUserReference!.update({
-                                            ...mapToFirestore(
-                                              {
-                                                'liked_posts':
-                                                    FieldValue.arrayRemove([
-                                                  widget.postReference
-                                                ]),
-                                              },
-                                            ),
-                                          });
-                                        }
-                                      },
-                                      value: _model.liked,
-                                      onIcon: Icon(
-                                        Icons.favorite,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        size: 24.0,
+                                            await currentUserReference!.update({
+                                              ...mapToFirestore(
+                                                {
+                                                  'liked_posts':
+                                                      FieldValue.arrayRemove([
+                                                    widget.postReference
+                                                  ]),
+                                                },
+                                              ),
+                                            });
+                                          }
+                                        },
+                                        value: _model.liked,
+                                        onIcon: Icon(
+                                          Icons.favorite,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 24.0,
+                                        ),
+                                        offIcon: Icon(
+                                          Icons.favorite_border,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
                                       ),
-                                      offIcon: Icon(
-                                        Icons.favorite_border,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          4.0, 0.0, 0.0, 0.0),
-                                      child: Text(
-                                        containerPostsRecord.numberOfLikes
-                                            .toString(),
-                                        style: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .override(
-                                              font: GoogleFonts.jaldi(
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            4.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          containerPostsRecord.numberOfLikes
+                                              .toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelMedium
+                                              .override(
+                                                font: GoogleFonts.jaldi(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .fontStyle,
+                                                ),
+                                                letterSpacing: 0.0,
                                                 fontWeight:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -297,52 +313,66 @@ class _BandPostsWidgetState extends State<BandPostsWidget> {
                                                         .labelMedium
                                                         .fontStyle,
                                               ),
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .fontStyle,
-                                            ),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Text(
-                                containerPostsRecord.description,
-                                maxLines: 10,
-                                style: FlutterFlowTheme.of(context)
-                                    .labelSmall
-                                    .override(
-                                      font: GoogleFonts.jaldi(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelSmall
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelSmall
-                                            .fontStyle,
-                                      ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelSmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelSmall
-                                          .fontStyle,
+                              ],
+                            ),
+                            Flexible(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Flexible(
+                                    child: Wrap(
+                                      spacing: 0.0,
+                                      runSpacing: 0.0,
+                                      alignment: WrapAlignment.start,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.start,
+                                      direction: Axis.horizontal,
+                                      runAlignment: WrapAlignment.start,
+                                      verticalDirection: VerticalDirection.down,
+                                      clipBehavior: Clip.none,
+                                      children: [
+                                        Text(
+                                          containerPostsRecord.description,
+                                          maxLines: 10,
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelSmall
+                                              .override(
+                                                font: GoogleFonts.jaldi(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelSmall
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelSmall
+                                                          .fontStyle,
+                                                ),
+                                                letterSpacing: 0.0,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelSmall
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelSmall
+                                                        .fontStyle,
+                                              ),
+                                        ),
+                                      ],
                                     ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

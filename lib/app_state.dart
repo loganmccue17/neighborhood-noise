@@ -25,4 +25,39 @@ class FFAppState extends ChangeNotifier {
   set npsScoreStr(String value) {
     _npsScoreStr = value;
   }
+
+  bool _showActiveGigsOnly = false;
+  bool get showActiveGigsOnly => _showActiveGigsOnly;
+  set showActiveGigsOnly(bool value) {
+    _showActiveGigsOnly = value;
+  }
+
+  List<String> _selectedGenres = [];
+  List<String> get selectedGenres => _selectedGenres;
+  set selectedGenres(List<String> value) {
+    _selectedGenres = value;
+  }
+
+  void addToSelectedGenres(String value) {
+    selectedGenres.add(value);
+  }
+
+  void removeFromSelectedGenres(String value) {
+    selectedGenres.remove(value);
+  }
+
+  void removeAtIndexFromSelectedGenres(int index) {
+    selectedGenres.removeAt(index);
+  }
+
+  void updateSelectedGenresAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    selectedGenres[index] = updateFn(_selectedGenres[index]);
+  }
+
+  void insertAtIndexInSelectedGenres(int index, String value) {
+    selectedGenres.insert(index, value);
+  }
 }

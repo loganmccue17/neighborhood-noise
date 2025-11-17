@@ -6,11 +6,6 @@ import 'package:flutter/material.dart';
 class SignupModel extends FlutterFlowModel<SignupWidget> {
   ///  State fields for stateful widgets in this page.
 
-  // State field(s) for Confirmpass widget.
-  FocusNode? confirmpassFocusNode;
-  TextEditingController? confirmpassTextController;
-  late bool confirmpassVisibility;
-  String? Function(BuildContext, String?)? confirmpassTextControllerValidator;
   // State field(s) for Email widget.
   FocusNode? emailFocusNode;
   TextEditingController? emailTextController;
@@ -20,22 +15,27 @@ class SignupModel extends FlutterFlowModel<SignupWidget> {
   TextEditingController? createPassTextController;
   late bool createPassVisibility;
   String? Function(BuildContext, String?)? createPassTextControllerValidator;
+  // State field(s) for Confirmpass widget.
+  FocusNode? confirmpassFocusNode;
+  TextEditingController? confirmpassTextController;
+  late bool confirmpassVisibility;
+  String? Function(BuildContext, String?)? confirmpassTextControllerValidator;
 
   @override
   void initState(BuildContext context) {
-    confirmpassVisibility = false;
     createPassVisibility = false;
+    confirmpassVisibility = false;
   }
 
   @override
   void dispose() {
-    confirmpassFocusNode?.dispose();
-    confirmpassTextController?.dispose();
-
     emailFocusNode?.dispose();
     emailTextController?.dispose();
 
     createPassFocusNode?.dispose();
     createPassTextController?.dispose();
+
+    confirmpassFocusNode?.dispose();
+    confirmpassTextController?.dispose();
   }
 }

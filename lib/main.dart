@@ -10,6 +10,7 @@ import 'auth/firebase_auth/auth_util.dart';
 import 'backend/firebase/firebase_config.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'index.dart';
 
 void main() async {
@@ -154,64 +155,54 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'Search': SearchWidget(),
-      'profile_page': ProfilePageWidget(),
       'HomePage': HomePageWidget(),
+      'Search': SearchWidget(),
       'band_profile_page': BandProfilePageWidget(),
+      'profile_page': ProfilePageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
     return Scaffold(
       resizeToAvoidBottomInset: !widget.disableResizeToAvoidBottomInset,
       body: _currentPage ?? tabs[_currentPageName],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (i) => safeSetState(() {
+      bottomNavigationBar: GNav(
+        selectedIndex: currentIndex,
+        onTabChange: (i) => safeSetState(() {
           _currentPage = null;
           _currentPageName = tabs.keys.toList()[i];
         }),
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        selectedItemColor: FlutterFlowTheme.of(context).primary,
-        unselectedItemColor: FlutterFlowTheme.of(context).secondaryText,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search_rounded,
-              size: 24.0,
-            ),
-            activeIcon: Icon(
-              Icons.search_rounded,
-              size: 24.0,
-            ),
-            label: 'Home',
-            tooltip: '',
+        backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        color: FlutterFlowTheme.of(context).secondaryText,
+        activeColor: FlutterFlowTheme.of(context).primary,
+        tabBackgroundColor: Color(0x00000000),
+        tabBorderRadius: 100.0,
+        tabMargin: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+        padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 5.0),
+        gap: 0.0,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        duration: Duration(milliseconds: 10),
+        haptic: true,
+        tabs: [
+          GButton(
+            icon: Icons.home_outlined,
+            text: 'Home',
+            iconSize: 30.0,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_2,
-              size: 24.0,
-            ),
-            label: 'Profile',
-            tooltip: '',
+          GButton(
+            icon:
+                currentIndex == 1 ? Icons.search_rounded : Icons.search_rounded,
+            text: 'Search',
+            iconSize: 30.0,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              size: 24.0,
-            ),
-            label: 'Home',
-            tooltip: '',
+          GButton(
+            icon: Icons.music_note,
+            text: 'Home',
+            iconSize: 30.0,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.music_note,
-              size: 24.0,
-            ),
-            label: 'Home',
-            tooltip: '',
+          GButton(
+            icon: Icons.person_2,
+            text: 'Profile',
+            iconSize: 30.0,
           )
         ],
       ),

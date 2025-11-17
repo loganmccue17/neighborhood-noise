@@ -362,10 +362,10 @@ class _ExpandedGigPageWidgetState extends State<ExpandedGigPageWidget> {
                               width: 400.0,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context).tertiary,
-                                borderRadius: BorderRadius.circular(10.0),
+                                borderRadius: BorderRadius.circular(24.0),
                                 border: Border.all(
                                   color: FlutterFlowTheme.of(context).primary,
-                                  width: 8.0,
+                                  width: 3.0,
                                 ),
                               ),
                             ),

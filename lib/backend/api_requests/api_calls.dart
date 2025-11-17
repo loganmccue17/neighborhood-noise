@@ -9,11 +9,14 @@ export 'api_manager.dart' show ApiCallResponse;
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
 class GeocodingAPICall {
-  static Future<ApiCallResponse> call() async {
+  static Future<ApiCallResponse> call({
+    String? add = 'kingston',
+    String? keyinput = 'AIzaSyC0pE-GmaOBjSzyBjQ3wvKIFE7Uw_wHSRA',
+  }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'GeocodingAPI',
       apiUrl:
-          'https://maps.googleapis.com/maps/api/geocode/key=AIzaSyC0pE-GmaOBjSzyBjQ3wvKIFE7Uw_wHSRA',
+          'https://maps.googleapis.com/maps/api/geocode/json?address=${add}&key=${keyinput}',
       callType: ApiCallType.GET,
       headers: {},
       params: {},

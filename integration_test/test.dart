@@ -30,6 +30,165 @@ void main() async {
     await appState.initializePersistedState();
   });
 
+  group('US4', () {
+    testWidgets('US4 -Navigate To Band Profile and Follow Band -  Trekker',
+        (WidgetTester tester) async {
+      _overrideOnError();
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: 'trek@mail.com', password: 'password');
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (context) => FFAppState(),
+        child: const MyApp(),
+      ));
+      await GoogleFonts.pendingFonts();
+
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 3000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 4000),
+      );
+      await tester.tap(find.byIcon(Icons.music_note));
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 1000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 2000),
+      );
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('compactBand_y75d')),
+        100.0,
+        scrollable: find
+            .descendant(
+              of: find.byKey(const ValueKey('PageView_hgdn')),
+              matching: find.byType(Scrollable),
+            )
+            .first,
+      );
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 1000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 2000),
+      );
+      await tester.tap(find.byKey(const ValueKey('compactBand_y75d')));
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 1000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 2000),
+      );
+      expect(find.byKey(const ValueKey('Button_iclv')), findsWidgets);
+      await tester.tap(find.byKey(const ValueKey('Button_iclv')));
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 500),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 2000),
+      );
+      expect(find.text('Unfollow'), findsOneWidget);
+    });
+
+    testWidgets('US4 - Navigate To Gig from Band Profile',
+        (WidgetTester tester) async {
+      _overrideOnError();
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: 'trek@mail.com', password: 'password');
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (context) => FFAppState(),
+        child: MyApp(
+          entryPage: HomePageWidget(),
+        ),
+      ));
+      await GoogleFonts.pendingFonts();
+
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 3000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 5000),
+      );
+      await tester.tap(find.byIcon(Icons.search_sharp));
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 2000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 2000),
+      );
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('AllBands_kmtd')),
+        100.0,
+        scrollable: find
+            .descendant(
+              of: find.byKey(const ValueKey('PageView_hgdn')),
+              matching: find.byType(Scrollable),
+            )
+            .first,
+      );
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 2000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 5000),
+      );
+      await tester.tap(find.byKey(const ValueKey('compactBand_y75d')));
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 1000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 2000),
+      );
+      expect(find.text('Gigs'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('GigPostComponent_onvm')));
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 1000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 2000),
+      );
+      expect(find.text('Gig Description'), findsOneWidget);
+    });
+
+    testWidgets('US4 - Navigate back to search page from band profile page',
+        (WidgetTester tester) async {
+      _overrideOnError();
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: 'trek@mail.com', password: 'password');
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (context) => FFAppState(),
+        child: MyApp(
+          entryPage: SearchWidget(),
+        ),
+      ));
+      await GoogleFonts.pendingFonts();
+
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 2000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 5000),
+      );
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('AllBands_kmtd')),
+        100.0,
+        scrollable: find
+            .descendant(
+              of: find.byKey(const ValueKey('PageView_hgdn')),
+              matching: find.byType(Scrollable),
+            )
+            .first,
+      );
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 1000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 2000),
+      );
+      await tester.tap(find.byKey(const ValueKey('compactBand_y75d')));
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 1000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 2000),
+      );
+      expect(find.byKey(const ValueKey('Icon_q5u3')), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('Icon_q5u3')));
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 2000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 5000),
+      );
+      expect(find.byKey(const ValueKey('TextField_8996')), findsOneWidget);
+    });
+  });
+
   testWidgets('US1', (WidgetTester tester) async {
     _overrideOnError();
 
@@ -46,12 +205,10 @@ void main() async {
       const Duration(milliseconds: 5000),
     );
     await tester.enterText(
-        find.byKey(const ValueKey('Email_ph4a')), 'myemail@gmail.com');
-    await tester.enterText(
-        find.byKey(const ValueKey('CreatePass_q1n0')), 'password');
-    await tester.enterText(
-        find.byKey(const ValueKey('Confirmpass_k7q9')), 'password');
-    await tester.tap(find.byKey(const ValueKey('Signupbutton_h7bt')));
+        find.byKey(const ValueKey('UNDEFINED')), 'myemail@gmail.com');
+    await tester.enterText(find.byKey(const ValueKey('UNDEFINED')), 'password');
+    await tester.enterText(find.byKey(const ValueKey('UNDEFINED')), 'password');
+    await tester.tap(find.byKey(const ValueKey('UNDEFINED')));
     await tester.pumpAndSettle(
       const Duration(milliseconds: 5000),
       EnginePhase.sendSemanticsUpdate,

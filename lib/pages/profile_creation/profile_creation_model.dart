@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
@@ -5,7 +6,30 @@ import 'profile_creation_widget.dart' show ProfileCreationWidget;
 import 'package:flutter/material.dart';
 
 class ProfileCreationModel extends FlutterFlowModel<ProfileCreationWidget> {
+  ///  Local state fields for this page.
+
+  List<String> locationOutput = [];
+  void addToLocationOutput(String item) => locationOutput.add(item);
+  void removeFromLocationOutput(String item) => locationOutput.remove(item);
+  void removeAtIndexFromLocationOutput(int index) =>
+      locationOutput.removeAt(index);
+  void insertAtIndexInLocationOutput(int index, String item) =>
+      locationOutput.insert(index, item);
+  void updateLocationOutputAtIndex(int index, Function(String) updateFn) =>
+      locationOutput[index] = updateFn(locationOutput[index]);
+
+  LatLng? latlong;
+
+  double? lat;
+
+  double? long;
+
   ///  State fields for stateful widgets in this page.
+
+  bool isDataUploading_uploadDataU8h = false;
+  FFUploadedFile uploadedLocalFile_uploadDataU8h =
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+  String uploadedFileUrl_uploadDataU8h = '';
 
   // State field(s) for NameInput widget.
   FocusNode? nameInputFocusNode;
@@ -20,11 +44,10 @@ class ProfileCreationModel extends FlutterFlowModel<ProfileCreationWidget> {
   FocusNode? locationInputFocusNode;
   TextEditingController? locationInputTextController;
   String? Function(BuildContext, String?)? locationInputTextControllerValidator;
-  bool isDataUploading_uploadDataU8h = false;
-  FFUploadedFile uploadedLocalFile_uploadDataU8h =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
-  String uploadedFileUrl_uploadDataU8h = '';
-
+  // Stores action output result for [Backend Call - API (GeocodingAPI)] action in locationsearch widget.
+  ApiCallResponse? apiResultfnt;
+  // Stores action output result for [Custom Action - latlong] action in locationsearch widget.
+  LatLng? latlongobject;
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
   ProfileDataRecord? profileDataRef;
 

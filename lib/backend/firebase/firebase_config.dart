@@ -10,7 +10,8 @@ Future initFirebase() async {
             projectId: "neighborhood-noise-fcf5qa",
             storageBucket: "neighborhood-noise-fcf5qa.firebasestorage.app",
             messagingSenderId: "922006682129",
-            appId: "1:922006682129:web:1be79a3b48952422a84fb0"));
+            appId: "1:922006682129:web:1be79a3b48952422a84fb0",
+            measurementId: "G-DYJ6WBW3FB"));
   } else {
     await Firebase.initializeApp();
   }

@@ -128,6 +128,7 @@ class _BandProfilePageREADONLYWidgetState
                               context.goNamed(SearchWidget.routeName);
                             },
                             child: Icon(
+                              key: ValueKey('Icon_q5u3'),
                               Icons.arrow_back,
                               color: FlutterFlowTheme.of(context).primary,
                               size: 30.0,
@@ -239,6 +240,7 @@ class _BandProfilePageREADONLYWidgetState
                           ),
                         if (_model.isFollowing ? true : false)
                           FFButtonWidget(
+                            key: ValueKey('Button_iclv'),
                             onPressed: () async {
                               logFirebaseEvent(
                                   'BAND_PROFILE_R_E_A_D_O_N_L_Y_UNFOLLOW_BT');
@@ -303,10 +305,9 @@ class _BandProfilePageREADONLYWidgetState
                           Align(
                             alignment: Alignment(0.0, 0),
                             child: TabBar(
-                              labelColor:
-                                  FlutterFlowTheme.of(context).primaryText,
+                              labelColor: FlutterFlowTheme.of(context).primary,
                               unselectedLabelColor:
-                                  FlutterFlowTheme.of(context).secondaryText,
+                                  FlutterFlowTheme.of(context).primaryText,
                               labelStyle: FlutterFlowTheme.of(context)
                                   .titleMedium
                                   .override(
@@ -439,12 +440,17 @@ class _BandProfilePageREADONLYWidgetState
                                                     final listViewGigsRecord =
                                                         listViewGigsRecordList[
                                                             listViewIndex];
-                                                    return GigPostComponentWidget(
-                                                      key: Key(
-                                                          'Key0xy_${listViewIndex}_of_${listViewGigsRecordList.length}'),
-                                                      gigDocReference:
-                                                          listViewGigsRecord
-                                                              .reference,
+                                                    return Container(
+                                                      key: ValueKey(
+                                                          'GigPostComponent_onvm'),
+                                                      child:
+                                                          GigPostComponentWidget(
+                                                        key: Key(
+                                                            'Key0xy_${listViewIndex}_of_${listViewGigsRecordList.length}'),
+                                                        gigDocReference:
+                                                            listViewGigsRecord
+                                                                .reference,
+                                                      ),
                                                     );
                                                   },
                                                 );

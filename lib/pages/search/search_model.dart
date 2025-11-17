@@ -1,5 +1,4 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import '/index.dart';
 import 'search_widget.dart' show SearchWidget;
 import 'package:flutter/material.dart';
 
@@ -10,6 +9,14 @@ class SearchModel extends FlutterFlowModel<SearchWidget> {
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
+  // State field(s) for PageView widget.
+  PageController? pageViewController;
+
+  int get pageViewCurrentIndex => pageViewController != null &&
+          pageViewController!.hasClients &&
+          pageViewController!.page != null
+      ? pageViewController!.page!.round()
+      : 0;
 
   @override
   void initState(BuildContext context) {}
