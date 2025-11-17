@@ -623,7 +623,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   40.0, 0.0, 20.0, 0.0),
                               child: FFButtonWidget(
-                                key: ValueKey('Signupbutton_0o4k'),
                                 onPressed: () async {
                                   logFirebaseEvent(
                                       'LOGIN_PAGE_Signupbutton_ON_TAP');

@@ -194,14 +194,12 @@ void main() async {
 
     await tester.pumpWidget(ChangeNotifierProvider(
       create: (context) => FFAppState(),
-      child: MyApp(
-        entryPage: LoginWidget(),
-      ),
+      child: const MyApp(),
     ));
     await GoogleFonts.pendingFonts();
 
     await tester.pumpAndSettle(const Duration(milliseconds: 10000));
-    await tester.tap(find.byKey(const ValueKey('Signupbutton_0o4k')));
+    await tester.tap(find.text('Sign Up'));
     await tester.pumpAndSettle(const Duration(milliseconds: 5000));
     await tester.enterText(
         find.byKey(const ValueKey('Email_46fn')), 'myemail@gmail.com');
