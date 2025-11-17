@@ -203,7 +203,7 @@ void main() async {
       ));
       await GoogleFonts.pendingFonts();
 
-      await tester.tap(find.byType(Button));
+      await tester.tap(find.text('Submit'));
       await tester.pumpAndSettle(const Duration(milliseconds: 5000));
       expect(find.text('Tell Us About The Band!'), findsWidgets);
     });
