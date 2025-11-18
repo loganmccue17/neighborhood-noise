@@ -203,9 +203,69 @@ void main() async {
       ));
       await GoogleFonts.pendingFonts();
 
-      await tester.tap(find.text('Submit'));
+      await tester.tap(find.byKey(const ValueKey('Button_wf9y')));
       await tester.pumpAndSettle(const Duration(milliseconds: 5000));
-      expect(find.text('Tell Us About The Band!'), findsWidgets);
+      expect(find.byKey(const ValueKey('PageTitle_dzoe')), findsWidgets);
+    });
+
+    testWidgets('Successful BandCreation', (WidgetTester tester) async {
+      _overrideOnError();
+
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (context) => FFAppState(),
+        child: MyApp(
+          entryPage: BandCreationWidget(),
+        ),
+      ));
+      await GoogleFonts.pendingFonts();
+
+      await tester.enterText(
+          find.byKey(const ValueKey('BandName_08xy')), 'LargeMango');
+      await tester.enterText(
+          find.byKey(const ValueKey('Location_21lp')), 'Providence');
+      await tester.tap(find.byKey(const ValueKey('locationsearch_ygz4')));
+      await tester.enterText(
+          find.byKey(const ValueKey('Genre_i06m')), 'old man rock');
+      await tester.tap(find.byKey(const ValueKey('Button_xpc6')));
+      await tester.pumpAndSettle(const Duration(milliseconds: 5000));
+      expect(find.byKey(const ValueKey('Profile_yneg')), findsWidgets);
+    });
+
+    testWidgets('Not Sufficient Fields', (WidgetTester tester) async {
+      _overrideOnError();
+
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (context) => FFAppState(),
+        child: MyApp(
+          entryPage: BandCreationWidget(),
+        ),
+      ));
+      await GoogleFonts.pendingFonts();
+
+      await tester.tap(find.byKey(const ValueKey('Button_xpc6')));
+      expect(find.text('Error'), findsNothing);
+    });
+  });
+
+  group('US2 - Profile Creation', () {
+    testWidgets('Create Profile', (WidgetTester tester) async {
+      _overrideOnError();
+
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (context) => FFAppState(),
+        child: MyApp(
+          entryPage: SignupWidget(),
+        ),
+      ));
+      await GoogleFonts.pendingFonts();
+
+      await tester.enterText(
+          find.byKey(const ValueKey('Email_46fn')), 'wassaw@gmail.com');
+      await tester.enterText(
+          find.byKey(const ValueKey('CreatePass_vgie')), 'password');
+      await tester.enterText(
+          find.byKey(const ValueKey('Confirmpass_usja')), 'password');
+      expect(find.byKey(const ValueKey('Row_qjf8')), findsOneWidget);
     });
   });
 

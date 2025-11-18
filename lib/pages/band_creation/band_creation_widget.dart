@@ -86,6 +86,7 @@ class _BandCreationWidgetState extends State<BandCreationWidget> {
                         Align(
                           alignment: AlignmentDirectional(0.0, 0.0),
                           child: GradientText(
+                            key: ValueKey('PageTitle_dzoe'),
                             'Tell Us About The Band!',
                             style: FlutterFlowTheme.of(context)
                                 .headlineSmall
@@ -214,6 +215,7 @@ class _BandCreationWidgetState extends State<BandCreationWidget> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             TextFormField(
+                              key: ValueKey('BandName_08xy'),
                               controller: _model.bandNameTextController,
                               focusNode: _model.bandNameFocusNode,
                               autofocus: false,
@@ -324,6 +326,7 @@ class _BandCreationWidgetState extends State<BandCreationWidget> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             TextFormField(
+                              key: ValueKey('Location_21lp'),
                               controller: _model.locationTextController,
                               focusNode: _model.locationFocusNode,
                               autofocus: false,
@@ -429,6 +432,7 @@ class _BandCreationWidgetState extends State<BandCreationWidget> {
                                   .asValidator(context),
                             ),
                             FFButtonWidget(
+                              key: ValueKey('locationsearch_ygz4'),
                               onPressed: () async {
                                 logFirebaseEvent(
                                     'BAND_CREATION_PAGE_locationsearch_ON_TAP');
@@ -527,6 +531,7 @@ class _BandCreationWidgetState extends State<BandCreationWidget> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             TextFormField(
+                              key: ValueKey('Genre_i06m'),
                               controller: _model.genreTextController,
                               focusNode: _model.genreFocusNode,
                               autofocus: false,
@@ -646,6 +651,7 @@ class _BandCreationWidgetState extends State<BandCreationWidget> {
                                 Align(
                                   alignment: AlignmentDirectional(0.0, 1.0),
                                   child: FFButtonWidget(
+                                    key: ValueKey('Button_xpc6'),
                                     onPressed: () async {
                                       logFirebaseEvent(
                                           'BAND_CREATION_PAGE_SUBMIT_BTN_ON_TAP');

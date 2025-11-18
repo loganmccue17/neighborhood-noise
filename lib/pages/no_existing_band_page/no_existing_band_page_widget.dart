@@ -193,6 +193,7 @@ class _NoExistingBandPageWidgetState extends State<NoExistingBandPageWidget> {
                       ),
                     ),
                     FFButtonWidget(
+                      key: ValueKey('Button_wf9y'),
                       onPressed: () async {
                         logFirebaseEvent(
                             'NO_EXISTING_BAND_CREATE_BAND_BTN_ON_TAP');

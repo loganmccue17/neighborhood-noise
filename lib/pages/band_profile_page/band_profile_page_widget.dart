@@ -114,6 +114,7 @@ class _BandProfilePageWidgetState extends State<BandProfilePageWidget>
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
+                        key: ValueKey('Profile_yneg'),
                         bandProfilePageBandsRecord.bandName,
                         style: FlutterFlowTheme.of(context)
                             .headlineMedium
