@@ -247,8 +247,8 @@ void main() async {
     });
   });
 
-  group('US2 - Profile Creation', () {
-    testWidgets('Create Profile', (WidgetTester tester) async {
+  group('US3 - Profile Creation', () {
+    testWidgets('Successful Profile creation', (WidgetTester tester) async {
       _overrideOnError();
 
       await tester.pumpWidget(ChangeNotifierProvider(
@@ -265,7 +265,36 @@ void main() async {
           find.byKey(const ValueKey('CreatePass_vgie')), 'password');
       await tester.enterText(
           find.byKey(const ValueKey('Confirmpass_usja')), 'password');
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 1000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 5000),
+      );
       expect(find.byKey(const ValueKey('Row_qjf8')), findsOneWidget);
+    });
+
+    testWidgets('Unsuccessful Profile creation - Missing Field',
+        (WidgetTester tester) async {
+      _overrideOnError();
+
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (context) => FFAppState(),
+        child: MyApp(
+          entryPage: SignupWidget(),
+        ),
+      ));
+      await GoogleFonts.pendingFonts();
+
+      await tester.enterText(
+          find.byKey(const ValueKey('Email_46fn')), 'wassaw@gmail.com');
+      await tester.enterText(
+          find.byKey(const ValueKey('CreatePass_vgie')), 'password');
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 1000),
+        EnginePhase.sendSemanticsUpdate,
+        const Duration(milliseconds: 5000),
+      );
+      expect(find.byKey(const ValueKey('Image_dffi')), findsOneWidget);
     });
   });
 

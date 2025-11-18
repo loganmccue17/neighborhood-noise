@@ -104,6 +104,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.asset(
+                        key: ValueKey('Image_dffi'),
                         'assets/images/ChatGPT_Image_Nov_10,_2025,_09_46_37_PM.png',
                         width: 319.6,
                         height: 171.81,
