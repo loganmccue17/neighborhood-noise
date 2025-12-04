@@ -36,6 +36,14 @@ class BandCreationModel extends FlutterFlowModel<BandCreationWidget> {
   FocusNode? bandNameFocusNode;
   TextEditingController? bandNameTextController;
   String? Function(BuildContext, String?)? bandNameTextControllerValidator;
+  // State field(s) for BandBio widget.
+  FocusNode? bandBioFocusNode;
+  TextEditingController? bandBioTextController;
+  String? Function(BuildContext, String?)? bandBioTextControllerValidator;
+  // State field(s) for Genre widget.
+  FocusNode? genreFocusNode;
+  TextEditingController? genreTextController;
+  String? Function(BuildContext, String?)? genreTextControllerValidator;
   // State field(s) for Location widget.
   FocusNode? locationFocusNode;
   TextEditingController? locationTextController;
@@ -44,10 +52,14 @@ class BandCreationModel extends FlutterFlowModel<BandCreationWidget> {
   ApiCallResponse? apiResultfnt;
   // Stores action output result for [Custom Action - latlong] action in locationsearch widget.
   LatLng? latlongobject;
-  // State field(s) for Genre widget.
-  FocusNode? genreFocusNode;
-  TextEditingController? genreTextController;
-  String? Function(BuildContext, String?)? genreTextControllerValidator;
+  // State field(s) for Spotify widget.
+  FocusNode? spotifyFocusNode;
+  TextEditingController? spotifyTextController;
+  String? Function(BuildContext, String?)? spotifyTextControllerValidator;
+  // State field(s) for Instagram widget.
+  FocusNode? instagramFocusNode;
+  TextEditingController? instagramTextController;
+  String? Function(BuildContext, String?)? instagramTextControllerValidator;
   bool isDataUploading_uploadDataPe6 = false;
   FFUploadedFile uploadedLocalFile_uploadDataPe6 =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
@@ -64,10 +76,19 @@ class BandCreationModel extends FlutterFlowModel<BandCreationWidget> {
     bandNameFocusNode?.dispose();
     bandNameTextController?.dispose();
 
-    locationFocusNode?.dispose();
-    locationTextController?.dispose();
+    bandBioFocusNode?.dispose();
+    bandBioTextController?.dispose();
 
     genreFocusNode?.dispose();
     genreTextController?.dispose();
+
+    locationFocusNode?.dispose();
+    locationTextController?.dispose();
+
+    spotifyFocusNode?.dispose();
+    spotifyTextController?.dispose();
+
+    instagramFocusNode?.dispose();
+    instagramTextController?.dispose();
   }
 }

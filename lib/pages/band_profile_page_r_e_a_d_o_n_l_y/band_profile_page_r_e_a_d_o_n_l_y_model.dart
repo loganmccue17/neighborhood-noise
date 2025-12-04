@@ -1,4 +1,5 @@
 import '/components/gig_post_component/gig_post_component_widget.dart';
+import '/components/n_a_vbar/n_a_vbar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'band_profile_page_r_e_a_d_o_n_l_y_widget.dart'
@@ -22,16 +23,20 @@ class BandProfilePageREADONLYModel
 
   // Models for GigPostComponent dynamic component.
   late FlutterFlowDynamicModels<GigPostComponentModel> gigPostComponentModels;
+  // Model for NAVbar component.
+  late NAVbarModel nAVbarModel;
 
   @override
   void initState(BuildContext context) {
     gigPostComponentModels =
         FlutterFlowDynamicModels(() => GigPostComponentModel());
+    nAVbarModel = createModel(context, () => NAVbarModel());
   }
 
   @override
   void dispose() {
     tabBarController?.dispose();
     gigPostComponentModels.dispose();
+    nAVbarModel.dispose();
   }
 }

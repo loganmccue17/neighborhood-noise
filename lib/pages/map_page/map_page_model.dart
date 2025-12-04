@@ -1,10 +1,11 @@
 import '/backend/backend.dart';
 import '/components/n_a_vbar/n_a_vbar_widget.dart';
+import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'search_widget.dart' show SearchWidget;
+import 'map_page_widget.dart' show MapPageWidget;
 import 'package:flutter/material.dart';
 
-class SearchModel extends FlutterFlowModel<SearchWidget> {
+class MapPageModel extends FlutterFlowModel<MapPageWidget> {
   ///  Local state fields for this page.
 
   String searchText = ' ';
@@ -24,12 +25,15 @@ class SearchModel extends FlutterFlowModel<SearchWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Firestore Query - Query a collection] action in Search widget.
+  // Stores action output result for [Firestore Query - Query a collection] action in MapPage widget.
   List<BandsRecord>? prefilteredList;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
+  // State field(s) for GoogleMap widget.
+  LatLng? googleMapsCenter;
+  final googleMapsController = Completer<GoogleMapController>();
   // Model for NAVbar component.
   late NAVbarModel nAVbarModel;
 

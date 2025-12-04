@@ -72,7 +72,7 @@ class _GigPostComponentWidgetState extends State<GigPostComponentWidget> {
             color: FlutterFlowTheme.of(context).secondaryBackground,
             borderRadius: BorderRadius.circular(10.0),
             border: Border.all(
-              color: FlutterFlowTheme.of(context).primary,
+              color: FlutterFlowTheme.of(context).primaryText,
               width: 4.0,
             ),
           ),

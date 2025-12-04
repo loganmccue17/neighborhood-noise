@@ -66,6 +66,26 @@ class BandsRecord extends FirestoreRecord {
   LatLng? get latlong => _latlong;
   bool hasLatlong() => _latlong != null;
 
+  // "bandBio" field.
+  String? _bandBio;
+  String get bandBio => _bandBio ?? '';
+  bool hasBandBio() => _bandBio != null;
+
+  // "bandInsta" field.
+  String? _bandInsta;
+  String get bandInsta => _bandInsta ?? '';
+  bool hasBandInsta() => _bandInsta != null;
+
+  // "bandSpotify" field.
+  String? _bandSpotify;
+  String get bandSpotify => _bandSpotify ?? '';
+  bool hasBandSpotify() => _bandSpotify != null;
+
+  // "followerCount" field.
+  int? _followerCount;
+  int get followerCount => _followerCount ?? 0;
+  bool hasFollowerCount() => _followerCount != null;
+
   void _initializeFields() {
     _bandName = snapshotData['bandName'] as String?;
     _bandMembers = getDataList(snapshotData['bandMembers']);
@@ -77,6 +97,10 @@ class BandsRecord extends FirestoreRecord {
     _hasActiveGigs = snapshotData['hasActiveGigs'] as bool?;
     _genreKeywords = getDataList(snapshotData['genreKeywords']);
     _latlong = snapshotData['latlong'] as LatLng?;
+    _bandBio = snapshotData['bandBio'] as String?;
+    _bandInsta = snapshotData['bandInsta'] as String?;
+    _bandSpotify = snapshotData['bandSpotify'] as String?;
+    _followerCount = castToType<int>(snapshotData['followerCount']);
   }
 
   static CollectionReference get collection =>
@@ -119,6 +143,10 @@ Map<String, dynamic> createBandsRecordData({
   String? bandPhotoUrl,
   bool? hasActiveGigs,
   LatLng? latlong,
+  String? bandBio,
+  String? bandInsta,
+  String? bandSpotify,
+  int? followerCount,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -128,6 +156,10 @@ Map<String, dynamic> createBandsRecordData({
       'bandPhotoUrl': bandPhotoUrl,
       'hasActiveGigs': hasActiveGigs,
       'latlong': latlong,
+      'bandBio': bandBio,
+      'bandInsta': bandInsta,
+      'bandSpotify': bandSpotify,
+      'followerCount': followerCount,
     }.withoutNulls,
   );
 
@@ -149,7 +181,11 @@ class BandsRecordDocumentEquality implements Equality<BandsRecord> {
         listEquality.equals(e1?.gigs, e2?.gigs) &&
         e1?.hasActiveGigs == e2?.hasActiveGigs &&
         listEquality.equals(e1?.genreKeywords, e2?.genreKeywords) &&
-        e1?.latlong == e2?.latlong;
+        e1?.latlong == e2?.latlong &&
+        e1?.bandBio == e2?.bandBio &&
+        e1?.bandInsta == e2?.bandInsta &&
+        e1?.bandSpotify == e2?.bandSpotify &&
+        e1?.followerCount == e2?.followerCount;
   }
 
   @override
@@ -163,7 +199,11 @@ class BandsRecordDocumentEquality implements Equality<BandsRecord> {
         e?.gigs,
         e?.hasActiveGigs,
         e?.genreKeywords,
-        e?.latlong
+        e?.latlong,
+        e?.bandBio,
+        e?.bandInsta,
+        e?.bandSpotify,
+        e?.followerCount
       ]);
 
   @override

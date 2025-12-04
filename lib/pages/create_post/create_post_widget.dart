@@ -1,6 +1,7 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
+import '/components/n_a_vbar/n_a_vbar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -9,7 +10,6 @@ import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'create_post_model.dart';
 export 'create_post_model.dart';
 
@@ -74,7 +74,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondary,
+        backgroundColor: FlutterFlowTheme.of(context).primaryText,
         body: SafeArea(
           top: true,
           child: Column(
@@ -104,35 +104,18 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Neighborhood Noise',
-                                style: FlutterFlowTheme.of(context)
-                                    .titleMedium
-                                    .override(
-                                      font: GoogleFonts.jaldi(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontStyle,
-                                      ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontStyle,
+                              Flexible(
+                                child: Align(
+                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.asset(
+                                      'assets/images/ChatGPT_Image_Nov_10,_2025,_09_46_37_PM.png',
+                                      width: 100.0,
+                                      height: 117.8,
+                                      fit: BoxFit.cover,
                                     ),
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.asset(
-                                  'assets/images/Screenshot_2025-10-18_234436.png',
-                                  width: 60.0,
-                                  height: 60.0,
-                                  fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ],
@@ -270,8 +253,8 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                       24.0, 0.0, 24.0, 0.0),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
+                                      color:
+                                          FlutterFlowTheme.of(context).tertiary,
                                       borderRadius: BorderRadius.circular(8.0),
                                       border: Border.all(
                                         color: FlutterFlowTheme.of(context)
@@ -396,243 +379,214 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                         ),
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(0.0, 1.0),
-                                          child: StreamBuilder<BandsRecord>(
-                                            stream: BandsRecord.getDocument(
-                                                widget.bandToPostTo!),
-                                            builder: (context, snapshot) {
-                                              // Customize what your widget looks like when it's loading.
-                                              if (!snapshot.hasData) {
-                                                return Center(
-                                                  child: SizedBox(
-                                                    width: 50.0,
-                                                    height: 50.0,
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      valueColor:
-                                                          AlwaysStoppedAnimation<
-                                                              Color>(
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .primary,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-
-                                              final createPostButtonBandsRecord =
-                                                  snapshot.data!;
-
-                                              return FFButtonWidget(
-                                                onPressed: () async {
-                                                  logFirebaseEvent(
-                                                      'CREATE_POST_PAGE_CreatePostButton_ON_TAP');
-                                                  logFirebaseEvent(
-                                                      'CreatePostButton_backend_call');
-
-                                                  var postsRecordReference =
-                                                      PostsRecord.collection
-                                                          .doc();
-                                                  await postsRecordReference
-                                                      .set(
-                                                          createPostsRecordData(
-                                                    postedByBand:
-                                                        widget.bandToPostTo,
-                                                    description: _model
-                                                        .postDescriptionTextFieldTextController
-                                                        .text,
-                                                    numberOfLikes: 0,
-                                                    bandPostedName:
-                                                        createPostButtonBandsRecord
-                                                            .bandName,
-                                                    imageURL: _model
-                                                        .uploadedFileUrl_uploadDataOxk,
-                                                  ));
-                                                  _model.postDocRef = PostsRecord
-                                                      .getDocumentFromData(
-                                                          createPostsRecordData(
-                                                            postedByBand: widget
-                                                                .bandToPostTo,
-                                                            description: _model
-                                                                .postDescriptionTextFieldTextController
-                                                                .text,
-                                                            numberOfLikes: 0,
-                                                            bandPostedName:
-                                                                createPostButtonBandsRecord
-                                                                    .bandName,
-                                                            imageURL: _model
-                                                                .uploadedFileUrl_uploadDataOxk,
-                                                          ),
-                                                          postsRecordReference);
-                                                  logFirebaseEvent(
-                                                      'CreatePostButton_backend_call');
-
-                                                  await widget.bandToPostTo!
-                                                      .update({
-                                                    ...mapToFirestore(
-                                                      {
-                                                        'posts': FieldValue
-                                                            .arrayUnion([
-                                                          _model.postDocRef
-                                                              ?.reference
-                                                        ]),
-                                                      },
-                                                    ),
-                                                  });
-                                                  logFirebaseEvent(
-                                                      'CreatePostButton_navigate_to');
-
-                                                  context.pushNamed(
-                                                      BandProfilePageWidget
-                                                          .routeName);
-
-                                                  safeSetState(() {});
-                                                },
-                                                text: '+',
-                                                options: FFButtonOptions(
-                                                  width: 110.52,
-                                                  height: 50.0,
-                                                  padding: EdgeInsets.all(0.0),
-                                                  iconPadding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(0.0, 0.0,
-                                                              0.0, 10.0),
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryBackground,
-                                                  textStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .titleLarge
-                                                      .override(
-                                                        font: GoogleFonts.jaldi(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .titleLarge
-                                                                  .fontStyle,
-                                                        ),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        fontSize: 50.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .fontStyle,
-                                                      ),
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    width: 3.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          24.0),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.74),
-                                          child: GradientText(
+                                              AlignmentDirectional(0.0, 0.94),
+                                          child: Text(
                                             'Create post !!',
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
+                                                .titleMedium
                                                 .override(
                                                   font: GoogleFonts.jaldi(
                                                     fontWeight:
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyMedium
+                                                            .titleMedium
                                                             .fontWeight,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodyMedium
+                                                            .titleMedium
                                                             .fontStyle,
                                                   ),
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primary,
-                                                  fontSize: 15.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .bodyMedium
+                                                          .titleMedium
                                                           .fontWeight,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .bodyMedium
+                                                          .titleMedium
                                                           .fontStyle,
                                                 ),
-                                            colors: [
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryText
-                                            ],
-                                            gradientDirection:
-                                                GradientDirection.ltr,
-                                            gradientType: GradientType.linear,
                                           ),
                                         ),
                                         Align(
                                           alignment: AlignmentDirectional(
                                               -0.01, -0.45),
-                                          child: GradientText(
+                                          child: Text(
                                             'Click here to upload a picture !!!',
                                             style: FlutterFlowTheme.of(context)
                                                 .titleSmall
                                                 .override(
                                                   font: GoogleFonts.jaldi(
-                                                    fontWeight: FontWeight.w600,
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .titleSmall
+                                                            .fontWeight,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
                                                                 context)
                                                             .titleSmall
                                                             .fontStyle,
                                                   ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleSmall
+                                                          .fontWeight,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
                                                           .titleSmall
                                                           .fontStyle,
                                                 ),
-                                            colors: [
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryText
-                                            ],
-                                            gradientDirection:
-                                                GradientDirection.ltr,
-                                            gradientType: GradientType.linear,
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
+                                ),
+                              ),
+                              Align(
+                                alignment: AlignmentDirectional(-0.01, 0.99),
+                                child: StreamBuilder<BandsRecord>(
+                                  stream: BandsRecord.getDocument(
+                                      widget.bandToPostTo!),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+
+                                    final createPostButtonBandsRecord =
+                                        snapshot.data!;
+
+                                    return FFButtonWidget(
+                                      onPressed: () async {
+                                        logFirebaseEvent(
+                                            'CREATE_POST_PAGE_CreatePostButton_ON_TAP');
+                                        logFirebaseEvent(
+                                            'CreatePostButton_backend_call');
+
+                                        var postsRecordReference =
+                                            PostsRecord.collection.doc();
+                                        await postsRecordReference
+                                            .set(createPostsRecordData(
+                                          postedByBand: widget.bandToPostTo,
+                                          description: _model
+                                              .postDescriptionTextFieldTextController
+                                              .text,
+                                          numberOfLikes: 0,
+                                          bandPostedName:
+                                              createPostButtonBandsRecord
+                                                  .bandName,
+                                          imageURL: _model
+                                              .uploadedFileUrl_uploadDataOxk,
+                                        ));
+                                        _model.postDocRef =
+                                            PostsRecord.getDocumentFromData(
+                                                createPostsRecordData(
+                                                  postedByBand:
+                                                      widget.bandToPostTo,
+                                                  description: _model
+                                                      .postDescriptionTextFieldTextController
+                                                      .text,
+                                                  numberOfLikes: 0,
+                                                  bandPostedName:
+                                                      createPostButtonBandsRecord
+                                                          .bandName,
+                                                  imageURL: _model
+                                                      .uploadedFileUrl_uploadDataOxk,
+                                                ),
+                                                postsRecordReference);
+                                        logFirebaseEvent(
+                                            'CreatePostButton_backend_call');
+
+                                        await widget.bandToPostTo!.update({
+                                          ...mapToFirestore(
+                                            {
+                                              'posts': FieldValue.arrayUnion([
+                                                _model.postDocRef?.reference
+                                              ]),
+                                            },
+                                          ),
+                                        });
+                                        logFirebaseEvent(
+                                            'CreatePostButton_navigate_to');
+
+                                        context.pushNamed(
+                                            BandProfilePageWidget.routeName);
+
+                                        safeSetState(() {});
+                                      },
+                                      text: '+',
+                                      options: FFButtonOptions(
+                                        width: 60.2,
+                                        height: 50.0,
+                                        padding: EdgeInsets.all(0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 10.0),
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiary,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .titleLarge
+                                            .override(
+                                              font: GoogleFonts.jaldi(
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleLarge
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleLarge
+                                                        .fontStyle,
+                                              ),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              fontSize: 50.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleLarge
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleLarge
+                                                      .fontStyle,
+                                            ),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          width: 3.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(24.0),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                               Align(
@@ -926,8 +880,8 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     filled: true,
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).tertiary,
                                   ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
@@ -1017,6 +971,10 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                   safeSetState(() {});
                                 },
                                 text: 'Search',
+                                icon: Icon(
+                                  Icons.search_outlined,
+                                  size: 15.0,
+                                ),
                                 options: FFButtonOptions(
                                   width: 100.0,
                                   height: 40.0,
@@ -1024,7 +982,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                       16.0, 0.0, 16.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).secondary,
+                                  color: FlutterFlowTheme.of(context).tertiary,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
@@ -1038,7 +996,8 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                                   .titleSmall
                                                   .fontStyle,
                                         ),
-                                        color: Colors.white,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
                                         letterSpacing: 0.0,
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .titleSmall
@@ -1050,7 +1009,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                   elevation: 0.0,
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context).primary,
-                                    width: 5.0,
+                                    width: 3.0,
                                   ),
                                   borderRadius: BorderRadius.circular(24.0),
                                 ),
@@ -1221,97 +1180,113 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                                   ),
                                 ),
                               ),
-                              FFButtonWidget(
-                                onPressed: () async {
-                                  logFirebaseEvent(
-                                      'CREATE_POST_PAGE_POST_GIG_BTN_ON_TAP');
-                                  logFirebaseEvent('Button_backend_call');
+                              Flexible(
+                                child: Align(
+                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      logFirebaseEvent(
+                                          'CREATE_POST_PAGE_POST_BTN_ON_TAP');
+                                      logFirebaseEvent('Button_backend_call');
 
-                                  var gigsRecordReference =
-                                      GigsRecord.collection.doc();
-                                  await gigsRecordReference
-                                      .set(createGigsRecordData(
-                                    bandPosted: widget.bandToPostTo,
-                                    description: _model
-                                        .gigDescriptionTextController.text,
-                                    location: _model.latlongoutput,
-                                    locationName: valueOrDefault<String>(
-                                      _model.locationOutput.firstOrNull,
-                                      'Null',
-                                    ),
-                                  ));
-                                  _model.gigPosting =
-                                      GigsRecord.getDocumentFromData(
-                                          createGigsRecordData(
-                                            bandPosted: widget.bandToPostTo,
-                                            description: _model
-                                                .gigDescriptionTextController
-                                                .text,
-                                            location: _model.latlongoutput,
-                                            locationName:
-                                                valueOrDefault<String>(
-                                              _model.locationOutput.firstOrNull,
-                                              'Null',
-                                            ),
-                                          ),
-                                          gigsRecordReference);
-                                  logFirebaseEvent('Button_backend_call');
-
-                                  await widget.bandToPostTo!.update({
-                                    ...createBandsRecordData(
-                                      hasActiveGigs: true,
-                                    ),
-                                    ...mapToFirestore(
-                                      {
-                                        'gigs': FieldValue.arrayUnion(
-                                            [_model.gigPosting?.reference]),
-                                      },
-                                    ),
-                                  });
-                                  logFirebaseEvent('Button_navigate_to');
-
-                                  context.pushNamed(
-                                      BandProfilePageWidget.routeName);
-
-                                  safeSetState(() {});
-                                },
-                                text: 'Post Gig',
-                                options: FFButtonOptions(
-                                  height: 40.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).secondary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        font: GoogleFonts.jaldi(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .fontStyle,
+                                      var gigsRecordReference =
+                                          GigsRecord.collection.doc();
+                                      await gigsRecordReference
+                                          .set(createGigsRecordData(
+                                        bandPosted: widget.bandToPostTo,
+                                        description: _model
+                                            .gigDescriptionTextController.text,
+                                        location: _model.latlongoutput,
+                                        locationName: valueOrDefault<String>(
+                                          _model.locationOutput.firstOrNull,
+                                          'Null',
                                         ),
-                                        color: Colors.white,
-                                        fontSize: 36.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontStyle,
+                                      ));
+                                      _model.gigPosting =
+                                          GigsRecord.getDocumentFromData(
+                                              createGigsRecordData(
+                                                bandPosted:
+                                                    widget.bandToPostTo,
+                                                description: _model
+                                                    .gigDescriptionTextController
+                                                    .text,
+                                                location: _model.latlongoutput,
+                                                locationName:
+                                                    valueOrDefault<String>(
+                                                  _model.locationOutput
+                                                      .firstOrNull,
+                                                  'Null',
+                                                ),
+                                              ),
+                                              gigsRecordReference);
+                                      logFirebaseEvent('Button_backend_call');
+
+                                      await widget.bandToPostTo!.update({
+                                        ...createBandsRecordData(
+                                          hasActiveGigs: true,
+                                        ),
+                                        ...mapToFirestore(
+                                          {
+                                            'gigs': FieldValue.arrayUnion(
+                                                [_model.gigPosting?.reference]),
+                                          },
+                                        ),
+                                      });
+                                      logFirebaseEvent('Button_navigate_to');
+
+                                      context.pushNamed(
+                                          BandProfilePageWidget.routeName);
+
+                                      safeSetState(() {});
+                                    },
+                                    text: 'post',
+                                    icon: Icon(
+                                      Icons.add_circle,
+                                      size: 25.0,
+                                    ),
+                                    options: FFButtonOptions(
+                                      width: 200.0,
+                                      height: 36.4,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      iconAlignment: IconAlignment.end,
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 1.0, 0.0),
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            font: GoogleFonts.jaldi(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .fontStyle,
+                                            ),
+                                            color: Colors.white,
+                                            fontSize: 36.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontStyle,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiary,
                                       ),
-                                  elevation: 0.0,
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    width: 5.0,
+                                      borderRadius: BorderRadius.circular(24.0),
+                                    ),
                                   ),
-                                  borderRadius: BorderRadius.circular(24.0),
                                 ),
                               ),
                             ],
@@ -1321,6 +1296,11 @@ class _CreatePostWidgetState extends State<CreatePostWidget>
                     ),
                   ],
                 ),
+              ),
+              wrapWithModel(
+                model: _model.nAVbarModel,
+                updateCallback: () => safeSetState(() {}),
+                child: NAVbarWidget(),
               ),
             ],
           ),

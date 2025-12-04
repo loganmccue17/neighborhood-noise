@@ -1,4 +1,5 @@
 import '/backend/backend.dart';
+import '/components/n_a_vbar/n_a_vbar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class _ExpandedGigPageWidgetState extends State<ExpandedGigPageWidget> {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: FlutterFlowTheme.of(context).secondary,
+            backgroundColor: FlutterFlowTheme.of(context).primaryText,
             body: Center(
               child: SizedBox(
                 width: 50.0,
@@ -78,7 +79,7 @@ class _ExpandedGigPageWidgetState extends State<ExpandedGigPageWidget> {
           },
           child: Scaffold(
             key: scaffoldKey,
-            backgroundColor: FlutterFlowTheme.of(context).secondary,
+            backgroundColor: FlutterFlowTheme.of(context).primaryText,
             body: SafeArea(
               top: true,
               child: Column(
@@ -135,7 +136,7 @@ class _ExpandedGigPageWidgetState extends State<ExpandedGigPageWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .headlineMedium
                                 .override(
-                                  font: GoogleFonts.jockeyOne(
+                                  font: GoogleFonts.newRocker(
                                     fontWeight: FlutterFlowTheme.of(context)
                                         .headlineMedium
                                         .fontWeight,
@@ -373,6 +374,11 @@ class _ExpandedGigPageWidgetState extends State<ExpandedGigPageWidget> {
                         ],
                       ),
                     ),
+                  ),
+                  wrapWithModel(
+                    model: _model.nAVbarModel,
+                    updateCallback: () => safeSetState(() {}),
+                    child: NAVbarWidget(),
                   ),
                 ],
               ),

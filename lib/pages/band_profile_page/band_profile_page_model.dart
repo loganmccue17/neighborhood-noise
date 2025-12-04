@@ -1,3 +1,4 @@
+import '/components/n_a_vbar/n_a_vbar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'band_profile_page_widget.dart' show BandProfilePageWidget;
@@ -13,11 +14,17 @@ class BandProfilePageModel extends FlutterFlowModel<BandProfilePageWidget> {
   int get tabBarPreviousIndex =>
       tabBarController != null ? tabBarController!.previousIndex : 0;
 
+  // Model for NAVbar component.
+  late NAVbarModel nAVbarModel;
+
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    nAVbarModel = createModel(context, () => NAVbarModel());
+  }
 
   @override
   void dispose() {
     tabBarController?.dispose();
+    nAVbarModel.dispose();
   }
 }

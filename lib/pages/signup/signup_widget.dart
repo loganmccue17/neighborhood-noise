@@ -107,7 +107,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                         key: ValueKey('Image_dffi'),
                         'assets/images/ChatGPT_Image_Nov_10,_2025,_09_46_37_PM.png',
                         width: 319.6,
-                        height: 171.81,
+                        height: 171.8,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -173,28 +173,28 @@ class _SignupWidgetState extends State<SignupWidget> {
                             color: FlutterFlowTheme.of(context).primary,
                             width: 5.0,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color(0x00000000),
                             width: 5.0,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).error,
                             width: 5.0,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).error,
                             width: 5.0,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         filled: true,
                         fillColor: FlutterFlowTheme.of(context).secondary,
@@ -294,28 +294,28 @@ class _SignupWidgetState extends State<SignupWidget> {
                             color: FlutterFlowTheme.of(context).primary,
                             width: 5.0,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color(0x00000000),
                             width: 5.0,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).error,
                             width: 5.0,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).error,
                             width: 5.0,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         filled: true,
                         fillColor: FlutterFlowTheme.of(context).secondary,
@@ -415,28 +415,28 @@ class _SignupWidgetState extends State<SignupWidget> {
                             color: FlutterFlowTheme.of(context).primary,
                             width: 5.0,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color(0x00000000),
                             width: 5.0,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).error,
                             width: 5.0,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).error,
                             width: 5.0,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         filled: true,
                         fillColor: FlutterFlowTheme.of(context).secondary,
@@ -478,6 +478,57 @@ class _SignupWidgetState extends State<SignupWidget> {
                       validator: _model.confirmpassTextControllerValidator
                           .asValidator(context),
                     ),
+                  ),
+                ),
+                FFButtonWidget(
+                  onPressed: () async {
+                    logFirebaseEvent('SIGNUP_PAGE_GoogleSignup_ON_TAP');
+                    logFirebaseEvent('GoogleSignup_auth');
+                    GoRouter.of(context).prepareAuthEvent();
+                    final user = await authManager.signInWithGoogle(context);
+                    if (user == null) {
+                      return;
+                    }
+                    logFirebaseEvent('GoogleSignup_navigate_to');
+
+                    context.pushNamedAuth(
+                        ProfileCreationWidget.routeName, context.mounted);
+                  },
+                  text: 'Continue with Google ',
+                  icon: Icon(
+                    Icons.login,
+                    size: 20.0,
+                  ),
+                  options: FFButtonOptions(
+                    height: 40.0,
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    iconPadding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    color: FlutterFlowTheme.of(context).secondary,
+                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                          font: GoogleFonts.jaldi(
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .fontStyle,
+                          ),
+                          color: Colors.white,
+                          letterSpacing: 0.0,
+                          fontWeight: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .fontWeight,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                        ),
+                    elevation: 0.0,
+                    borderSide: BorderSide(
+                      color: FlutterFlowTheme.of(context).primary,
+                      width: 4.0,
+                    ),
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
                 Align(

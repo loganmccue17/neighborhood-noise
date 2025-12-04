@@ -91,6 +91,11 @@ class UsersRecord extends FirestoreRecord {
   List<DocumentReference> get followedbands => _followedbands ?? const [];
   bool hasFollowedbands() => _followedbands != null;
 
+  // "user_instrument" field.
+  String? _userInstrument;
+  String get userInstrument => _userInstrument ?? '';
+  bool hasUserInstrument() => _userInstrument != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -107,6 +112,7 @@ class UsersRecord extends FirestoreRecord {
     _userBand = snapshotData['user_band'] as DocumentReference?;
     _likedPosts = getDataList(snapshotData['liked_posts']);
     _followedbands = getDataList(snapshotData['followedbands']);
+    _userInstrument = snapshotData['user_instrument'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -156,6 +162,7 @@ Map<String, dynamic> createUsersRecordData({
   DocumentReference? profileRefrence,
   bool? hasBand,
   DocumentReference? userBand,
+  String? userInstrument,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -172,6 +179,7 @@ Map<String, dynamic> createUsersRecordData({
       'profile_refrence': profileRefrence,
       'hasBand': hasBand,
       'user_band': userBand,
+      'user_instrument': userInstrument,
     }.withoutNulls,
   );
 
@@ -198,7 +206,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.hasBand == e2?.hasBand &&
         e1?.userBand == e2?.userBand &&
         listEquality.equals(e1?.likedPosts, e2?.likedPosts) &&
-        listEquality.equals(e1?.followedbands, e2?.followedbands);
+        listEquality.equals(e1?.followedbands, e2?.followedbands) &&
+        e1?.userInstrument == e2?.userInstrument;
   }
 
   @override
@@ -217,7 +226,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.hasBand,
         e?.userBand,
         e?.likedPosts,
-        e?.followedbands
+        e?.followedbands,
+        e?.userInstrument
       ]);
 
   @override

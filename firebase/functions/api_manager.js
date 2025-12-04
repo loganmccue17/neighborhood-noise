@@ -1,13 +1,34 @@
 const axios = require("axios").default;
 const qs = require("qs");
 
+async function _geocodingAPICall(context, ffVariables) {
+  var add = ffVariables["add"];
+  var keyinput = ffVariables["keyinput"];
+
+  var url = `https://maps.googleapis.com/maps/api/geocode/json?address=${add}&key=${keyinput}`;
+  var headers = {};
+  var params = {};
+  var ffApiRequestBody = undefined;
+
+  return makeApiRequest({
+    method: "get",
+    url,
+    headers,
+    params,
+    returnBody: true,
+    isStreamingApi: false,
+  });
+}
+
 /// Helper functions to route to the appropriate API Call.
 
 async function makeApiCall(context, data) {
   var callName = data["callName"] || "";
   var variables = data["variables"] || {};
 
-  const callMap = {};
+  const callMap = {
+    GeocodingAPICall: _geocodingAPICall,
+  };
 
   if (!(callName in callMap)) {
     return {

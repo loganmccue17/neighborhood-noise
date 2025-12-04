@@ -1,5 +1,6 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
+import '/components/n_a_vbar/n_a_vbar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'create_post_widget.dart' show CreatePostWidget;
@@ -60,9 +61,13 @@ class CreatePostModel extends FlutterFlowModel<CreatePostWidget> {
       gigDescriptionTextControllerValidator;
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
   GigsRecord? gigPosting;
+  // Model for NAVbar component.
+  late NAVbarModel nAVbarModel;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    nAVbarModel = createModel(context, () => NAVbarModel());
+  }
 
   @override
   void dispose() {
@@ -75,5 +80,7 @@ class CreatePostModel extends FlutterFlowModel<CreatePostWidget> {
 
     gigDescriptionFocusNode?.dispose();
     gigDescriptionTextController?.dispose();
+
+    nAVbarModel.dispose();
   }
 }

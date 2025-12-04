@@ -1,7 +1,8 @@
 import '/backend/backend.dart';
-import '/components/compact_band/compact_band_widget.dart';
+import '/components/band_pop_up_sheet/band_pop_up_sheet_widget.dart';
 import '/components/filter_sheet/filter_sheet_widget.dart';
 import '/components/n_a_vbar/n_a_vbar_widget.dart';
+import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -10,21 +11,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'search_model.dart';
-export 'search_model.dart';
+import 'map_page_model.dart';
+export 'map_page_model.dart';
 
-class SearchWidget extends StatefulWidget {
-  const SearchWidget({super.key});
+class MapPageWidget extends StatefulWidget {
+  const MapPageWidget({super.key});
 
-  static String routeName = 'Search';
-  static String routePath = '/search';
+  static String routeName = 'MapPage';
+  static String routePath = '/mapPage';
 
   @override
-  State<SearchWidget> createState() => _SearchWidgetState();
+  State<MapPageWidget> createState() => _MapPageWidgetState();
 }
 
-class _SearchWidgetState extends State<SearchWidget> {
-  late SearchModel _model;
+class _MapPageWidgetState extends State<MapPageWidget> {
+  late MapPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   bool textFieldFocusListenerRegistered = false;
@@ -32,17 +33,17 @@ class _SearchWidgetState extends State<SearchWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => SearchModel());
+    _model = createModel(context, () => MapPageModel());
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Search'});
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'MapPage'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('SEARCH_PAGE_Search_ON_INIT_STATE');
-      logFirebaseEvent('Search_update_page_state');
+      logFirebaseEvent('MAP_PAGE_PAGE_MapPage_ON_INIT_STATE');
+      logFirebaseEvent('MapPage_update_page_state');
       _model.dataLoaded = false;
-      logFirebaseEvent('Search_firestore_query');
+      logFirebaseEvent('MapPage_firestore_query');
       _model.prefilteredList = await queryBandsRecordOnce();
-      logFirebaseEvent('Search_update_page_state');
+      logFirebaseEvent('MapPage_update_page_state');
       _model.mapDocList = functions
           .getListOfBandsToShowOnMap(
               _model.prefilteredList!.toList(),
@@ -54,10 +55,10 @@ class _SearchWidgetState extends State<SearchWidget> {
           .toList()
           .cast<BandsRecord>();
       safeSetState(() {});
-      logFirebaseEvent('Search_update_page_state');
+      logFirebaseEvent('MapPage_update_page_state');
       _model.dataLoaded = true;
       safeSetState(() {});
-      logFirebaseEvent('Search_rebuild_page');
+      logFirebaseEvent('MapPage_rebuild_page');
       safeSetState(() {});
     });
 
@@ -85,7 +86,8 @@ class _SearchWidgetState extends State<SearchWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        resizeToAvoidBottomInset: false,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SafeArea(
           top: true,
           child: StreamBuilder<List<BandsRecord>>(
@@ -111,7 +113,7 @@ class _SearchWidgetState extends State<SearchWidget> {
 
               return Container(
                 decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryText,
+                  color: Color(0xFF36382E),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -168,7 +170,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
                                     child: Image.asset(
-                                      'assets/images/Logo.png',
+                                      'assets/images/Logo(2).png',
                                       width: 60.0,
                                       height: 60.0,
                                       fit: BoxFit.cover,
@@ -198,7 +200,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                                   _model.textFieldFocusNode!.addListener(
                                     () async {
                                       logFirebaseEvent(
-                                          'SEARCH_TextField_00qjk4oj_ON_FOCUS_CHANG');
+                                          'MAP_TextField_huh9ns69_ON_FOCUS_CHANGE');
                                       logFirebaseEvent(
                                           'TextField_update_page_state');
                                       _model.mapDocList = functions
@@ -218,7 +220,6 @@ class _SearchWidgetState extends State<SearchWidget> {
                                   );
                                 }
                                 return TextFormField(
-                                  key: ValueKey('TextField_8996'),
                                   controller: _model.textController,
                                   focusNode: _model.textFieldFocusNode,
                                   autofocus: false,
@@ -351,91 +352,111 @@ class _SearchWidgetState extends State<SearchWidget> {
                           Stack(
                             alignment: AlignmentDirectional(0.0, -1.0),
                             children: [
-                              Container(
-                                width: 300.0,
-                                height: 500.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  border: Border.all(
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    width: 5.0,
-                                  ),
-                                ),
-                                child: Stack(
-                                  children: [
-                                    StreamBuilder<List<BandsRecord>>(
-                                      stream: queryBandsRecord(
-                                        queryBuilder: (bandsRecord) =>
-                                            bandsRecord.orderBy('bandName'),
-                                      ),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 50.0,
-                                              height: 50.0,
-                                              child: CircularProgressIndicator(
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        List<BandsRecord>
-                                            allBandsBandsRecordList =
-                                            snapshot.data!;
-
-                                        return ListView.builder(
-                                          padding: EdgeInsets.zero,
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.vertical,
-                                          itemCount:
-                                              allBandsBandsRecordList.length,
-                                          itemBuilder:
-                                              (context, allBandsIndex) {
-                                            final allBandsBandsRecord =
-                                                allBandsBandsRecordList[
-                                                    allBandsIndex];
-                                            return Visibility(
-                                              visible: functions.shouldBandShow(
-                                                      allBandsBandsRecord
-                                                          .bandName,
-                                                      allBandsBandsRecord
-                                                          .genreKeywords
-                                                          .toList(),
-                                                      allBandsBandsRecord
-                                                          .hasActiveGigs,
-                                                      _model
-                                                          .textController.text,
-                                                      FFAppState()
-                                                          .selectedGenres
-                                                          .toList(),
-                                                      FFAppState()
-                                                          .showActiveGigsOnly) ??
-                                                  true,
-                                              child: Container(
-                                                key: ValueKey(
-                                                    'compactBand_y75d'),
-                                                child: CompactBandWidget(
-                                                  key: Key(
-                                                      'Keyimi_${allBandsIndex}_of_${allBandsBandsRecordList.length}'),
-                                                  bandRef: allBandsBandsRecord
-                                                      .reference,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(20.0),
+                                child: Container(
+                                  width: 300.0,
+                                  height: 500.0,
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 1.0,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        offset: Offset(
+                                          0.0,
+                                          2.0,
+                                        ),
+                                      )
+                                    ],
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        FlutterFlowTheme.of(context).primary,
+                                        FlutterFlowTheme.of(context).secondary
+                                      ],
+                                      stops: [0.0, 1.0],
+                                      begin: AlignmentDirectional(0.0, -1.0),
+                                      end: AlignmentDirectional(0, 1.0),
                                     ),
-                                  ],
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    border: Border.all(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      width: 3.0,
+                                    ),
+                                  ),
+                                  child: Visibility(
+                                    visible: _model.dataLoaded,
+                                    child: FlutterFlowGoogleMap(
+                                      controller: _model.googleMapsController,
+                                      onCameraIdle: (latLng) =>
+                                          _model.googleMapsCenter = latLng,
+                                      initialLocation:
+                                          _model.googleMapsCenter ??=
+                                              FFAppState().mockedLatLong!,
+                                      markers: _model.mapDocList
+                                          .map(
+                                            (marker) => FlutterFlowMarker(
+                                              marker.reference.path,
+                                              marker.latlong!,
+                                              () async {
+                                                logFirebaseEvent(
+                                                    'MAP_GoogleMap_j0icr5z9_ON_MARKER_TAP');
+                                                logFirebaseEvent(
+                                                    'GoogleMap_bottom_sheet');
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(context)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            BandPopUpSheetWidget(
+                                                          bandDisplaying:
+                                                              marker,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
+                                              },
+                                            ),
+                                          )
+                                          .toList(),
+                                      markerColor: GoogleMarkerColor.violet,
+                                      markerImage: MarkerImage(
+                                        imagePath: 'assets/images/Logo.png',
+                                        isAssetImage: true,
+                                        size: 20.0 ?? 20,
+                                      ),
+                                      mapType: MapType.normal,
+                                      style: GoogleMapStyle.standard,
+                                      initialZoom: 14.0,
+                                      allowInteraction: true,
+                                      allowZoom: true,
+                                      showZoomControls: true,
+                                      showLocation: true,
+                                      showCompass: false,
+                                      showMapToolbar: false,
+                                      showTraffic: false,
+                                      centerMapOnMarkerTap: true,
+                                      mapTakesGesturePreference: true,
+                                    ),
+                                  ),
                                 ),
                               ),
                               Align(
@@ -454,7 +475,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                                     ),
                                     onPressed: () async {
                                       logFirebaseEvent(
-                                          'SEARCH_PAGE_filter_alt_ICN_ON_TAP');
+                                          'MAP_PAGE_PAGE_filter_alt_ICN_ON_TAP');
                                       logFirebaseEvent(
                                           'IconButton_bottom_sheet');
                                       await showModalBottomSheet(
@@ -477,6 +498,22 @@ class _SearchWidgetState extends State<SearchWidget> {
                                           );
                                         },
                                       ).then((value) => safeSetState(() {}));
+
+                                      logFirebaseEvent(
+                                          'IconButton_update_page_state');
+                                      _model.mapDocList = functions
+                                          .getListOfBandsToShowOnMap(
+                                              containerBandsRecordList.toList(),
+                                              _model.showActiveGigsOnly,
+                                              _model.textController.text,
+                                              FFAppState().mockedLatLong,
+                                              FFAppState()
+                                                  .selectedGenres
+                                                  .toList(),
+                                              FFAppState().filterRange)
+                                          .toList()
+                                          .cast<BandsRecord>();
+                                      safeSetState(() {});
                                     },
                                   ),
                                 ),

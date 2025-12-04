@@ -42,45 +42,18 @@ void main() async {
       ));
       await GoogleFonts.pendingFonts();
 
-      await tester.pumpAndSettle(
-        const Duration(milliseconds: 3000),
-        EnginePhase.sendSemanticsUpdate,
-        const Duration(milliseconds: 4000),
-      );
-      await tester.tap(find.byIcon(Icons.music_note));
-      await tester.pumpAndSettle(
-        const Duration(milliseconds: 1000),
-        EnginePhase.sendSemanticsUpdate,
-        const Duration(milliseconds: 2000),
-      );
-      await tester.scrollUntilVisible(
-        find.byKey(const ValueKey('compactBand_y75d')),
-        100.0,
-        scrollable: find
-            .descendant(
-              of: find.byKey(const ValueKey('PageView_hgdn')),
-              matching: find.byType(Scrollable),
-            )
-            .first,
-      );
-      await tester.pumpAndSettle(
-        const Duration(milliseconds: 1000),
-        EnginePhase.sendSemanticsUpdate,
-        const Duration(milliseconds: 2000),
-      );
-      await tester.tap(find.byKey(const ValueKey('compactBand_y75d')));
-      await tester.pumpAndSettle(
-        const Duration(milliseconds: 1000),
-        EnginePhase.sendSemanticsUpdate,
-        const Duration(milliseconds: 2000),
-      );
-      expect(find.byKey(const ValueKey('Button_iclv')), findsWidgets);
-      await tester.tap(find.byKey(const ValueKey('Button_iclv')));
-      await tester.pumpAndSettle(
-        const Duration(milliseconds: 500),
-        EnginePhase.sendSemanticsUpdate,
-        const Duration(milliseconds: 2000),
-      );
+      await tester.pumpAndSettle(const Duration(milliseconds: 3000));
+      await tester.tap(find.byIcon(Icons.search_sharp));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
+      await tester.tap(find.descendant(
+        of: find.byKey(const ValueKey('compactBand_y75d')),
+        matching: find.byKey(const ValueKey('Image_l2r7')),
+      ));
+      await tester.pumpAndSettle(const Duration(milliseconds: 2000));
+      expect(find.byKey(const ValueKey('Text_5ah7')), findsWidgets);
+      await tester.tap(find.byKey(const ValueKey('Button_alwp')));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
       expect(find.text('Unfollow'), findsOneWidget);
     });
 
@@ -97,45 +70,14 @@ void main() async {
       ));
       await GoogleFonts.pendingFonts();
 
-      await tester.pumpAndSettle(
-        const Duration(milliseconds: 3000),
-        EnginePhase.sendSemanticsUpdate,
-        const Duration(milliseconds: 5000),
-      );
+      await tester.pumpAndSettle(const Duration(milliseconds: 3000));
       await tester.tap(find.byIcon(Icons.search_sharp));
-      await tester.pumpAndSettle(
-        const Duration(milliseconds: 2000),
-        EnginePhase.sendSemanticsUpdate,
-        const Duration(milliseconds: 2000),
-      );
-      await tester.scrollUntilVisible(
-        find.byKey(const ValueKey('AllBands_kmtd')),
-        100.0,
-        scrollable: find
-            .descendant(
-              of: find.byKey(const ValueKey('PageView_hgdn')),
-              matching: find.byType(Scrollable),
-            )
-            .first,
-      );
-      await tester.pumpAndSettle(
-        const Duration(milliseconds: 2000),
-        EnginePhase.sendSemanticsUpdate,
-        const Duration(milliseconds: 5000),
-      );
+      await tester.pumpAndSettle(const Duration(milliseconds: 2000));
       await tester.tap(find.byKey(const ValueKey('compactBand_y75d')));
-      await tester.pumpAndSettle(
-        const Duration(milliseconds: 1000),
-        EnginePhase.sendSemanticsUpdate,
-        const Duration(milliseconds: 2000),
-      );
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
       expect(find.text('Gigs'), findsOneWidget);
-      await tester.tap(find.byKey(const ValueKey('GigPostComponent_onvm')));
-      await tester.pumpAndSettle(
-        const Duration(milliseconds: 1000),
-        EnginePhase.sendSemanticsUpdate,
-        const Duration(milliseconds: 2000),
-      );
+      await tester.tap(find.byKey(const ValueKey('GigPostComponent_ut4l')));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
       expect(find.text('Gig Description'), findsOneWidget);
     });
 
@@ -152,34 +94,11 @@ void main() async {
       ));
       await GoogleFonts.pendingFonts();
 
-      await tester.pumpAndSettle(
-        const Duration(milliseconds: 2000),
-        EnginePhase.sendSemanticsUpdate,
-        const Duration(milliseconds: 5000),
-      );
-      await tester.scrollUntilVisible(
-        find.byKey(const ValueKey('AllBands_kmtd')),
-        100.0,
-        scrollable: find
-            .descendant(
-              of: find.byKey(const ValueKey('PageView_hgdn')),
-              matching: find.byType(Scrollable),
-            )
-            .first,
-      );
-      await tester.pumpAndSettle(
-        const Duration(milliseconds: 1000),
-        EnginePhase.sendSemanticsUpdate,
-        const Duration(milliseconds: 2000),
-      );
+      await tester.pumpAndSettle(const Duration(milliseconds: 2000));
       await tester.tap(find.byKey(const ValueKey('compactBand_y75d')));
-      await tester.pumpAndSettle(
-        const Duration(milliseconds: 1000),
-        EnginePhase.sendSemanticsUpdate,
-        const Duration(milliseconds: 2000),
-      );
-      expect(find.byKey(const ValueKey('Icon_q5u3')), findsOneWidget);
-      await tester.tap(find.byKey(const ValueKey('Icon_q5u3')));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
+      expect(find.byKey(const ValueKey('Text_5ah7')), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('Icon_ud1x')));
       await tester.pumpAndSettle(
         const Duration(milliseconds: 2000),
         EnginePhase.sendSemanticsUpdate,
@@ -205,7 +124,7 @@ void main() async {
 
       await tester.tap(find.byKey(const ValueKey('Button_wf9y')));
       await tester.pumpAndSettle(const Duration(milliseconds: 5000));
-      expect(find.byKey(const ValueKey('PageTitle_dzoe')), findsWidgets);
+      expect(find.byKey(const ValueKey('UNDEFINED')), findsWidgets);
     });
 
     testWidgets('Successful BandCreation', (WidgetTester tester) async {
@@ -220,15 +139,15 @@ void main() async {
       await GoogleFonts.pendingFonts();
 
       await tester.enterText(
-          find.byKey(const ValueKey('BandName_08xy')), 'LargeMango');
+          find.byKey(const ValueKey('UNDEFINED')), 'LargeMango');
       await tester.enterText(
-          find.byKey(const ValueKey('Location_21lp')), 'Providence');
-      await tester.tap(find.byKey(const ValueKey('locationsearch_ygz4')));
+          find.byKey(const ValueKey('UNDEFINED')), 'Providence');
+      await tester.tap(find.byKey(const ValueKey('UNDEFINED')));
       await tester.enterText(
-          find.byKey(const ValueKey('Genre_i06m')), 'old man rock');
-      await tester.tap(find.byKey(const ValueKey('Button_xpc6')));
+          find.byKey(const ValueKey('UNDEFINED')), 'old man rock');
+      await tester.tap(find.byKey(const ValueKey('UNDEFINED')));
       await tester.pumpAndSettle(const Duration(milliseconds: 5000));
-      expect(find.byKey(const ValueKey('Profile_yneg')), findsWidgets);
+      expect(find.byKey(const ValueKey('UNDEFINED')), findsWidgets);
     });
 
     testWidgets('Not Sufficient Fields', (WidgetTester tester) async {
@@ -242,7 +161,7 @@ void main() async {
       ));
       await GoogleFonts.pendingFonts();
 
-      await tester.tap(find.byKey(const ValueKey('Button_xpc6')));
+      await tester.tap(find.byKey(const ValueKey('UNDEFINED')));
       expect(find.text('Error'), findsNothing);
     });
   });

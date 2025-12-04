@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/band_posts/band_posts_widget.dart';
+import '/components/n_a_vbar/n_a_vbar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).primaryText,
         body: SafeArea(
           top: true,
           child: Container(
@@ -108,15 +109,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             .titleMedium
                                             .fontStyle,
                                       ),
-                                ),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.asset(
-                                    'assets/images/Screenshot_2025-10-18_234436.png',
-                                    width: 60.0,
-                                    height: 60.0,
-                                    fit: BoxFit.cover,
-                                  ),
                                 ),
                               ],
                             ),
@@ -206,6 +198,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                     ),
                   ),
+                ),
+                wrapWithModel(
+                  model: _model.nAVbarModel,
+                  updateCallback: () => safeSetState(() {}),
+                  child: NAVbarWidget(),
                 ),
               ],
             ),

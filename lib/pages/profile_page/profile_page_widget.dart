@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/gig_post_component/gig_post_component_widget.dart';
+import '/components/n_a_vbar/n_a_vbar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -59,7 +60,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
           // Customize what your widget looks like when it's loading.
           if (!snapshot.hasData) {
             return Scaffold(
-              backgroundColor: FlutterFlowTheme.of(context).secondary,
+              backgroundColor: FlutterFlowTheme.of(context).primaryText,
               body: Center(
                 child: SizedBox(
                   width: 50.0,
@@ -83,7 +84,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
             },
             child: Scaffold(
               key: scaffoldKey,
-              backgroundColor: FlutterFlowTheme.of(context).secondary,
+              backgroundColor: FlutterFlowTheme.of(context).primaryText,
               body: SafeArea(
                 top: true,
                 child: Align(
@@ -93,6 +94,54 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Align(
+                        alignment: AlignmentDirectional(1.0, 0.0),
+                        child: FFButtonWidget(
+                          onPressed: () {
+                            print('Button pressed ...');
+                          },
+                          text: 'settings',
+                          icon: Icon(
+                            Icons.settings_sharp,
+                            size: 15.0,
+                          ),
+                          options: FFButtonOptions(
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 0.0, 16.0, 0.0),
+                            iconAlignment: IconAlignment.end,
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconColor: FlutterFlowTheme.of(context).primary,
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  font: GoogleFonts.jaldi(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .fontStyle,
+                                  ),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontStyle,
+                                ),
+                            elevation: 0.0,
+                            borderRadius: BorderRadius.circular(24.0),
+                            hoverColor: FlutterFlowTheme.of(context).tertiary,
+                            hoverTextColor:
+                                FlutterFlowTheme.of(context).tertiary,
+                          ),
+                        ),
+                      ),
                       Container(
                         width: 120.0,
                         height: 120.0,
@@ -117,7 +166,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                         style: FlutterFlowTheme.of(context)
                             .headlineMedium
                             .override(
-                              font: GoogleFonts.jockeyOne(
+                              font: GoogleFonts.newRocker(
                                 fontWeight: FontWeight.w300,
                                 fontStyle: FlutterFlowTheme.of(context)
                                     .headlineMedium
@@ -131,6 +180,58 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                                   .fontStyle,
                             ),
                       ),
+                      Align(
+                        alignment: AlignmentDirectional(0.0, 0.0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 20.0),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              logFirebaseEvent(
+                                  'PROFILE_PAGE_PAGE_SIGN_OUT_BTN_ON_TAP');
+                              logFirebaseEvent('Button_navigate_to');
+
+                              context.pushNamed(LoginWidget.routeName);
+                            },
+                            text: 'Sign Out',
+                            options: FFButtonOptions(
+                              width: 76.0,
+                              height: 40.0,
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0.0, 16.0, 0.0),
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).secondary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    font: GoogleFonts.jaldi(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .fontStyle,
+                                    ),
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .fontStyle,
+                                  ),
+                              elevation: 0.0,
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primary,
+                                width: 5.0,
+                              ),
+                              borderRadius: BorderRadius.circular(24.0),
+                            ),
+                          ),
+                        ),
+                      ),
                       Expanded(
                         child: Column(
                           children: [
@@ -140,7 +241,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                                 labelColor:
                                     FlutterFlowTheme.of(context).primary,
                                 unselectedLabelColor:
-                                    FlutterFlowTheme.of(context).primaryText,
+                                    FlutterFlowTheme.of(context).tertiary,
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .titleMedium
                                     .override(
@@ -206,7 +307,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                                     child: AnimatedContainer(
                                       duration: Duration(milliseconds: 100),
                                       curve: Curves.easeIn,
-                                      height: 0.32,
+                                      height: 0.3,
                                       decoration: BoxDecoration(
                                         gradient: LinearGradient(
                                           colors: [
@@ -358,8 +459,18 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                                       width: 300.0,
                                       height: 350.0,
                                       decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                            FlutterFlowTheme.of(context)
+                                                .secondary
+                                          ],
+                                          stops: [0.0, 1.0],
+                                          begin:
+                                              AlignmentDirectional(0.0, -1.0),
+                                          end: AlignmentDirectional(0, 1.0),
+                                        ),
                                         borderRadius:
                                             BorderRadius.circular(24.0),
                                         shape: BoxShape.rectangle,
@@ -458,63 +569,11 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 20.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              logFirebaseEvent(
-                                  'PROFILE_PAGE_PAGE_SIGN_OUT_BTN_ON_TAP');
-                              logFirebaseEvent('Button_navigate_to');
-
-                              context.pushNamed(
-                                LoginWidget.routeName,
-                                extra: <String, dynamic>{
-                                  kTransitionInfoKey: TransitionInfo(
-                                    hasTransition: true,
-                                    transitionType: PageTransitionType.fade,
-                                  ),
-                                },
-                              );
-                            },
-                            text: 'Sign Out',
-                            options: FFButtonOptions(
-                              width: 76.0,
-                              height: 40.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 0.0, 16.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).secondary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    font: GoogleFonts.jaldi(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontStyle,
-                                    ),
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontStyle,
-                                  ),
-                              elevation: 0.0,
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primary,
-                                width: 5.0,
-                              ),
-                              borderRadius: BorderRadius.circular(24.0),
-                            ),
-                          ),
+                        alignment: AlignmentDirectional(0.0, 1.0),
+                        child: wrapWithModel(
+                          model: _model.nAVbarModel,
+                          updateCallback: () => safeSetState(() {}),
+                          child: NAVbarWidget(),
                         ),
                       ),
                     ].divide(SizedBox(height: 24.0)),

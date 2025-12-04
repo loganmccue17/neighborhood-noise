@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -74,17 +75,23 @@ class _CompactBandWidgetState extends State<CompactBandWidget> {
           highlightColor: Colors.transparent,
           onTap: () async {
             logFirebaseEvent('COMPACT_BAND_Container_3kecoplq_ON_TAP');
-            logFirebaseEvent('Container_navigate_to');
+            if (widget.bandRef != currentUserDocument?.userBand) {
+              logFirebaseEvent('Container_navigate_to');
 
-            context.pushNamed(
-              BandProfilePageREADONLYWidget.routeName,
-              queryParameters: {
-                'bandRef': serializeParam(
-                  widget.bandRef,
-                  ParamType.DocumentReference,
-                ),
-              }.withoutNulls,
-            );
+              context.pushNamed(
+                BandProfilePageREADONLYWidget.routeName,
+                queryParameters: {
+                  'bandRef': serializeParam(
+                    widget.bandRef,
+                    ParamType.DocumentReference,
+                  ),
+                }.withoutNulls,
+              );
+            } else {
+              logFirebaseEvent('Container_navigate_to');
+
+              context.pushNamed(BandProfilePageWidget.routeName);
+            }
           },
           child: Container(
             width: 300.0,
@@ -118,6 +125,7 @@ class _CompactBandWidgetState extends State<CompactBandWidget> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(30.0),
                           child: Image.network(
+                            key: ValueKey('Image_l2r7'),
                             containerBandsRecord.bandPhotoUrl,
                             width: 30.0,
                             height: 30.0,

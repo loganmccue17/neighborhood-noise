@@ -8,15 +8,15 @@ import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
 
 import 'backend/firebase/firebase_config.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
+
+  final environmentValues = FFDevEnvironmentValues();
+  await environmentValues.initialize();
 
   await initFirebase();
 
@@ -120,92 +120,6 @@ class _MyAppState extends State<MyApp> {
       ),
       themeMode: _themeMode,
       routerConfig: _router,
-    );
-  }
-}
-
-class NavBarPage extends StatefulWidget {
-  NavBarPage({
-    Key? key,
-    this.initialPage,
-    this.page,
-    this.disableResizeToAvoidBottomInset = false,
-  }) : super(key: key);
-
-  final String? initialPage;
-  final Widget? page;
-  final bool disableResizeToAvoidBottomInset;
-
-  @override
-  _NavBarPageState createState() => _NavBarPageState();
-}
-
-/// This is the private State class that goes with NavBarPage.
-class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'HomePage';
-  late Widget? _currentPage;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentPageName = widget.initialPage ?? _currentPageName;
-    _currentPage = widget.page;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final tabs = {
-      'HomePage': HomePageWidget(),
-      'Search': SearchWidget(),
-      'band_profile_page': BandProfilePageWidget(),
-      'profile_page': ProfilePageWidget(),
-    };
-    final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
-
-    return Scaffold(
-      resizeToAvoidBottomInset: !widget.disableResizeToAvoidBottomInset,
-      body: _currentPage ?? tabs[_currentPageName],
-      bottomNavigationBar: GNav(
-        selectedIndex: currentIndex,
-        onTabChange: (i) => safeSetState(() {
-          _currentPage = null;
-          _currentPageName = tabs.keys.toList()[i];
-        }),
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
-        color: FlutterFlowTheme.of(context).secondaryText,
-        activeColor: FlutterFlowTheme.of(context).primary,
-        tabBackgroundColor: Color(0x00000000),
-        tabBorderRadius: 100.0,
-        tabMargin: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-        padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 5.0),
-        gap: 0.0,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        duration: Duration(milliseconds: 10),
-        haptic: true,
-        tabs: [
-          GButton(
-            icon: Icons.home_outlined,
-            text: 'Home',
-            iconSize: 30.0,
-          ),
-          GButton(
-            icon:
-                currentIndex == 1 ? Icons.search_rounded : Icons.search_rounded,
-            text: 'Search',
-            iconSize: 30.0,
-          ),
-          GButton(
-            icon: Icons.music_note,
-            text: 'Home',
-            iconSize: 30.0,
-          ),
-          GButton(
-            icon: Icons.person_2,
-            text: 'Profile',
-            iconSize: 30.0,
-          )
-        ],
-      ),
     );
   }
 }

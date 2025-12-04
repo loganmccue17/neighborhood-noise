@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -262,11 +263,22 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                         min: 5.0,
                         max: 100.0,
                         value: _model.sliderValue ??= 25.0,
-                        label: _model.sliderValue?.toStringAsFixed(4),
+                        label: _model.sliderValue?.toStringAsFixed(1),
                         divisions: 19,
                         onChanged: (newValue) {
-                          newValue = double.parse(newValue.toStringAsFixed(4));
+                          newValue = double.parse(newValue.toStringAsFixed(1));
                           safeSetState(() => _model.sliderValue = newValue);
+                          EasyDebounce.debounce(
+                            '_model.sliderValue',
+                            Duration(milliseconds: 100),
+                            () async {
+                              logFirebaseEvent(
+                                  'FILTER_SHEET_Slider_1wnow5as_ON_FORM_WID');
+                              logFirebaseEvent('Slider_update_app_state');
+                              FFAppState().filterRange = _model.sliderValue!;
+                              safeSetState(() {});
+                            },
+                          );
                         },
                       ),
                     ),
@@ -330,6 +342,8 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                     logFirebaseEvent('Button_update_app_state');
                     FFAppState().showActiveGigsOnly = _model.tempActiveGigsOnly;
                     safeSetState(() {});
+                    logFirebaseEvent('Button_rebuild_component');
+                    _model.updatePage(() {});
                     logFirebaseEvent('Button_bottom_sheet');
                     Navigator.pop(context);
                   },

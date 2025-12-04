@@ -1,4 +1,6 @@
 import 'dart:convert';
+import '../cloud_functions/cloud_functions.dart';
+
 import 'package:flutter/foundation.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
@@ -13,20 +15,17 @@ class GeocodingAPICall {
     String? add = 'kingston',
     String? keyinput = 'AIzaSyC0pE-GmaOBjSzyBjQ3wvKIFE7Uw_wHSRA',
   }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'GeocodingAPI',
-      apiUrl:
-          'https://maps.googleapis.com/maps/api/geocode/json?address=${add}&key=${keyinput}',
-      callType: ApiCallType.GET,
-      headers: {},
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    final response = await makeCloudCall(
+      _kPrivateApiFunctionName,
+      {
+        'callName': 'GeocodingAPICall',
+        'variables': {
+          'add': add,
+          'keyinput': keyinput,
+        },
+      },
     );
+    return ApiCallResponse.fromCloudCallResponse(response);
   }
 }
 
