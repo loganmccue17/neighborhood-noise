@@ -217,27 +217,92 @@ void main() async {
     });
   });
 
-  testWidgets('US1', (WidgetTester tester) async {
-    _overrideOnError();
+  group('US1', () {
+    testWidgets('Successful Login', (WidgetTester tester) async {
+      _overrideOnError();
 
-    await tester.pumpWidget(ChangeNotifierProvider(
-      create: (context) => FFAppState(),
-      child: const MyApp(),
-    ));
-    await GoogleFonts.pendingFonts();
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (context) => FFAppState(),
+        child: const MyApp(),
+      ));
+      await GoogleFonts.pendingFonts();
 
-    await tester.pumpAndSettle(const Duration(milliseconds: 10000));
-    await tester.tap(find.text('Sign Up'));
-    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
-    await tester.enterText(
-        find.byKey(const ValueKey('Email_46fn')), 'myemail@gmail.com');
-    await tester.enterText(
-        find.byKey(const ValueKey('CreatePass_vgie')), 'password');
-    await tester.enterText(
-        find.byKey(const ValueKey('Confirmpass_usja')), 'password');
-    await tester.tap(find.byKey(const ValueKey('Signupbutton_g1d9')));
-    await tester.pumpAndSettle(const Duration(milliseconds: 5000));
-    expect(find.byKey(const ValueKey('PageTitle_muey')), findsOneWidget);
+      await tester.pumpAndSettle(const Duration(milliseconds: 10000));
+      await tester.tap(find.text('Sign Up'));
+      await tester.pumpAndSettle(const Duration(milliseconds: 5000));
+      await tester.enterText(
+          find.byKey(const ValueKey('Email_46fn')), 'myemail@gmail.com');
+      await tester.enterText(
+          find.byKey(const ValueKey('CreatePass_vgie')), 'password');
+      await tester.enterText(
+          find.byKey(const ValueKey('Confirmpass_usja')), 'password');
+      await tester.tap(find.byKey(const ValueKey('Signupbutton_g1d9')));
+      await tester.pumpAndSettle(const Duration(milliseconds: 5000));
+      expect(find.byKey(const ValueKey('PageTitle_muey')), findsOneWidget);
+    });
+
+    testWidgets('Invalid Email Address Format', (WidgetTester tester) async {
+      _overrideOnError();
+
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (context) => FFAppState(),
+        child: MyApp(
+          entryPage: SignupWidget(),
+        ),
+      ));
+      await GoogleFonts.pendingFonts();
+
+      await tester.enterText(
+          find.byKey(const ValueKey('Email_46fn')), 'test.email');
+      await tester.enterText(
+          find.byKey(const ValueKey('CreatePass_vgie')), '123456');
+      await tester.enterText(
+          find.byKey(const ValueKey('Confirmpass_usja')), '123456');
+      await tester.tap(find.byKey(const ValueKey('Signupbutton_g1d9')));
+      expect(find.text('error'), findsWidgets);
+    });
+
+    testWidgets('Account Already Exists', (WidgetTester tester) async {
+      _overrideOnError();
+
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (context) => FFAppState(),
+        child: MyApp(
+          entryPage: SignupWidget(),
+        ),
+      ));
+      await GoogleFonts.pendingFonts();
+
+      await tester.enterText(
+          find.byKey(const ValueKey('Email_46fn')), 'myemail@gmail.com');
+      await tester.enterText(
+          find.byKey(const ValueKey('CreatePass_vgie')), '123456');
+      await tester.enterText(
+          find.byKey(const ValueKey('Confirmpass_usja')), '123456');
+      await tester.tap(find.byKey(const ValueKey('Signupbutton_g1d9')));
+      expect(find.text('error'), findsWidgets);
+    });
+
+    testWidgets('Weak Password', (WidgetTester tester) async {
+      _overrideOnError();
+
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (context) => FFAppState(),
+        child: MyApp(
+          entryPage: SignupWidget(),
+        ),
+      ));
+      await GoogleFonts.pendingFonts();
+
+      await tester.enterText(
+          find.byKey(const ValueKey('Email_46fn')), 'myemail@gmail.com');
+      await tester.enterText(
+          find.byKey(const ValueKey('CreatePass_vgie')), '12');
+      await tester.enterText(
+          find.byKey(const ValueKey('Confirmpass_usja')), '12');
+      await tester.tap(find.byKey(const ValueKey('Signupbutton_g1d9')));
+      expect(find.text('error'), findsWidgets);
+    });
   });
 }
 

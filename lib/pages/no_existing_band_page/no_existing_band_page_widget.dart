@@ -81,7 +81,7 @@ class _NoExistingBandPageWidgetState extends State<NoExistingBandPageWidget> {
                             16.0, 0.0, 16.0, 0.0),
                         iconPadding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).secondary,
+                        color: FlutterFlowTheme.of(context).primaryText,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   font: GoogleFonts.jaldi(
@@ -121,13 +121,19 @@ class _NoExistingBandPageWidgetState extends State<NoExistingBandPageWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/ChatGPT_Image_Nov_10,_2025,_09_46_37_PM.png',
-                              width: 299.8,
-                              height: 168.5,
-                              fit: BoxFit.cover,
+                          Flexible(
+                            child: Align(
+                              alignment: AlignmentDirectional(-1.0, 0.0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.asset(
+                                  'assets/images/ChatGPT_Image_Nov_10,_2025,_09_46_37_PM.png',
+                                  width: 304.8,
+                                  height: 221.2,
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment(0.0, 0.0),
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -149,15 +155,6 @@ class _NoExistingBandPageWidgetState extends State<NoExistingBandPageWidget> {
                                 fit: BoxFit.fitWidth,
                                 alignment: Alignment(0.0, 0.0),
                               ),
-                            ),
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(24.0),
-                            child: Image.asset(
-                              'assets/images/rockshows.webp',
-                              width: double.infinity,
-                              height: double.infinity,
-                              fit: BoxFit.cover,
                             ),
                           ),
                           ClipRRect(

@@ -48,7 +48,6 @@ class _SearchWidgetState extends State<SearchWidget> {
               _model.prefilteredList!.toList(),
               false,
               '',
-              FFAppState().mockedLatLong,
               FFAppState().selectedGenres.toList(),
               FFAppState().filterRange)
           .toList()
@@ -181,12 +180,9 @@ class _SearchWidgetState extends State<SearchWidget> {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 12.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    Container(
+                      width: 300.0,
+                      child: Stack(
                         children: [
                           Align(
                             alignment: AlignmentDirectional(0.0, 0.0),
@@ -206,7 +202,6 @@ class _SearchWidgetState extends State<SearchWidget> {
                                               containerBandsRecordList.toList(),
                                               _model.showActiveGigsOnly,
                                               _model.textController.text,
-                                              FFAppState().mockedLatLong,
                                               FFAppState()
                                                   .selectedGenres
                                                   .toList(),
@@ -341,6 +336,48 @@ class _SearchWidgetState extends State<SearchWidget> {
                               }),
                             ),
                           ),
+                          Align(
+                            alignment: AlignmentDirectional(1.0, 0.0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 5.0, 10.0, 0.0),
+                              child: FlutterFlowIconButton(
+                                borderRadius: 8.0,
+                                buttonSize: 35.0,
+                                icon: Icon(
+                                  Icons.filter_alt,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 24.0,
+                                ),
+                                onPressed: () async {
+                                  logFirebaseEvent(
+                                      'SEARCH_PAGE_filter_alt_ICN_ON_TAP');
+                                  logFirebaseEvent('IconButton_bottom_sheet');
+                                  await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    enableDrag: false,
+                                    context: context,
+                                    builder: (context) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          FocusScope.of(context).unfocus();
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                        },
+                                        child: Padding(
+                                          padding:
+                                              MediaQuery.viewInsetsOf(context),
+                                          child: FilterSheetWidget(),
+                                        ),
+                                      );
+                                    },
+                                  ).then((value) => safeSetState(() {}));
+                                },
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -355,8 +392,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                                 width: 300.0,
                                 height: 500.0,
                                 decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
+                                  color: FlutterFlowTheme.of(context).tertiary,
                                   borderRadius: BorderRadius.circular(20.0),
                                   border: Border.all(
                                     color: FlutterFlowTheme.of(context).primary,
@@ -436,49 +472,6 @@ class _SearchWidgetState extends State<SearchWidget> {
                                       },
                                     ),
                                   ],
-                                ),
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(1.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 5.0, 60.0, 0.0),
-                                  child: FlutterFlowIconButton(
-                                    borderRadius: 8.0,
-                                    buttonSize: 20.0,
-                                    icon: Icon(
-                                      Icons.filter_alt,
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      size: 15.0,
-                                    ),
-                                    onPressed: () async {
-                                      logFirebaseEvent(
-                                          'SEARCH_PAGE_filter_alt_ICN_ON_TAP');
-                                      logFirebaseEvent(
-                                          'IconButton_bottom_sheet');
-                                      await showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        backgroundColor: Colors.transparent,
-                                        enableDrag: false,
-                                        context: context,
-                                        builder: (context) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              FocusScope.of(context).unfocus();
-                                              FocusManager.instance.primaryFocus
-                                                  ?.unfocus();
-                                            },
-                                            child: Padding(
-                                              padding: MediaQuery.viewInsetsOf(
-                                                  context),
-                                              child: FilterSheetWidget(),
-                                            ),
-                                          );
-                                        },
-                                      ).then((value) => safeSetState(() {}));
-                                    },
-                                  ),
                                 ),
                               ),
                             ],

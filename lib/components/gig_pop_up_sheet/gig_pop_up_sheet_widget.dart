@@ -8,23 +8,23 @@ import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'band_pop_up_sheet_model.dart';
-export 'band_pop_up_sheet_model.dart';
+import 'gig_pop_up_sheet_model.dart';
+export 'gig_pop_up_sheet_model.dart';
 
-class BandPopUpSheetWidget extends StatefulWidget {
-  const BandPopUpSheetWidget({
+class GigPopUpSheetWidget extends StatefulWidget {
+  const GigPopUpSheetWidget({
     super.key,
-    required this.bandDisplaying,
+    required this.gigDisplaying,
   });
 
-  final BandsRecord? bandDisplaying;
+  final GigsRecord? gigDisplaying;
 
   @override
-  State<BandPopUpSheetWidget> createState() => _BandPopUpSheetWidgetState();
+  State<GigPopUpSheetWidget> createState() => _GigPopUpSheetWidgetState();
 }
 
-class _BandPopUpSheetWidgetState extends State<BandPopUpSheetWidget> {
-  late BandPopUpSheetModel _model;
+class _GigPopUpSheetWidgetState extends State<GigPopUpSheetWidget> {
+  late GigPopUpSheetModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -35,18 +35,21 @@ class _BandPopUpSheetWidgetState extends State<BandPopUpSheetWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => BandPopUpSheetModel());
+    _model = createModel(context, () => GigPopUpSheetModel());
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('BAND_POP_UP_SHEET_bandPopUpSheet_ON_INIT');
+      logFirebaseEvent('GIG_POP_UP_SHEET_gigPopUpSheet_ON_INIT_S');
+      logFirebaseEvent('gigPopUpSheet_backend_call');
+      _model.bandPostedDocument =
+          await BandsRecord.getDocumentOnce(widget.gigDisplaying!.bandPosted!);
       if ((currentUserDocument?.followedbands.toList() ?? [])
-          .contains(widget.bandDisplaying?.reference)) {
-        logFirebaseEvent('bandPopUpSheet_update_component_state');
+          .contains(widget.gigDisplaying?.bandPosted)) {
+        logFirebaseEvent('gigPopUpSheet_update_component_state');
         _model.isFollowing = true;
         safeSetState(() {});
       } else {
-        logFirebaseEvent('bandPopUpSheet_update_component_state');
+        logFirebaseEvent('gigPopUpSheet_update_component_state');
         _model.isFollowing = false;
         safeSetState(() {});
       }
@@ -96,24 +99,21 @@ class _BandPopUpSheetWidgetState extends State<BandPopUpSheetWidget> {
                       highlightColor: Colors.transparent,
                       onTap: () async {
                         logFirebaseEvent(
-                            'BAND_POP_UP_SHEET_Text_m3ltwss3_ON_TAP');
+                            'GIG_POP_UP_SHEET_Text_uch10w31_ON_TAP');
                         logFirebaseEvent('Text_navigate_to');
 
                         context.pushNamed(
                           BandProfilePageREADONLYWidget.routeName,
                           queryParameters: {
                             'bandRef': serializeParam(
-                              widget.bandDisplaying?.reference,
+                              widget.gigDisplaying?.bandPosted,
                               ParamType.DocumentReference,
                             ),
                           }.withoutNulls,
                         );
                       },
                       child: Text(
-                        valueOrDefault<String>(
-                          widget.bandDisplaying?.bandName,
-                          'Band',
-                        ),
+                        _model.bandPostedDocument!.bandName,
                         style:
                             FlutterFlowTheme.of(context).headlineSmall.override(
                                   font: GoogleFonts.jockeyOne(
@@ -145,7 +145,7 @@ class _BandPopUpSheetWidgetState extends State<BandPopUpSheetWidget> {
                       ),
                       onPressed: () async {
                         logFirebaseEvent(
-                            'BAND_POP_UP_SHEET_COMP_close_ICN_ON_TAP');
+                            'GIG_POP_UP_SHEET_COMP_close_ICN_ON_TAP');
                         logFirebaseEvent('IconButton_bottom_sheet');
                         Navigator.pop(context);
                       },
@@ -166,23 +166,51 @@ class _BandPopUpSheetWidgetState extends State<BandPopUpSheetWidget> {
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: FlutterFlowTheme.of(context).primary,
-                              width: 2.0,
+                              width: 3.0,
                             ),
                           ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(24.0),
-                            child: Image.network(
-                              widget.bandDisplaying!.bandPhotoUrl,
-                              width: 100.0,
-                              height: 100.0,
-                              fit: BoxFit.cover,
-                            ),
+                          child: Stack(
+                            children: [
+                              InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  logFirebaseEvent(
+                                      'GIG_POP_UP_SHEET_CircleImage_q47s9i51_ON');
+                                  logFirebaseEvent('CircleImage_navigate_to');
+
+                                  context.pushNamed(
+                                    BandProfilePageREADONLYWidget.routeName,
+                                    queryParameters: {
+                                      'bandRef': serializeParam(
+                                        _model.bandPostedDocument?.reference,
+                                        ParamType.DocumentReference,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+                                },
+                                child: Container(
+                                  width: 200.0,
+                                  height: 200.0,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Image.network(
+                                    _model.bandPostedDocument!.bandPhotoUrl,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
                     if ((currentUserDocument?.usersBands.toList() ?? [])
-                            .contains(widget.bandDisplaying?.reference) ==
+                            .contains(_model.bandPostedDocument?.reference) ==
                         false)
                       AuthUserStreamWidget(
                         builder: (context) => Stack(
@@ -191,21 +219,21 @@ class _BandPopUpSheetWidgetState extends State<BandPopUpSheetWidget> {
                               FFButtonWidget(
                                 onPressed: () async {
                                   logFirebaseEvent(
-                                      'BAND_POP_UP_SHEET_FollowButton_ON_TAP');
+                                      'GIG_POP_UP_SHEET_FollowButton_ON_TAP');
                                   logFirebaseEvent('FollowButton_backend_call');
 
                                   await currentUserReference!.update({
                                     ...mapToFirestore(
                                       {
                                         'followedbands': FieldValue.arrayUnion([
-                                          widget.bandDisplaying?.reference
+                                          widget.gigDisplaying?.bandPosted
                                         ]),
                                       },
                                     ),
                                   });
                                   logFirebaseEvent('FollowButton_backend_call');
 
-                                  await widget.bandDisplaying!.reference
+                                  await _model.bandPostedDocument!.reference
                                       .update({
                                     ...mapToFirestore(
                                       {
@@ -262,7 +290,7 @@ class _BandPopUpSheetWidgetState extends State<BandPopUpSheetWidget> {
                               FFButtonWidget(
                                 onPressed: () async {
                                   logFirebaseEvent(
-                                      'BAND_POP_UP_SHEET_UNFOLLOW_BTN_ON_TAP');
+                                      'GIG_POP_UP_SHEET_UNFOLLOW_BTN_ON_TAP');
                                   logFirebaseEvent('Button_backend_call');
 
                                   await currentUserReference!.update({
@@ -270,14 +298,14 @@ class _BandPopUpSheetWidgetState extends State<BandPopUpSheetWidget> {
                                       {
                                         'followedbands':
                                             FieldValue.arrayRemove([
-                                          widget.bandDisplaying?.reference
+                                          widget.gigDisplaying?.bandPosted
                                         ]),
                                       },
                                     ),
                                   });
                                   logFirebaseEvent('Button_backend_call');
 
-                                  await widget.bandDisplaying!.reference
+                                  await _model.bandPostedDocument!.reference
                                       .update({
                                     ...mapToFirestore(
                                       {
@@ -336,6 +364,94 @@ class _BandPopUpSheetWidgetState extends State<BandPopUpSheetWidget> {
                     Align(
                       alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Text(
+                        'Description',
+                        style:
+                            FlutterFlowTheme.of(context).titleMedium.override(
+                                  font: GoogleFonts.jaldi(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .titleMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .titleMedium
+                                        .fontStyle,
+                                  ),
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .fontStyle,
+                                ),
+                      ),
+                    ),
+                    Text(
+                      widget.gigDisplaying!.description,
+                      style: FlutterFlowTheme.of(context).bodyLarge.override(
+                            font: GoogleFonts.jaldi(
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodyLarge
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyLarge
+                                  .fontStyle,
+                            ),
+                            letterSpacing: 0.0,
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .bodyLarge
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyLarge
+                                .fontStyle,
+                          ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(-1.0, 0.0),
+                      child: Text(
+                        'Location',
+                        style:
+                            FlutterFlowTheme.of(context).titleMedium.override(
+                                  font: GoogleFonts.jaldi(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .titleMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .titleMedium
+                                        .fontStyle,
+                                  ),
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .fontStyle,
+                                ),
+                      ),
+                    ),
+                    Text(
+                      widget.gigDisplaying!.locationName,
+                      style: FlutterFlowTheme.of(context).bodyLarge.override(
+                            font: GoogleFonts.jaldi(
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodyLarge
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyLarge
+                                  .fontStyle,
+                            ),
+                            letterSpacing: 0.0,
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .bodyLarge
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyLarge
+                                .fontStyle,
+                          ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(-1.0, 0.0),
+                      child: Text(
                         'Genre(s)',
                         style:
                             FlutterFlowTheme.of(context).titleMedium.override(
@@ -358,10 +474,7 @@ class _BandPopUpSheetWidgetState extends State<BandPopUpSheetWidget> {
                       ),
                     ),
                     Text(
-                      valueOrDefault<String>(
-                        widget.bandDisplaying?.genre,
-                        'Genreless',
-                      ),
+                      _model.bandPostedDocument!.genre,
                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                             font: GoogleFonts.jaldi(
                               fontWeight: FlutterFlowTheme.of(context)

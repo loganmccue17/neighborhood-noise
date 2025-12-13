@@ -39,9 +39,6 @@ class _ProfileCreationWidgetState extends State<ProfileCreationWidget> {
     _model.nameInputTextController ??= TextEditingController();
     _model.nameInputFocusNode ??= FocusNode();
 
-    _model.nicknameInputTextController ??= TextEditingController();
-    _model.nicknameInputFocusNode ??= FocusNode();
-
     _model.instrumentInputTextController ??= TextEditingController();
     _model.instrumentInputFocusNode ??= FocusNode();
 
@@ -93,7 +90,7 @@ class _ProfileCreationWidgetState extends State<ProfileCreationWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .displayMedium
                                 .override(
-                              font: GoogleFonts.jockeyOne(
+                              font: GoogleFonts.newRocker(
                                 fontWeight: FlutterFlowTheme.of(context)
                                     .displayMedium
                                     .fontWeight,
@@ -102,6 +99,7 @@ class _ProfileCreationWidgetState extends State<ProfileCreationWidget> {
                                     .fontStyle,
                               ),
                               color: FlutterFlowTheme.of(context).tertiary,
+                              fontSize: 35.0,
                               letterSpacing: 0.0,
                               fontWeight: FlutterFlowTheme.of(context)
                                   .displayMedium
@@ -358,118 +356,6 @@ class _ProfileCreationWidgetState extends State<ProfileCreationWidget> {
                                   .asValidator(context),
                             ),
                           ].divide(SizedBox(height: 30.0)),
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            TextFormField(
-                              controller: _model.nicknameInputTextController,
-                              focusNode: _model.nicknameInputFocusNode,
-                              autofocus: false,
-                              enabled: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                isDense: true,
-                                labelText: 'Nickname:',
-                                labelStyle: FlutterFlowTheme.of(context)
-                                    .titleMedium
-                                    .override(
-                                      font: GoogleFonts.jaldi(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontStyle,
-                                      ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontStyle,
-                                    ),
-                                hintStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      font: GoogleFonts.jaldi(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontStyle,
-                                      ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
-                                    ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0xFFFF9A1F),
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).error,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).error,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                filled: true,
-                                fillColor:
-                                    FlutterFlowTheme.of(context).tertiary,
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.jaldi(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    fontSize: 18.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                              cursorColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              enableInteractiveSelection: true,
-                              validator: _model
-                                  .nicknameInputTextControllerValidator
-                                  .asValidator(context),
-                            ),
-                          ],
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.max,
@@ -933,7 +819,7 @@ class _ProfileCreationWidgetState extends State<ProfileCreationWidget> {
                                     borderSide: BorderSide(
                                       color:
                                           FlutterFlowTheme.of(context).primary,
-                                      width: 5.0,
+                                      width: 3.0,
                                     ),
                                     borderRadius: BorderRadius.circular(24.0),
                                   ),
@@ -975,9 +861,6 @@ class _ProfileCreationWidgetState extends State<ProfileCreationWidget> {
                                                     createProfileDataRecordData(
                                               name: _model
                                                   .nameInputTextController.text,
-                                              nickname: _model
-                                                  .instrumentInputTextController
-                                                  .text,
                                               birthday: _model.datePicked,
                                               location: _model
                                                   .locationInputTextController
@@ -989,9 +872,6 @@ class _ProfileCreationWidgetState extends State<ProfileCreationWidget> {
                                                     createProfileDataRecordData(
                                                       name: _model
                                                           .nameInputTextController
-                                                          .text,
-                                                      nickname: _model
-                                                          .instrumentInputTextController
                                                           .text,
                                                       birthday:
                                                           _model.datePicked,
@@ -1007,7 +887,6 @@ class _ProfileCreationWidgetState extends State<ProfileCreationWidget> {
 
                                             await currentUserReference!
                                                 .update(createUsersRecordData(
-                                              hasBand: false,
                                               profileRefrence: _model
                                                   .profileDataRef?.reference,
                                               displayName: _model

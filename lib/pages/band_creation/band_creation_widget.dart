@@ -11,7 +11,6 @@ import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'band_creation_model.dart';
 export 'band_creation_model.dart';
 
@@ -94,7 +93,7 @@ class _BandCreationWidgetState extends State<BandCreationWidget> {
                       children: [
                         Align(
                           alignment: AlignmentDirectional(0.0, 0.0),
-                          child: GradientText(
+                          child: Text(
                             'Tell Us About The Band!',
                             style: FlutterFlowTheme.of(context)
                                 .headlineSmall
@@ -107,6 +106,7 @@ class _BandCreationWidgetState extends State<BandCreationWidget> {
                                         .headlineSmall
                                         .fontStyle,
                                   ),
+                                  color: FlutterFlowTheme.of(context).primary,
                                   fontSize: 30.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FlutterFlowTheme.of(context)
@@ -116,12 +116,6 @@ class _BandCreationWidgetState extends State<BandCreationWidget> {
                                       .headlineSmall
                                       .fontStyle,
                                 ),
-                            colors: [
-                              FlutterFlowTheme.of(context).primary,
-                              FlutterFlowTheme.of(context).tertiary
-                            ],
-                            gradientType: GradientType.radial,
-                            radius: 4.0,
                           ),
                         ),
                         Align(
@@ -1108,11 +1102,21 @@ class _BandCreationWidgetState extends State<BandCreationWidget> {
                                       }, bandsRecordReference);
                                       logFirebaseEvent('Button_backend_call');
 
-                                      await currentUserReference!
-                                          .update(createUsersRecordData(
-                                        hasBand: true,
-                                        userBand: _model.createdBand?.reference,
-                                      ));
+                                      await currentUserReference!.update({
+                                        ...mapToFirestore(
+                                          {
+                                            'users_bands':
+                                                FieldValue.arrayUnion([
+                                              _model.createdBand?.reference
+                                            ]),
+                                          },
+                                        ),
+                                      });
+                                      logFirebaseEvent(
+                                          'Button_update_app_state');
+                                      FFAppState().activeBand =
+                                          _model.createdBand?.reference;
+                                      safeSetState(() {});
                                       logFirebaseEvent('Button_navigate_to');
 
                                       context.pushNamed(

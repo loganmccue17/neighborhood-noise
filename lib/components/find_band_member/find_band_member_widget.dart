@@ -1,4 +1,3 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -6,6 +5,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'find_band_member_model.dart';
 export 'find_band_member_model.dart';
 
@@ -45,6 +45,8 @@ class _FindBandMemberWidgetState extends State<FindBandMemberWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Container(
       height: 250.0,
       decoration: BoxDecoration(
@@ -295,7 +297,7 @@ class _FindBandMemberWidgetState extends State<FindBandMemberWidget> {
                       alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Stack(
                         children: [
-                          if (_model.potentialMember?.hasBand == false)
+                          if (_model.potentialMember?.reference != null)
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -364,15 +366,17 @@ class _FindBandMemberWidgetState extends State<FindBandMemberWidget> {
                                         'FIND_BAND_MEMBER_ADD_MEMBER_BTN_ON_TAP');
                                     logFirebaseEvent('Button_backend_call');
 
-                                    await _model.foundUser!
-                                        .update(createUsersRecordData(
-                                      hasBand: true,
-                                      userBand: currentUserDocument?.userBand,
-                                    ));
+                                    await _model.foundUser!.update({
+                                      ...mapToFirestore(
+                                        {
+                                          'users_bands': FieldValue.arrayUnion(
+                                              [FFAppState().activeBand]),
+                                        },
+                                      ),
+                                    });
                                     logFirebaseEvent('Button_backend_call');
 
-                                    await currentUserDocument!.userBand!
-                                        .update({
+                                    await FFAppState().activeBand!.update({
                                       ...mapToFirestore(
                                         {
                                           'bandMembers': FieldValue.arrayUnion([
@@ -427,40 +431,6 @@ class _FindBandMemberWidgetState extends State<FindBandMemberWidget> {
                                   ),
                                 ),
                               ],
-                            ),
-                          if (_model.potentialMember?.hasBand == true)
-                            Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 8.0, 0.0, 0.0),
-                                child: Text(
-                                  'User Has Band Already',
-                                  style: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        font: GoogleFonts.jaldi(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .fontStyle,
-                                        ),
-                                        color:
-                                            FlutterFlowTheme.of(context).error,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontStyle,
-                                      ),
-                                ),
-                              ),
                             ),
                           if (_model.potentialMember?.reference == null)
                             Align(

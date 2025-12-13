@@ -35,10 +35,6 @@ class ProfileCreationModel extends FlutterFlowModel<ProfileCreationWidget> {
   FocusNode? nameInputFocusNode;
   TextEditingController? nameInputTextController;
   String? Function(BuildContext, String?)? nameInputTextControllerValidator;
-  // State field(s) for NicknameInput widget.
-  FocusNode? nicknameInputFocusNode;
-  TextEditingController? nicknameInputTextController;
-  String? Function(BuildContext, String?)? nicknameInputTextControllerValidator;
   // State field(s) for InstrumentInput widget.
   FocusNode? instrumentInputFocusNode;
   TextEditingController? instrumentInputTextController;
@@ -63,9 +59,6 @@ class ProfileCreationModel extends FlutterFlowModel<ProfileCreationWidget> {
   void dispose() {
     nameInputFocusNode?.dispose();
     nameInputTextController?.dispose();
-
-    nicknameInputFocusNode?.dispose();
-    nicknameInputTextController?.dispose();
 
     instrumentInputFocusNode?.dispose();
     instrumentInputTextController?.dispose();

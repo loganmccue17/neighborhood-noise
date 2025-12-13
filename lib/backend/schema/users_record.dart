@@ -71,16 +71,6 @@ class UsersRecord extends FirestoreRecord {
   DocumentReference? get profileRefrence => _profileRefrence;
   bool hasProfileRefrence() => _profileRefrence != null;
 
-  // "hasBand" field.
-  bool? _hasBand;
-  bool get hasBand => _hasBand ?? false;
-  bool hasHasBand() => _hasBand != null;
-
-  // "user_band" field.
-  DocumentReference? _userBand;
-  DocumentReference? get userBand => _userBand;
-  bool hasUserBand() => _userBand != null;
-
   // "liked_posts" field.
   List<DocumentReference>? _likedPosts;
   List<DocumentReference> get likedPosts => _likedPosts ?? const [];
@@ -96,6 +86,11 @@ class UsersRecord extends FirestoreRecord {
   String get userInstrument => _userInstrument ?? '';
   bool hasUserInstrument() => _userInstrument != null;
 
+  // "users_bands" field.
+  List<DocumentReference>? _usersBands;
+  List<DocumentReference> get usersBands => _usersBands ?? const [];
+  bool hasUsersBands() => _usersBands != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -108,11 +103,10 @@ class UsersRecord extends FirestoreRecord {
     _nPSString = snapshotData['NPS_String'] as String?;
     _npsGatePassed = snapshotData['npsGatePassed'] as bool?;
     _profileRefrence = snapshotData['profile_refrence'] as DocumentReference?;
-    _hasBand = snapshotData['hasBand'] as bool?;
-    _userBand = snapshotData['user_band'] as DocumentReference?;
     _likedPosts = getDataList(snapshotData['liked_posts']);
     _followedbands = getDataList(snapshotData['followedbands']);
     _userInstrument = snapshotData['user_instrument'] as String?;
+    _usersBands = getDataList(snapshotData['users_bands']);
   }
 
   static CollectionReference get collection =>
@@ -160,8 +154,6 @@ Map<String, dynamic> createUsersRecordData({
   String? nPSString,
   bool? npsGatePassed,
   DocumentReference? profileRefrence,
-  bool? hasBand,
-  DocumentReference? userBand,
   String? userInstrument,
 }) {
   final firestoreData = mapToFirestore(
@@ -177,8 +169,6 @@ Map<String, dynamic> createUsersRecordData({
       'NPS_String': nPSString,
       'npsGatePassed': npsGatePassed,
       'profile_refrence': profileRefrence,
-      'hasBand': hasBand,
-      'user_band': userBand,
       'user_instrument': userInstrument,
     }.withoutNulls,
   );
@@ -203,11 +193,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.nPSString == e2?.nPSString &&
         e1?.npsGatePassed == e2?.npsGatePassed &&
         e1?.profileRefrence == e2?.profileRefrence &&
-        e1?.hasBand == e2?.hasBand &&
-        e1?.userBand == e2?.userBand &&
         listEquality.equals(e1?.likedPosts, e2?.likedPosts) &&
         listEquality.equals(e1?.followedbands, e2?.followedbands) &&
-        e1?.userInstrument == e2?.userInstrument;
+        e1?.userInstrument == e2?.userInstrument &&
+        listEquality.equals(e1?.usersBands, e2?.usersBands);
   }
 
   @override
@@ -223,11 +212,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.nPSString,
         e?.npsGatePassed,
         e?.profileRefrence,
-        e?.hasBand,
-        e?.userBand,
         e?.likedPosts,
         e?.followedbands,
-        e?.userInstrument
+        e?.userInstrument,
+        e?.usersBands
       ]);
 
   @override

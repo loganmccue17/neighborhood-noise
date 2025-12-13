@@ -39,26 +39,29 @@ class CreatePostModel extends FlutterFlowModel<CreatePostWidget> {
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   String uploadedFileUrl_uploadDataOxk = '';
 
-  // Stores action output result for [Backend Call - Create Document] action in CreatePostButton widget.
-  PostsRecord? postDocRef;
   // State field(s) for PostDescriptionTextField widget.
   FocusNode? postDescriptionTextFieldFocusNode;
   TextEditingController? postDescriptionTextFieldTextController;
   String? Function(BuildContext, String?)?
       postDescriptionTextFieldTextControllerValidator;
+  // Stores action output result for [Backend Call - Create Document] action in CreatePostButton widget.
+  PostsRecord? postDocRef;
   // State field(s) for Location widget.
   FocusNode? locationFocusNode;
   TextEditingController? locationTextController;
   String? Function(BuildContext, String?)? locationTextControllerValidator;
-  // Stores action output result for [Backend Call - API (GeocodingAPI)] action in locationsearch widget.
+  // Stores action output result for [Backend Call - API (GeocodingAPI)] action in locationSearch widget.
   ApiCallResponse? apiResultfnt;
-  // Stores action output result for [Custom Action - latlong] action in locationsearch widget.
+  // Stores action output result for [Custom Action - latlong] action in locationSearch widget.
   LatLng? latlongobject;
   // State field(s) for GigDescription widget.
   FocusNode? gigDescriptionFocusNode;
   TextEditingController? gigDescriptionTextController;
   String? Function(BuildContext, String?)?
       gigDescriptionTextControllerValidator;
+  DateTime? datePicked;
+  // Stores action output result for [Backend Call - Read Document] action in Button widget.
+  BandsRecord? bandToPostToDoc;
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
   GigsRecord? gigPosting;
   // Model for NAVbar component.

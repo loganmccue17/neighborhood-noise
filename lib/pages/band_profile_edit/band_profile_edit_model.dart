@@ -56,9 +56,9 @@ class BandProfileEditModel extends FlutterFlowModel<BandProfileEditWidget> {
   FocusNode? bandLocFieldFocusNode;
   TextEditingController? bandLocFieldTextController;
   String? Function(BuildContext, String?)? bandLocFieldTextControllerValidator;
-  // Stores action output result for [Backend Call - API (GeocodingAPI)] action in locationsearch widget.
+  // Stores action output result for [Backend Call - API (GeocodingAPI)] action in IconButton widget.
   ApiCallResponse? apiResultfnt;
-  // Stores action output result for [Custom Action - latlong] action in locationsearch widget.
+  // Stores action output result for [Custom Action - latlong] action in IconButton widget.
   LatLng? latlongobject;
   // State field(s) for BandNameField widget.
   FocusNode? bandNameFieldFocusNode2;

@@ -2,12 +2,15 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/gig_post_component/gig_post_component_widget.dart';
 import '/components/n_a_vbar/n_a_vbar_widget.dart';
+import '/components/settings/settings_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'profile_page_model.dart';
 export 'profile_page_model.dart';
 
@@ -34,6 +37,19 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'profile_page'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('PROFILE_profile_page_ON_INIT_STATE');
+      if (FFAppState().activeBand == null) {
+        if ((currentUserDocument?.usersBands.toList() ?? []).isNotEmpty) {
+          logFirebaseEvent('profile_page_update_app_state');
+          FFAppState().activeBand =
+              (currentUserDocument?.usersBands.toList() ?? []).firstOrNull;
+          safeSetState(() {});
+        }
+      }
+    });
+
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
@@ -52,6 +68,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return AuthUserStreamWidget(
       builder: (context) => StreamBuilder<ProfileDataRecord>(
         stream: ProfileDataRecord.getDocument(
@@ -97,13 +115,36 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                       Align(
                         alignment: AlignmentDirectional(1.0, 0.0),
                         child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            logFirebaseEvent('PROFILE_PAGE_PAGE__BTN_ON_TAP');
+                            logFirebaseEvent('Button_bottom_sheet');
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              enableDrag: false,
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    FocusScope.of(context).unfocus();
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                  },
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: Container(
+                                      height: 300.0,
+                                      child: SettingsWidget(),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ).then((value) => safeSetState(() {}));
                           },
-                          text: 'settings',
+                          text: '',
                           icon: Icon(
                             Icons.settings_sharp,
-                            size: 15.0,
+                            size: 20.0,
                           ),
                           options: FFButtonOptions(
                             height: 40.0,
@@ -180,72 +221,32 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                                   .fontStyle,
                             ),
                       ),
-                      Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 20.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              logFirebaseEvent(
-                                  'PROFILE_PAGE_PAGE_SIGN_OUT_BTN_ON_TAP');
-                              logFirebaseEvent('Button_navigate_to');
-
-                              context.pushNamed(LoginWidget.routeName);
-                            },
-                            text: 'Sign Out',
-                            options: FFButtonOptions(
-                              width: 76.0,
-                              height: 40.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 0.0, 16.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).secondary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    font: GoogleFonts.jaldi(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontStyle,
-                                    ),
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontStyle,
-                                  ),
-                              elevation: 0.0,
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primary,
-                                width: 5.0,
-                              ),
-                              borderRadius: BorderRadius.circular(24.0),
-                            ),
-                          ),
-                        ),
-                      ),
                       Expanded(
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: Alignment(0.0, 0),
-                              child: TabBar(
-                                labelColor:
-                                    FlutterFlowTheme.of(context).primary,
-                                unselectedLabelColor:
-                                    FlutterFlowTheme.of(context).tertiary,
-                                labelStyle: FlutterFlowTheme.of(context)
-                                    .titleMedium
-                                    .override(
-                                      font: GoogleFonts.jaldi(
+                        child: Align(
+                          alignment: AlignmentDirectional(0.0, 0.0),
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment(0.0, 0),
+                                child: TabBar(
+                                  labelColor:
+                                      FlutterFlowTheme.of(context).primary,
+                                  unselectedLabelColor:
+                                      FlutterFlowTheme.of(context).tertiary,
+                                  labelStyle: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .override(
+                                        font: GoogleFonts.jaldi(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleMedium
+                                                  .fontStyle,
+                                        ),
+                                        letterSpacing: 0.0,
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .titleMedium
                                             .fontWeight,
@@ -253,185 +254,171 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                                             .titleMedium
                                             .fontStyle,
                                       ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
+                                  unselectedLabelStyle:
+                                      FlutterFlowTheme.of(context)
                                           .titleMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontStyle,
+                                          .override(
+                                            font: GoogleFonts.jaldi(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleMedium
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleMedium
+                                                    .fontStyle,
+                                          ),
+                                  indicatorColor:
+                                      FlutterFlowTheme.of(context).primary,
+                                  tabs: [
+                                    Tab(
+                                      text: 'Following',
                                     ),
-                                unselectedLabelStyle: FlutterFlowTheme.of(
-                                        context)
-                                    .titleMedium
-                                    .override(
-                                      font: GoogleFonts.jaldi(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontStyle,
-                                      ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontStyle,
+                                    Tab(
+                                      text: 'Concerts',
                                     ),
-                                indicatorColor:
-                                    FlutterFlowTheme.of(context).primary,
-                                tabs: [
-                                  Tab(
-                                    text: 'Following',
-                                  ),
-                                  Tab(
-                                    text: 'Concerts',
-                                  ),
-                                ],
-                                controller: _model.tabBarController,
-                                onTap: (i) async {
-                                  [() async {}, () async {}][i]();
-                                },
+                                  ],
+                                  controller: _model.tabBarController,
+                                  onTap: (i) async {
+                                    [() async {}, () async {}][i]();
+                                  },
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: TabBarView(
-                                controller: _model.tabBarController,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 20.0, 0.0, 0.0),
-                                    child: AnimatedContainer(
-                                      duration: Duration(milliseconds: 100),
-                                      curve: Curves.easeIn,
-                                      height: 0.3,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            FlutterFlowTheme.of(context)
+                              Expanded(
+                                child: TabBarView(
+                                  controller: _model.tabBarController,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          30.0, 20.0, 30.0, 0.0),
+                                      child: AnimatedContainer(
+                                        duration: Duration(milliseconds: 100),
+                                        curve: Curves.easeIn,
+                                        width: 300.0,
+                                        height: 350.0,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary
+                                            ],
+                                            stops: [0.0, 1.0],
+                                            begin:
+                                                AlignmentDirectional(0.0, -1.0),
+                                            end: AlignmentDirectional(0, 1.0),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
+                                          shape: BoxShape.rectangle,
+                                          border: Border.all(
+                                            color: FlutterFlowTheme.of(context)
                                                 .primary,
-                                            FlutterFlowTheme.of(context)
-                                                .secondary
-                                          ],
-                                          stops: [0.0, 1.0],
-                                          begin:
-                                              AlignmentDirectional(0.0, -1.0),
-                                          end: AlignmentDirectional(0, 1.0),
+                                          ),
                                         ),
-                                        borderRadius:
-                                            BorderRadius.circular(24.0),
-                                        shape: BoxShape.rectangle,
-                                        border: Border.all(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                        ),
-                                      ),
-                                      child: Align(
-                                        alignment:
-                                            AlignmentDirectional(-1.0, -1.0),
-                                        child: Builder(
-                                          builder: (context) {
-                                            final followedBands =
-                                                (currentUserDocument
-                                                            ?.followedbands
-                                                            .toList() ??
-                                                        [])
-                                                    .toList();
+                                        child: Align(
+                                          alignment:
+                                              AlignmentDirectional(-1.0, -1.0),
+                                          child: Builder(
+                                            builder: (context) {
+                                              final followedBands =
+                                                  (currentUserDocument
+                                                              ?.followedbands
+                                                              .toList() ??
+                                                          [])
+                                                      .toList();
 
-                                            return ListView.builder(
-                                              padding: EdgeInsets.zero,
-                                              shrinkWrap: true,
-                                              scrollDirection: Axis.vertical,
-                                              itemCount: followedBands.length,
-                                              itemBuilder: (context,
-                                                  followedBandsIndex) {
-                                                final followedBandsItem =
-                                                    followedBands[
-                                                        followedBandsIndex];
-                                                return StreamBuilder<
-                                                    BandsRecord>(
-                                                  stream:
-                                                      BandsRecord.getDocument(
-                                                          followedBandsItem),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 50.0,
-                                                          height: 50.0,
-                                                          child:
-                                                              CircularProgressIndicator(
-                                                            valueColor:
-                                                                AlwaysStoppedAnimation<
-                                                                    Color>(
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primary,
+                                              return ListView.builder(
+                                                padding: EdgeInsets.zero,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.vertical,
+                                                itemCount: followedBands.length,
+                                                itemBuilder: (context,
+                                                    followedBandsIndex) {
+                                                  final followedBandsItem =
+                                                      followedBands[
+                                                          followedBandsIndex];
+                                                  return StreamBuilder<
+                                                      BandsRecord>(
+                                                    stream:
+                                                        BandsRecord.getDocument(
+                                                            followedBandsItem),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      // Customize what your widget looks like when it's loading.
+                                                      if (!snapshot.hasData) {
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            width: 50.0,
+                                                            height: 50.0,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              valueColor:
+                                                                  AlwaysStoppedAnimation<
+                                                                      Color>(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      );
-                                                    }
-
-                                                    final textBandsRecord =
-                                                        snapshot.data!;
-
-                                                    return InkWell(
-                                                      splashColor:
-                                                          Colors.transparent,
-                                                      focusColor:
-                                                          Colors.transparent,
-                                                      hoverColor:
-                                                          Colors.transparent,
-                                                      highlightColor:
-                                                          Colors.transparent,
-                                                      onTap: () async {
-                                                        logFirebaseEvent(
-                                                            'PROFILE_PAGE_PAGE_Text_6cohsr5q_ON_TAP');
-                                                        logFirebaseEvent(
-                                                            'Text_navigate_to');
-
-                                                        context.pushNamed(
-                                                          BandProfilePageREADONLYWidget
-                                                              .routeName,
-                                                          queryParameters: {
-                                                            'bandRef':
-                                                                serializeParam(
-                                                              followedBandsItem,
-                                                              ParamType
-                                                                  .DocumentReference,
-                                                            ),
-                                                          }.withoutNulls,
                                                         );
-                                                      },
-                                                      child: Text(
-                                                        textBandsRecord
-                                                            .bandName,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
-                                                                .override(
-                                                                  font:
-                                                                      GoogleFonts
-                                                                          .jaldi(
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .titleSmall
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .titleSmall
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  letterSpacing:
-                                                                      0.0,
+                                                      }
+
+                                                      final textBandsRecord =
+                                                          snapshot.data!;
+
+                                                      return InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        onTap: () async {
+                                                          logFirebaseEvent(
+                                                              'PROFILE_PAGE_PAGE_Text_6cohsr5q_ON_TAP');
+                                                          logFirebaseEvent(
+                                                              'Text_navigate_to');
+
+                                                          context.pushNamed(
+                                                            BandProfilePageREADONLYWidget
+                                                                .routeName,
+                                                            queryParameters: {
+                                                              'bandRef':
+                                                                  serializeParam(
+                                                                followedBandsItem,
+                                                                ParamType
+                                                                    .DocumentReference,
+                                                              ),
+                                                            }.withoutNulls,
+                                                          );
+                                                        },
+                                                        child: Text(
+                                                          textBandsRecord
+                                                              .bandName,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .titleSmall
+                                                              .override(
+                                                                font:
+                                                                    GoogleFonts
+                                                                        .jaldi(
                                                                   fontWeight: FlutterFlowTheme.of(
                                                                           context)
                                                                       .titleSmall
@@ -441,142 +428,161 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                                                                       .titleSmall
                                                                       .fontStyle,
                                                                 ),
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        30.0, 20.0, 30.0, 0.0),
-                                    child: Container(
-                                      width: 300.0,
-                                      height: 350.0,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                            FlutterFlowTheme.of(context)
-                                                .secondary
-                                          ],
-                                          stops: [0.0, 1.0],
-                                          begin:
-                                              AlignmentDirectional(0.0, -1.0),
-                                          end: AlignmentDirectional(0, 1.0),
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(24.0),
-                                        shape: BoxShape.rectangle,
-                                        border: Border.all(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 5.0,
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 10.0, 0.0, 10.0),
-                                        child: SingleChildScrollView(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        8.0, 0.0, 8.0, 0.0),
-                                                child: StreamBuilder<
-                                                    List<GigsRecord>>(
-                                                  stream: queryGigsRecord(
-                                                    queryBuilder: (gigsRecord) =>
-                                                        gigsRecord.whereIn(
-                                                            'band_posted',
-                                                            (currentUserDocument
-                                                                    ?.followedbands
-                                                                    .toList() ??
-                                                                [])),
-                                                  ),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 50.0,
-                                                          height: 50.0,
-                                                          child:
-                                                              CircularProgressIndicator(
-                                                            valueColor:
-                                                                AlwaysStoppedAnimation<
-                                                                    Color>(
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primary,
-                                                            ),
-                                                          ),
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmall
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmall
+                                                                    .fontStyle,
+                                                              ),
                                                         ),
                                                       );
-                                                    }
-                                                    List<GigsRecord>
-                                                        listViewGigsRecordList =
-                                                        snapshot.data!;
-
-                                                    return ListView.separated(
-                                                      padding: EdgeInsets.zero,
-                                                      shrinkWrap: true,
-                                                      scrollDirection:
-                                                          Axis.vertical,
-                                                      itemCount:
-                                                          listViewGigsRecordList
-                                                              .length,
-                                                      separatorBuilder: (_,
-                                                              __) =>
-                                                          SizedBox(height: 6.0),
-                                                      itemBuilder: (context,
-                                                          listViewIndex) {
-                                                        final listViewGigsRecord =
-                                                            listViewGigsRecordList[
-                                                                listViewIndex];
-                                                        return GigPostComponentWidget(
-                                                          key: Key(
-                                                              'Key86l_${listViewIndex}_of_${listViewGigsRecordList.length}'),
-                                                          gigDocReference:
-                                                              listViewGigsRecord
-                                                                  .reference,
-                                                        );
-                                                      },
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                            ].divide(SizedBox(height: 20.0)),
+                                                    },
+                                                  );
+                                                },
+                                              );
+                                            },
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          30.0, 20.0, 30.0, 0.0),
+                                      child: Container(
+                                        width: 300.0,
+                                        height: 350.0,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary
+                                            ],
+                                            stops: [0.0, 1.0],
+                                            begin:
+                                                AlignmentDirectional(0.0, -1.0),
+                                            end: AlignmentDirectional(0, 1.0),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
+                                          shape: BoxShape.rectangle,
+                                          border: Border.all(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 10.0, 0.0, 10.0),
+                                          child: SingleChildScrollView(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 8.0, 0.0),
+                                                  child: StreamBuilder<
+                                                      List<GigsRecord>>(
+                                                    stream: queryGigsRecord(
+                                                      queryBuilder: (gigsRecord) =>
+                                                          gigsRecord.whereIn(
+                                                              'band_posted',
+                                                              (currentUserDocument
+                                                                      ?.followedbands
+                                                                      .toList() ??
+                                                                  [])),
+                                                    ),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      // Customize what your widget looks like when it's loading.
+                                                      if (!snapshot.hasData) {
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            width: 50.0,
+                                                            height: 50.0,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              valueColor:
+                                                                  AlwaysStoppedAnimation<
+                                                                      Color>(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                      List<GigsRecord>
+                                                          listViewGigsRecordList =
+                                                          snapshot.data!;
+
+                                                      return ListView.separated(
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        shrinkWrap: true,
+                                                        scrollDirection:
+                                                            Axis.vertical,
+                                                        itemCount:
+                                                            listViewGigsRecordList
+                                                                .length,
+                                                        separatorBuilder:
+                                                            (_, __) => SizedBox(
+                                                                height: 6.0),
+                                                        itemBuilder: (context,
+                                                            listViewIndex) {
+                                                          final listViewGigsRecord =
+                                                              listViewGigsRecordList[
+                                                                  listViewIndex];
+                                                          return GigPostComponentWidget(
+                                                            key: Key(
+                                                                'Key86l_${listViewIndex}_of_${listViewGigsRecordList.length}'),
+                                                            gigDocReference:
+                                                                listViewGigsRecord
+                                                                    .reference,
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ].divide(SizedBox(height: 20.0)),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Align(
                         alignment: AlignmentDirectional(0.0, 1.0),
-                        child: wrapWithModel(
-                          model: _model.nAVbarModel,
-                          updateCallback: () => safeSetState(() {}),
-                          child: NAVbarWidget(),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 10.0, 0.0, 0.0),
+                          child: wrapWithModel(
+                            model: _model.nAVbarModel,
+                            updateCallback: () => safeSetState(() {}),
+                            child: NAVbarWidget(),
+                          ),
                         ),
                       ),
-                    ].divide(SizedBox(height: 24.0)),
+                    ],
                   ),
                 ),
               ),

@@ -1,9 +1,9 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'n_a_vbar_model.dart';
 export 'n_a_vbar_model.dart';
 
@@ -45,6 +45,8 @@ class _NAVbarWidgetState extends State<NAVbarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Container(
       height: 95.0,
       child: Stack(
@@ -322,8 +324,7 @@ class _NAVbarWidgetState extends State<NAVbarWidget> {
                       onTap: () async {
                         logFirebaseEvent(
                             'N_A_VBAR_ConditionalBuilder_83qae69a_ON_');
-                        if (valueOrDefault<bool>(
-                            currentUserDocument?.hasBand, false)) {
+                        if (FFAppState().activeBand != null) {
                           logFirebaseEvent('ConditionalBuilder_navigate_to');
 
                           context.pushNamed(BandProfilePageWidget.routeName);

@@ -847,10 +847,9 @@ class _BandProfilePageREADONLYWidgetState
                                                     queryBuilder:
                                                         (usersRecord) =>
                                                             usersRecord.where(
-                                                      'user_band',
-                                                      isEqualTo:
-                                                          bandProfilePageREADONLYBandsRecord
-                                                              .reference,
+                                                      'users_bands',
+                                                      arrayContains:
+                                                          widget.bandRef,
                                                     ),
                                                   ),
                                                   builder: (context, snapshot) {

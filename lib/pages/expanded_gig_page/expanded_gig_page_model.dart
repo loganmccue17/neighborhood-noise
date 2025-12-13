@@ -1,5 +1,8 @@
+import '/backend/backend.dart';
 import '/components/n_a_vbar/n_a_vbar_widget.dart';
+import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/index.dart';
 import 'expanded_gig_page_widget.dart' show ExpandedGigPageWidget;
 import 'package:flutter/material.dart';
 
@@ -15,6 +18,11 @@ class ExpandedGigPageModel extends FlutterFlowModel<ExpandedGigPageWidget> {
   TextEditingController? descriptionReadOnlyTextController;
   String? Function(BuildContext, String?)?
       descriptionReadOnlyTextControllerValidator;
+  // State field(s) for GoogleMap widget.
+  LatLng? googleMapsCenter;
+  final googleMapsController = Completer<GoogleMapController>();
+  // Stores action output result for [Backend Call - Read Document] action in GoogleMap widget.
+  BandsRecord? bandPostedDocument;
   // Model for NAVbar component.
   late NAVbarModel nAVbarModel;
 

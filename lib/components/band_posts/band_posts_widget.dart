@@ -85,8 +85,8 @@ class _BandPostsWidgetState extends State<BandPostsWidget> {
         final containerPostsRecord = snapshot.data!;
 
         return Container(
-          width: 240.0,
-          height: 300.0,
+          width: 325.4,
+          height: 333.28,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).tertiary,
             borderRadius: BorderRadius.circular(24.0),
@@ -184,8 +184,8 @@ class _BandPostsWidgetState extends State<BandPostsWidget> {
                         borderRadius: BorderRadius.circular(24.0),
                         child: Image.network(
                           containerPostsRecord.imageURL,
-                          width: 200.0,
-                          height: 200.0,
+                          width: 261.3,
+                          height: 214.41,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -320,59 +320,32 @@ class _BandPostsWidgetState extends State<BandPostsWidget> {
                                 ),
                               ],
                             ),
-                            Flexible(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Flexible(
-                                    child: Wrap(
-                                      spacing: 0.0,
-                                      runSpacing: 0.0,
-                                      alignment: WrapAlignment.start,
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.start,
-                                      direction: Axis.horizontal,
-                                      runAlignment: WrapAlignment.start,
-                                      verticalDirection: VerticalDirection.down,
-                                      clipBehavior: Clip.none,
-                                      children: [
-                                        Text(
-                                          containerPostsRecord.description,
-                                          maxLines: 10,
-                                          style: FlutterFlowTheme.of(context)
-                                              .labelSmall
-                                              .override(
-                                                font: GoogleFonts.jaldi(
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .labelSmall
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .labelSmall
-                                                          .fontStyle,
-                                                ),
-                                                letterSpacing: 0.0,
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelSmall
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelSmall
-                                                        .fontStyle,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                           ],
                         ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        containerPostsRecord.description,
+                        maxLines: 10,
+                        style: FlutterFlowTheme.of(context).labelSmall.override(
+                              font: GoogleFonts.jaldi(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .labelSmall
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .labelSmall
+                                    .fontStyle,
+                              ),
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .labelSmall
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .labelSmall
+                                  .fontStyle,
+                            ),
                       ),
                     ),
                   ],

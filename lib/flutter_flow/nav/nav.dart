@@ -88,21 +88,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
               : LoginWidget(),
         ),
         FFRoute(
-          name: LoginWidget.routeName,
-          path: LoginWidget.routePath,
-          builder: (context, params) => LoginWidget(),
-        ),
-        FFRoute(
-          name: NPSpageWidget.routeName,
-          path: NPSpageWidget.routePath,
-          builder: (context, params) => NPSpageWidget(),
-        ),
-        FFRoute(
-          name: NoExistingBandPageWidget.routeName,
-          path: NoExistingBandPageWidget.routePath,
-          builder: (context, params) => NoExistingBandPageWidget(),
-        ),
-        FFRoute(
           name: ExpandedGigPageWidget.routeName,
           path: ExpandedGigPageWidget.routePath,
           builder: (context, params) => ExpandedGigPageWidget(
@@ -113,45 +98,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
               collectionNamePath: ['gigs'],
             ),
           ),
-        ),
-        FFRoute(
-          name: HomePageWidget.routeName,
-          path: HomePageWidget.routePath,
-          builder: (context, params) => HomePageWidget(),
-        ),
-        FFRoute(
-          name: CreatePostWidget.routeName,
-          path: CreatePostWidget.routePath,
-          builder: (context, params) => CreatePostWidget(
-            bandToPostTo: params.getParam(
-              'bandToPostTo',
-              ParamType.DocumentReference,
-              isList: false,
-              collectionNamePath: ['bands'],
-            ),
-          ),
-        ),
-        FFRoute(
-          name: ProfileCreationWidget.routeName,
-          path: ProfileCreationWidget.routePath,
-          builder: (context, params) => ProfileCreationWidget(),
-        ),
-        FFRoute(
-          name: SignupWidget.routeName,
-          path: SignupWidget.routePath,
-          builder: (context, params) => SignupWidget(),
-        ),
-        FFRoute(
-          name: SearchWidget.routeName,
-          path: SearchWidget.routePath,
-          requireAuth: true,
-          builder: (context, params) => SearchWidget(),
-        ),
-        FFRoute(
-          name: MapPageWidget.routeName,
-          path: MapPageWidget.routePath,
-          requireAuth: true,
-          builder: (context, params) => MapPageWidget(),
         ),
         FFRoute(
           name: BandCreationWidget.routeName,
@@ -171,9 +117,24 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           ),
         ),
         FFRoute(
-          name: ProfilePageWidget.routeName,
-          path: ProfilePageWidget.routePath,
-          builder: (context, params) => ProfilePageWidget(),
+          name: ProfilePageEditWidget.routeName,
+          path: ProfilePageEditWidget.routePath,
+          builder: (context, params) => ProfilePageEditWidget(),
+        ),
+        FFRoute(
+          name: NPSpageWidget.routeName,
+          path: NPSpageWidget.routePath,
+          builder: (context, params) => NPSpageWidget(),
+        ),
+        FFRoute(
+          name: SignupWidget.routeName,
+          path: SignupWidget.routePath,
+          builder: (context, params) => SignupWidget(),
+        ),
+        FFRoute(
+          name: ProfileCreationWidget.routeName,
+          path: ProfileCreationWidget.routePath,
+          builder: (context, params) => ProfileCreationWidget(),
         ),
         FFRoute(
           name: BandProfilePageWidget.routeName,
@@ -181,9 +142,53 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           builder: (context, params) => BandProfilePageWidget(),
         ),
         FFRoute(
+          name: NoExistingBandPageWidget.routeName,
+          path: NoExistingBandPageWidget.routePath,
+          builder: (context, params) => NoExistingBandPageWidget(),
+        ),
+        FFRoute(
+          name: LoginWidget.routeName,
+          path: LoginWidget.routePath,
+          builder: (context, params) => LoginWidget(),
+        ),
+        FFRoute(
+          name: HomePageWidget.routeName,
+          path: HomePageWidget.routePath,
+          builder: (context, params) => HomePageWidget(),
+        ),
+        FFRoute(
+          name: SearchWidget.routeName,
+          path: SearchWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => SearchWidget(),
+        ),
+        FFRoute(
+          name: MapPageWidget.routeName,
+          path: MapPageWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => MapPageWidget(),
+        ),
+        FFRoute(
           name: BandProfileEditWidget.routeName,
           path: BandProfileEditWidget.routePath,
           builder: (context, params) => BandProfileEditWidget(),
+        ),
+        FFRoute(
+          name: ProfilePageWidget.routeName,
+          path: ProfilePageWidget.routePath,
+          builder: (context, params) => ProfilePageWidget(),
+        ),
+        FFRoute(
+          name: CreatePostWidget.routeName,
+          path: CreatePostWidget.routePath,
+          builder: (context, params) => CreatePostWidget(
+            bandToPostTo: params.getParam(
+              'bandToPostTo',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['bands'],
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

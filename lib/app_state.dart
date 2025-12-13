@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'flutter_flow/request_manager.dart';
 import '/backend/backend.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
@@ -83,6 +83,27 @@ class FFAppState extends ChangeNotifier {
     _filterRange = value;
     prefs.setDouble('ff_filterRange', value);
   }
+
+  DocumentReference? _activeBand;
+  DocumentReference? get activeBand => _activeBand;
+  set activeBand(DocumentReference? value) {
+    _activeBand = value;
+  }
+
+  final _mapQueryManager = StreamRequestManager<List<BandsRecord>>();
+  Stream<List<BandsRecord>> mapQuery({
+    String? uniqueQueryKey,
+    bool? overrideCache,
+    required Stream<List<BandsRecord>> Function() requestFn,
+  }) =>
+      _mapQueryManager.performRequest(
+        uniqueQueryKey: uniqueQueryKey,
+        overrideCache: overrideCache,
+        requestFn: requestFn,
+      );
+  void clearMapQueryCache() => _mapQueryManager.clear();
+  void clearMapQueryCacheKey(String? uniqueKey) =>
+      _mapQueryManager.clearRequest(uniqueKey);
 }
 
 void _safeInit(Function() initializeField) {

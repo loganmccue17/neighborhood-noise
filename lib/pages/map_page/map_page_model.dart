@@ -23,17 +23,32 @@ class MapPageModel extends FlutterFlowModel<MapPageWidget> {
   void updateMapDocListAtIndex(int index, Function(BandsRecord) updateFn) =>
       mapDocList[index] = updateFn(mapDocList[index]);
 
+  List<GigsRecord> gigDocList = [];
+  void addToGigDocList(GigsRecord item) => gigDocList.add(item);
+  void removeFromGigDocList(GigsRecord item) => gigDocList.remove(item);
+  void removeAtIndexFromGigDocList(int index) => gigDocList.removeAt(index);
+  void insertAtIndexInGigDocList(int index, GigsRecord item) =>
+      gigDocList.insert(index, item);
+  void updateGigDocListAtIndex(int index, Function(GigsRecord) updateFn) =>
+      gigDocList[index] = updateFn(gigDocList[index]);
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Firestore Query - Query a collection] action in MapPage widget.
   List<BandsRecord>? prefilteredList;
+  // Stores action output result for [Custom Action - getGigDocsList] action in MapPage widget.
+  List<GigsRecord>? gigList;
+  // State field(s) for GoogleMap widget.
+  LatLng? googleMapsCenter;
+  final googleMapsController = Completer<GoogleMapController>();
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
-  // State field(s) for GoogleMap widget.
-  LatLng? googleMapsCenter;
-  final googleMapsController = Completer<GoogleMapController>();
+  // Stores action output result for [Custom Action - getGigDocsList] action in TextField widget.
+  List<GigsRecord>? gigListFromTextField;
+  // Stores action output result for [Custom Action - getGigDocsList] action in IconButton widget.
+  List<GigsRecord>? gigListFromTheButton;
   // Model for NAVbar component.
   late NAVbarModel nAVbarModel;
 

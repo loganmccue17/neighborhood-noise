@@ -35,11 +35,23 @@ class GigsRecord extends FirestoreRecord {
   String get locationName => _locationName ?? '';
   bool hasLocationName() => _locationName != null;
 
+  // "band_posted_name" field.
+  String? _bandPostedName;
+  String get bandPostedName => _bandPostedName ?? '';
+  bool hasBandPostedName() => _bandPostedName != null;
+
+  // "date" field.
+  DateTime? _date;
+  DateTime? get date => _date;
+  bool hasDate() => _date != null;
+
   void _initializeFields() {
     _bandPosted = snapshotData['band_posted'] as DocumentReference?;
     _description = snapshotData['description'] as String?;
     _location = snapshotData['location'] as LatLng?;
     _locationName = snapshotData['location_name'] as String?;
+    _bandPostedName = snapshotData['band_posted_name'] as String?;
+    _date = snapshotData['date'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -80,6 +92,8 @@ Map<String, dynamic> createGigsRecordData({
   String? description,
   LatLng? location,
   String? locationName,
+  String? bandPostedName,
+  DateTime? date,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -87,6 +101,8 @@ Map<String, dynamic> createGigsRecordData({
       'description': description,
       'location': location,
       'location_name': locationName,
+      'band_posted_name': bandPostedName,
+      'date': date,
     }.withoutNulls,
   );
 
@@ -101,12 +117,20 @@ class GigsRecordDocumentEquality implements Equality<GigsRecord> {
     return e1?.bandPosted == e2?.bandPosted &&
         e1?.description == e2?.description &&
         e1?.location == e2?.location &&
-        e1?.locationName == e2?.locationName;
+        e1?.locationName == e2?.locationName &&
+        e1?.bandPostedName == e2?.bandPostedName &&
+        e1?.date == e2?.date;
   }
 
   @override
-  int hash(GigsRecord? e) => const ListEquality()
-      .hash([e?.bandPosted, e?.description, e?.location, e?.locationName]);
+  int hash(GigsRecord? e) => const ListEquality().hash([
+        e?.bandPosted,
+        e?.description,
+        e?.location,
+        e?.locationName,
+        e?.bandPostedName,
+        e?.date
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is GigsRecord;

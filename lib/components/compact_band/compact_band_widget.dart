@@ -75,7 +75,9 @@ class _CompactBandWidgetState extends State<CompactBandWidget> {
           highlightColor: Colors.transparent,
           onTap: () async {
             logFirebaseEvent('COMPACT_BAND_Container_3kecoplq_ON_TAP');
-            if (widget.bandRef != currentUserDocument?.userBand) {
+            if ((currentUserDocument?.usersBands.toList() ?? [])
+                    .contains(widget.bandRef) ==
+                false) {
               logFirebaseEvent('Container_navigate_to');
 
               context.pushNamed(
@@ -160,22 +162,36 @@ class _CompactBandWidgetState extends State<CompactBandWidget> {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  size: 16.0,
-                                ),
-                                Text(
-                                  containerBandsRecord.location,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodySmall
-                                      .override(
-                                        font: GoogleFonts.jaldi(
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    size: 16.0,
+                                  ),
+                                  Text(
+                                    containerBandsRecord.location,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodySmall
+                                        .override(
+                                          font: GoogleFonts.jaldi(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodySmall
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodySmall
+                                                    .fontStyle,
+                                          ),
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          letterSpacing: 0.0,
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
                                                   .bodySmall
@@ -185,18 +201,10 @@ class _CompactBandWidgetState extends State<CompactBandWidget> {
                                                   .bodySmall
                                                   .fontStyle,
                                         ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .fontStyle,
-                                      ),
-                                ),
-                              ].divide(SizedBox(width: 6.0)),
+                                    overflow: TextOverflow.fade,
+                                  ),
+                                ].divide(SizedBox(width: 6.0)),
+                              ),
                             ),
                           ].divide(SizedBox(height: 4.0)),
                         ),

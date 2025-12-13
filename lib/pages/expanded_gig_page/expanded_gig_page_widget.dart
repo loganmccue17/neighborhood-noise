@@ -1,7 +1,10 @@
 import '/backend/backend.dart';
+import '/components/band_pop_up_sheet/band_pop_up_sheet_widget.dart';
 import '/components/n_a_vbar/n_a_vbar_widget.dart';
+import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'expanded_gig_page_model.dart';
@@ -79,6 +82,7 @@ class _ExpandedGigPageWidgetState extends State<ExpandedGigPageWidget> {
           },
           child: Scaffold(
             key: scaffoldKey,
+            resizeToAvoidBottomInset: false,
             backgroundColor: FlutterFlowTheme.of(context).primaryText,
             body: SafeArea(
               top: true,
@@ -131,12 +135,42 @@ class _ExpandedGigPageWidgetState extends State<ExpandedGigPageWidget> {
                       return Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Text(
-                            columnBandsRecord.bandName,
-                            style: FlutterFlowTheme.of(context)
-                                .headlineMedium
-                                .override(
-                                  font: GoogleFonts.newRocker(
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              logFirebaseEvent(
+                                  'EXPANDED_GIG_PAGE_PAGE_Profile_ON_TAP');
+                              logFirebaseEvent('Profile_navigate_to');
+
+                              context.pushNamed(
+                                BandProfilePageREADONLYWidget.routeName,
+                                queryParameters: {
+                                  'bandRef': serializeParam(
+                                    columnBandsRecord.reference,
+                                    ParamType.DocumentReference,
+                                  ),
+                                }.withoutNulls,
+                              );
+                            },
+                            child: Text(
+                              columnBandsRecord.bandName,
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .override(
+                                    font: GoogleFonts.newRocker(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .fontStyle,
+                                    ),
+                                    color:
+                                        FlutterFlowTheme.of(context).tertiary,
+                                    letterSpacing: 0.0,
                                     fontWeight: FlutterFlowTheme.of(context)
                                         .headlineMedium
                                         .fontWeight,
@@ -144,32 +178,45 @@ class _ExpandedGigPageWidgetState extends State<ExpandedGigPageWidget> {
                                         .headlineMedium
                                         .fontStyle,
                                   ),
-                                  color: FlutterFlowTheme.of(context).tertiary,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .fontStyle,
-                                ),
+                            ),
                           ),
-                          Container(
-                            width: 120.0,
-                            height: 120.0,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: Image.network(
-                                  columnBandsRecord.bandPhotoUrl,
-                                ).image,
-                              ),
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: FlutterFlowTheme.of(context).primary,
-                                width: 3.0,
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              logFirebaseEvent(
+                                  'EXPANDED_GIG_Container_nwxndyvm_ON_TAP');
+                              logFirebaseEvent('Container_navigate_to');
+
+                              context.pushNamed(
+                                BandProfilePageREADONLYWidget.routeName,
+                                queryParameters: {
+                                  'bandRef': serializeParam(
+                                    columnBandsRecord.reference,
+                                    ParamType.DocumentReference,
+                                  ),
+                                }.withoutNulls,
+                              );
+                            },
+                            child: Container(
+                              width: 120.0,
+                              height: 120.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: Image.network(
+                                    columnBandsRecord.bandPhotoUrl,
+                                  ).image,
+                                ),
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  width: 3.0,
+                                ),
                               ),
                             ),
                           ),
@@ -218,6 +265,7 @@ class _ExpandedGigPageWidgetState extends State<ExpandedGigPageWidget> {
                             ),
                             focusNode: _model.descriptionReadOnlyFocusNode,
                             autofocus: false,
+                            enabled: true,
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -359,15 +407,94 @@ class _ExpandedGigPageWidgetState extends State<ExpandedGigPageWidget> {
                             ),
                           ),
                           Expanded(
-                            child: Container(
-                              width: 400.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).tertiary,
-                                borderRadius: BorderRadius.circular(24.0),
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 3.0,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(24.0),
+                              child: Container(
+                                width: 400.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).tertiary,
+                                  borderRadius: BorderRadius.circular(24.0),
+                                  border: Border.all(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    width: 3.0,
+                                  ),
                                 ),
+                                child: Builder(builder: (context) {
+                                  final _googleMapMarker =
+                                      expandedGigPageGigsRecord;
+                                  return FlutterFlowGoogleMap(
+                                    controller: _model.googleMapsController,
+                                    onCameraIdle: (latLng) =>
+                                        _model.googleMapsCenter = latLng,
+                                    initialLocation: _model.googleMapsCenter ??=
+                                        expandedGigPageGigsRecord.location!,
+                                    markers: [
+                                      FlutterFlowMarker(
+                                        _googleMapMarker.reference.path,
+                                        _googleMapMarker.location!,
+                                        () async {
+                                          logFirebaseEvent(
+                                              'EXPANDED_GIG_GoogleMap_jr5x9p4m_ON_MARKE');
+                                          logFirebaseEvent(
+                                              'GoogleMap_backend_call');
+                                          _model.bandPostedDocument =
+                                              await BandsRecord.getDocumentOnce(
+                                                  expandedGigPageGigsRecord
+                                                      .bandPosted!);
+                                          logFirebaseEvent(
+                                              'GoogleMap_bottom_sheet');
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            enableDrag: false,
+                                            context: context,
+                                            builder: (context) {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  FocusScope.of(context)
+                                                      .unfocus();
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: BandPopUpSheetWidget(
+                                                    bandDisplaying: _model
+                                                        .bandPostedDocument!,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ).then(
+                                              (value) => safeSetState(() {}));
+
+                                          safeSetState(() {});
+                                        },
+                                      ),
+                                    ],
+                                    markerColor: GoogleMarkerColor.violet,
+                                    markerImage: MarkerImage(
+                                      imagePath: 'assets/images/Logo.png',
+                                      isAssetImage: true,
+                                      size: 20.0 ?? 20,
+                                    ),
+                                    mapType: MapType.normal,
+                                    style: GoogleMapStyle.standard,
+                                    initialZoom: 14.0,
+                                    allowInteraction: true,
+                                    allowZoom: true,
+                                    showZoomControls: true,
+                                    showLocation: true,
+                                    showCompass: false,
+                                    showMapToolbar: false,
+                                    showTraffic: false,
+                                    centerMapOnMarkerTap: true,
+                                    mapTakesGesturePreference: false,
+                                  );
+                                }),
                               ),
                             ),
                           ),

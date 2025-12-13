@@ -480,57 +480,6 @@ class _SignupWidgetState extends State<SignupWidget> {
                     ),
                   ),
                 ),
-                FFButtonWidget(
-                  onPressed: () async {
-                    logFirebaseEvent('SIGNUP_PAGE_GoogleSignup_ON_TAP');
-                    logFirebaseEvent('GoogleSignup_auth');
-                    GoRouter.of(context).prepareAuthEvent();
-                    final user = await authManager.signInWithGoogle(context);
-                    if (user == null) {
-                      return;
-                    }
-                    logFirebaseEvent('GoogleSignup_navigate_to');
-
-                    context.pushNamedAuth(
-                        ProfileCreationWidget.routeName, context.mounted);
-                  },
-                  text: 'Continue with Google ',
-                  icon: Icon(
-                    Icons.login,
-                    size: 20.0,
-                  ),
-                  options: FFButtonOptions(
-                    height: 40.0,
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).secondary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          font: GoogleFonts.jaldi(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .fontStyle,
-                          ),
-                          color: Colors.white,
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .titleSmall
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                        ),
-                    elevation: 0.0,
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).primary,
-                      width: 4.0,
-                    ),
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                ),
                 Align(
                   alignment: AlignmentDirectional(-0.14, 0.56),
                   child: Padding(

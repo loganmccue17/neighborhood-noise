@@ -90,7 +90,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               child: Image.asset(
                                 'assets/images/ChatGPT_Image_Nov_10,_2025,_09_46_37_PM.png',
                                 width: 304.8,
-                                height: 221.17,
+                                height: 221.2,
                                 fit: BoxFit.cover,
                                 alignment: Alignment(0.0, 0.0),
                               ),
@@ -702,6 +702,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       },
                                     ),
                                   });
+                                  if ((currentUserDocument?.usersBands
+                                              .toList() ??
+                                          [])
+                                      .isNotEmpty) {
+                                    logFirebaseEvent(
+                                        'LoginButton_update_app_state');
+                                    FFAppState().activeBand =
+                                        (currentUserDocument?.usersBands
+                                                    .toList() ??
+                                                [])
+                                            .firstOrNull;
+                                    safeSetState(() {});
+                                  }
                                   if ((valueOrDefault(
                                               currentUserDocument?.loginCount,
                                               0) >=

@@ -155,10 +155,7 @@ class _GigPostComponentWidgetState extends State<GigPostComponentWidget> {
                     },
                   ),
                   Text(
-                    valueOrDefault<String>(
-                      containerGigsRecord.locationName,
-                      'N/A',
-                    ),
+                    containerGigsRecord.bandPostedName,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           font: GoogleFonts.jaldi(
                             fontWeight: FlutterFlowTheme.of(context)
@@ -177,7 +174,10 @@ class _GigPostComponentWidgetState extends State<GigPostComponentWidget> {
                         ),
                   ),
                   Text(
-                    containerGigsRecord.description,
+                    valueOrDefault<String>(
+                      dateTimeFormat("M/d h:mm a", containerGigsRecord.date),
+                      'No Date Set',
+                    ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           font: GoogleFonts.jaldi(
                             fontWeight: FlutterFlowTheme.of(context)
