@@ -69,56 +69,40 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
         body: SafeArea(
           top: true,
-          child: Container(
-            width: 400.0,
-            height: 800.0,
-            decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).primaryText,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          width: 100.0,
-                          height: 60.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).tertiary,
-                            borderRadius: BorderRadius.circular(0.0),
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context).secondary,
-                              width: 3.0,
-                            ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: 100.0,
+                        height: 60.0,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).tertiary,
+                          borderRadius: BorderRadius.circular(0.0),
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context).secondary,
+                            width: 3.0,
                           ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 0.0, 0.0),
-                            child: Row(
-                              key: ValueKey('Row_qjf8'),
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Neighborhood Noise',
-                                  style: FlutterFlowTheme.of(context)
-                                      .titleMedium
-                                      .override(
-                                        font: GoogleFonts.jaldi(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleMedium
-                                                  .fontStyle,
-                                        ),
-                                        letterSpacing: 0.0,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              12.0, 0.0, 0.0, 0.0),
+                          child: Row(
+                            key: ValueKey('Row_qjf8'),
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Neighborhood Noise',
+                                style: FlutterFlowTheme.of(context)
+                                    .titleMedium
+                                    .override(
+                                      font: GoogleFonts.jaldi(
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .titleMedium
                                             .fontWeight,
@@ -126,112 +110,114 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             .titleMedium
                                             .fontStyle,
                                       ),
+                                      letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .titleMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .titleMedium
+                                          .fontStyle,
+                                    ),
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.asset(
+                                  'assets/images/Logo(2).png',
+                                  width: 60.0,
+                                  height: 60.0,
+                                  fit: BoxFit.cover,
                                 ),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.asset(
-                                    'assets/images/Logo(2).png',
-                                    width: 60.0,
-                                    height: 60.0,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(64.0, 0.0, 64.0, 0.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          if ((currentUserDocument?.followedbands.toList() ??
-                                      [])
-                                  .length !=
-                              0)
-                            AuthUserStreamWidget(
-                              builder: (context) =>
-                                  StreamBuilder<List<PostsRecord>>(
-                                stream: queryPostsRecord(
-                                  queryBuilder: (postsRecord) =>
-                                      postsRecord.whereIn(
-                                          'postedByBand',
-                                          (currentUserDocument?.followedbands
-                                                  .toList() ??
-                                              [])),
-                                  limit: 20,
-                                ),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                          ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(64.0, 0.0, 64.0, 0.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        if ((currentUserDocument?.followedbands.toList() ?? [])
+                                .length !=
+                            0)
+                          AuthUserStreamWidget(
+                            builder: (context) =>
+                                StreamBuilder<List<PostsRecord>>(
+                              stream: queryPostsRecord(
+                                queryBuilder: (postsRecord) =>
+                                    postsRecord.whereIn(
+                                        'postedByBand',
+                                        (currentUserDocument?.followedbands
+                                                .toList() ??
+                                            [])),
+                                limit: 20,
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          FlutterFlowTheme.of(context).primary,
                                         ),
                                       ),
-                                    );
-                                  }
-                                  List<PostsRecord> listViewPostsRecordList =
-                                      snapshot.data!;
-
-                                  return ListView.separated(
-                                    padding: EdgeInsets.zero,
-                                    primary: false,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: listViewPostsRecordList.length,
-                                    separatorBuilder: (_, __) =>
-                                        SizedBox(height: 12.0),
-                                    itemBuilder: (context, listViewIndex) {
-                                      final listViewPostsRecord =
-                                          listViewPostsRecordList[
-                                              listViewIndex];
-                                      return wrapWithModel(
-                                        model: _model.bandPostsModels.getModel(
-                                          listViewIndex.toString(),
-                                          listViewIndex,
-                                        ),
-                                        updateCallback: () =>
-                                            safeSetState(() {}),
-                                        child: BandPostsWidget(
-                                          key: Key(
-                                            'Keys55_${listViewIndex.toString()}',
-                                          ),
-                                          postReference:
-                                              listViewPostsRecord.reference,
-                                        ),
-                                      );
-                                    },
+                                    ),
                                   );
-                                },
-                              ),
+                                }
+                                List<PostsRecord> listViewPostsRecordList =
+                                    snapshot.data!;
+
+                                return ListView.separated(
+                                  padding: EdgeInsets.zero,
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: listViewPostsRecordList.length,
+                                  separatorBuilder: (_, __) =>
+                                      SizedBox(height: 12.0),
+                                  itemBuilder: (context, listViewIndex) {
+                                    final listViewPostsRecord =
+                                        listViewPostsRecordList[listViewIndex];
+                                    return wrapWithModel(
+                                      model: _model.bandPostsModels.getModel(
+                                        listViewIndex.toString(),
+                                        listViewIndex,
+                                      ),
+                                      updateCallback: () => safeSetState(() {}),
+                                      child: BandPostsWidget(
+                                        key: Key(
+                                          'Keys55_${listViewIndex.toString()}',
+                                        ),
+                                        postReference:
+                                            listViewPostsRecord.reference,
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                             ),
-                        ],
-                      ),
+                          ),
+                      ],
                     ),
                   ),
                 ),
-                wrapWithModel(
-                  model: _model.nAVbarModel,
-                  updateCallback: () => safeSetState(() {}),
-                  child: NAVbarWidget(),
-                ),
-              ],
-            ),
+              ),
+              wrapWithModel(
+                model: _model.nAVbarModel,
+                updateCallback: () => safeSetState(() {}),
+                child: NAVbarWidget(),
+              ),
+            ],
           ),
         ),
       ),

@@ -267,6 +267,10 @@ class _BandPostsWidgetState extends State<BandPostsWidget> {
                                               ),
                                             });
                                           }
+
+                                          logFirebaseEvent(
+                                              'ToggleIcon_google_analytics_event');
+                                          logFirebaseEvent('PostLiked');
                                         },
                                         value: _model.liked,
                                         onIcon: Icon(
